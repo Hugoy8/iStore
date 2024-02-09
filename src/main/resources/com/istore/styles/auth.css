@@ -7,4 +7,5 @@
     -fx-align-items: center;
     -fx-padding: 64px;
     -fx-background-color: #fff;
+    -fx-background-radius: 12px;
 }
