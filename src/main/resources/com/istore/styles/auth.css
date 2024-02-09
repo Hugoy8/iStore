@@ -1,0 +1,10 @@
+.card {
+    -fx-min-width: 555px;
+    -fx-max-width: 555px;
+    -fx-display: flex;
+    -fx-flex-direction: column;
+    -fx-justify-content: center;
+    -fx-align-items: center;
+    -fx-padding: 64px;
+    -fx-background-color: #fff;
+}
