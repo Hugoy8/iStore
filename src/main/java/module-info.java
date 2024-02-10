@@ -9,4 +9,8 @@ module com.istore {
     exports com.istore;
     exports com.istore.gui;
     opens com.istore.gui to javafx.fxml;
+    exports com.istore.gui.controllers.auth;
+    opens com.istore.gui.controllers.auth to javafx.fxml;
+    exports com.istore.gui.controllers.dashboard;
+    opens com.istore.gui.controllers.dashboard to javafx.fxml;
 }
