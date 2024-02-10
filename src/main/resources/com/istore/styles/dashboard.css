@@ -1,0 +1,9 @@
+.sidebar-button {
+    -fx-background-color: none;
+    -fx-text-fill: #818181;
+}
+
+.active-button {
+    -fx-background-color: #007AFF;
+    -fx-text-fill: #fff;
+}

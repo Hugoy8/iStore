@@ -54,7 +54,6 @@ public class AppLauncher extends Application {
         scene.getStylesheets().add(AppLauncher.class.getResource("/com/istore/styles/dashboard.css").toExternalForm());
 
         primaryStage.setScene(scene);
-        setTitle("Tableau de bord");
     }
 
     public static void main(String[] args) {
