@@ -29,7 +29,7 @@ public class AppLauncher extends Application {
         WINDOW_WIDTH = Screen.getPrimary().getBounds().getWidth();
         WINDOW_HEIGHT = Screen.getPrimary().getBounds().getHeight();
 
-        showLoginView();
+        showDashboardView();
         primaryStage.setFullScreen(false);
         primaryStage.show();
     }

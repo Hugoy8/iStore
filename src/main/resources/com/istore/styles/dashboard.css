@@ -19,3 +19,65 @@
     -fx-text-fill: #FF3C3C;
     -fx-padding: 10px 12px;
 }
+
+.column-header .label {
+    -fx-alignment: center-left;
+}
+
+
+.column-header .label {
+    -fx-alignment: center-left; /* Aligner le texte à gauche */
+    -fx-text-fill: black; /* Couleur du texte */
+    -fx-background-color: #FFFFFF; /* Fond blanc */
+    /* Pas de -fx-border ici pour ne pas dessiner de bordure autour du texte de l'en-tête */
+}
+
+.table-view {
+    -fx-background-color: #FFFFFF; /* Définit la couleur de fond du TableView */
+    -fx-background-insets: 0; /* Assure que le fond et le radius s'appliquent depuis le bord */
+    -fx-background-radius: 10px; /* Rayon pour les coins arrondis */
+    -fx-border-radius: 10px; /* Rayon pour les coins arrondis de la bordure, si bordure il y a */
+    -fx-border-color: transparent; /* Rend la bordure transparente pour "l'enlever" */
+}
+
+.table-view .column-header-background .filler,
+.table-view .column-header-background .column-header {
+    -fx-background-color: transparent; /* Rend le fond de l'en-tête transparent */
+    -fx-background-radius: 10px 10px 0 0; /* Arrondit uniquement les coins supérieurs */
+}
+
+.table-view .column-header {
+    -fx-border-color: transparent; /* Assure que les bordures autour des en-têtes de colonnes sont enlevées ou transparentes */
+}
+
+/* Supprime l'arrière-plan par défaut sur les en-têtes de colonnes et le séparateur */
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+/* Supprime les lignes séparatrices entre les en-têtes de colonnes */
+.table-view .column-header {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Supprime l'effet de tri sur les en-têtes de colonnes */
+.table-view .column-header .arrow {
+    -fx-background-color: transparent;
+}
+
+/* Supprime l'arrière-plan des cellules d'en-tête */
+.table-view .column-header .label {
+    -fx-background-color: #FFFFFF; /* ou toute autre couleur souhaitée pour le fond */
+}
+
+/* Assure-toi que l'arrière-plan de la région de remplissage des en-têtes est transparent */
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.button-icon {
+    -fx-background-color: transparent;
+    -fx-padding: 4; /* Ajuste selon tes besoins pour les icones */
+    -fx-cursor: hand; /* Change le curseur en main pour indiquer que c'est cliquable */
+}

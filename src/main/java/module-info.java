@@ -1,11 +1,13 @@
 module com.istore {
+    requires java.base;
     requires java.sql;
     requires jbcrypt;
     requires javafx.controls;
     requires javafx.fxml;
     requires mysql.connector.java;
 
-
+    opens com.istore.models to javafx.base, javafx.fxml;
+    exports com.istore.models;
     opens com.istore to javafx.fxml;
     exports com.istore;
     exports com.istore.gui;
