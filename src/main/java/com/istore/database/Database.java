@@ -14,8 +14,7 @@ public class Database {
     }
 
     public void connectToDb(){
-        String BDD = System.getenv("DB_NAME");
-        String url = System.getenv("DB_URL");
+        String url = System.getenv("DB_URL") + System.getenv("DB_NAME");
         String user = System.getenv("DB_USER");
         String password = System.getenv("DB_PASSWORD");
 
@@ -24,7 +23,7 @@ public class Database {
             this.connectionDb = DriverManager.getConnection(url, user, password);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("Erreur");
+            System.out.println("Erreur pendant la connexion à la base de donnée.");
             System.exit(0);
         }
     }

@@ -1,9 +1,21 @@
-.sidebar-button {
-    -fx-background-color: none;
-    -fx-text-fill: #818181;
+.sidebarBox{
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 19, 0.0, 0, 16);
 }
 
-.active-button {
+.sidebarButton{
+    -fx-background-color: none;
+    -fx-text-fill: #818181;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px 12px;
+}
+
+.activeButton {
     -fx-background-color: #007AFF;
     -fx-text-fill: #fff;
+}
+
+.sidebarDeconnexion{
+    -fx-background-color: none;
+    -fx-text-fill: #FF3C3C;
+    -fx-padding: 10px 12px;
 }

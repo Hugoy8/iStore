@@ -21,7 +21,7 @@ public class InventoryDAO {
      * @param storeId
      * @return Inventory
      */
-    public Inventory findInventoryByStoreId(int storeId) {
+    public Inventory findInventoryByStoreId(int storeId) throws SQLException {
         String query = "SELECT * FROM inventories WHERE store_id = ?";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -33,7 +33,7 @@ public class InventoryDAO {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return null;
     }
@@ -42,14 +42,14 @@ public class InventoryDAO {
      * Créer un inventaire
      * @param inventory
      */
-    public void createInventory(Inventory inventory) {
+    public void createInventory(Inventory inventory) throws SQLException {
         String query = "INSERT INTO inventories (store_id) VALUES (?)";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, inventory.getStoreId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -57,14 +57,14 @@ public class InventoryDAO {
      * Mettre à jour un inventaire par son id de magasin
      * @param storeId
      */
-    public void deleteInventoryByStoreId(int storeId) {
+    public void deleteInventoryByStoreId(int storeId) throws SQLException {
         String query = "DELETE FROM inventories WHERE store_id = ?";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, storeId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -72,7 +72,7 @@ public class InventoryDAO {
      * Lister tous les inventaires disponibles
      * @return List<Inventory>
      */
-    public List<Inventory> listAllInventories() {
+    public List<Inventory> listAllInventories() throws SQLException {
         List<Inventory> inventories = new ArrayList<>();
         String query = "SELECT * FROM inventories";
         try (Connection conn = db.getConnectionDb();
@@ -84,7 +84,7 @@ public class InventoryDAO {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return inventories;
     }

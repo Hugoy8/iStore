@@ -3,6 +3,7 @@ module com.istore {
     requires jbcrypt;
     requires javafx.controls;
     requires javafx.fxml;
+    requires mysql.connector.java;
 
 
     opens com.istore to javafx.fxml;

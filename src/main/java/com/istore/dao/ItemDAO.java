@@ -19,7 +19,7 @@ public class ItemDAO {
      * Créer un item
      * @param item
      */
-    public void createItem(Item item) {
+    public void createItem(Item item) throws SQLException {
         String query = "INSERT INTO items (name, price, quantity, inventory_id) VALUES (?, ?, ?, ?)";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -29,7 +29,7 @@ public class ItemDAO {
             ps.setInt(4, item.getInventoryId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -38,7 +38,7 @@ public class ItemDAO {
      * @param id
      * @return Item
      */
-    public Item findItemById(int id) {
+    public Item findItemById(int id) throws SQLException {
         String query = "SELECT * FROM items WHERE id = ?";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -54,7 +54,7 @@ public class ItemDAO {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return null;
     }
@@ -63,7 +63,7 @@ public class ItemDAO {
      * Mettre à jour un item
      * @param item
      */
-    public void updateItem(Item item) {
+    public void updateItem(Item item) throws SQLException {
         String query = "UPDATE items SET name = ?, price = ?, quantity = ?, inventory_id = ? WHERE id = ?";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -74,7 +74,7 @@ public class ItemDAO {
             ps.setInt(5, item.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -82,18 +82,18 @@ public class ItemDAO {
      * Supprimer un item par son id
      * @param id
      */
-    public void deleteItem(int id) {
+    public void deleteItem(int id) throws SQLException {
         String query = "DELETE FROM items WHERE id = ?";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
-    public List<Item> listAllItems() {
+    public List<Item> listAllItems() throws SQLException {
         List<Item> items = new ArrayList<>();
         String query = "SELECT * FROM items";
         try (Connection conn = db.getConnectionDb();
@@ -109,7 +109,7 @@ public class ItemDAO {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return items;
     }

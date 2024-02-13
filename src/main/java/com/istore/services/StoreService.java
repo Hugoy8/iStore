@@ -3,6 +3,7 @@ package com.istore.services;
 import com.istore.dao.StoreDAO;
 import com.istore.models.Store;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StoreService {
@@ -17,7 +18,7 @@ public class StoreService {
      * Crée un nouveau magasin.
      * @param store Le magasin à créer.
      */
-    public void createStore(Store store) {
+    public void createStore(Store store) throws SQLException {
         storeDAO.createStore(store);
     }
 
@@ -25,7 +26,7 @@ public class StoreService {
      * Supprime un magasin.
      * @param storeId L'identifiant du magasin à supprimer.
      */
-    public void deleteStore(int storeId) {
+    public void deleteStore(int storeId) throws SQLException {
         storeDAO.deleteStore(storeId);
     }
 
@@ -33,7 +34,7 @@ public class StoreService {
      * Liste tous les magasins.
      * @return La liste de tous les magasins.
      */
-    public List<Store> listAllStores() {
+    public List<Store> listAllStores() throws SQLException {
         return storeDAO.listAllStores();
     }
 }

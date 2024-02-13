@@ -8,4 +8,18 @@
     -fx-padding: 64px;
     -fx-background-color: #fff;
     -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 19, 0.0, 0, 16);
+}
+
+.buttonSubmit{
+    -fx-text-fill: white;
+    -fx-background-color: #007AFF;
+}
+.buttonSubmit:hover{
+    -fx-background-color: #CBE4FF;
+    -fx-text-fill: #007AFF;
+}
+
+.buttonSwitch:hover{
+    -fx-underline: true;
 }

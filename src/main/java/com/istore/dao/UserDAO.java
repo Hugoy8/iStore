@@ -20,10 +20,11 @@ public class UserDAO {
      * @param email
      * @return User
      */
-    public User findUserByEmail(String email) {
+    public User findUserByEmail(String email) throws SQLException {
         String query = "SELECT * FROM users WHERE email = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -36,7 +37,7 @@ public class UserDAO {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return null;
     }
@@ -45,17 +46,18 @@ public class UserDAO {
      * Créer un utilisateur
      * @param user
      */
-    public void createUser(User user) {
+    public void createUser(User user) throws SQLException {
         String query = "INSERT INTO users (email, pseudo, password_hash, role) VALUES (?, ?, ?, ?)";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPseudo());
             ps.setString(3, user.getPasswordHash());
             ps.setString(4, user.getRole());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -63,10 +65,11 @@ public class UserDAO {
      * Mettre à jour un utilisateur complet
      * @param user
      */
-    public void updateUser(User user) {
+    public void updateUser(User user) throws SQLException {
         String query = "UPDATE users SET email = ?, pseudo = ?, password_hash = ?, role = ? WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPseudo());
             ps.setString(3, user.getPasswordHash());
@@ -74,22 +77,24 @@ public class UserDAO {
             ps.setInt(5, user.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
     /**
      * Supprimer un utilisateur par son id
-     * @param userId
+     * @param userDeleteId
+     * @param userAction L'utilisateur qui effectue l'action
      */
-    public void deleteUser(int userId) {
+    public void deleteUser(int userDeleteId, User userAction) throws SQLException {
         String query = "DELETE FROM users WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, userId);
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, userDeleteId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -97,12 +102,13 @@ public class UserDAO {
      * Récupérer la liste de tous les utilisateurs
      * @return List<User>
      */
-    public List<User> listAllUsers() {
+    public List<User> listAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
-        try (Connection conn = db.getConnectionDb();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try {
+            Connection connection = this.db.getConnectionDb();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 users.add(new User(
                         rs.getInt("id"),
@@ -113,8 +119,75 @@ public class UserDAO {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return users;
+    }
+
+
+    /**
+     * Permet de vérifier si un pseudo est déjà utilisé
+     * @param pseudo Le pseudo à vérifier
+     * @return Retourne True si le pseudo est libre sinon False.
+     */
+    public boolean checkPseudo(String pseudo) throws SQLException {
+        String query = "SELECT * FROM users WHERE pseudo = ?";
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, pseudo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+
+        return true;
+    }
+
+    /**
+     * Permet de vérifier si un email est déjà utilisé
+     * @param email L'email à vérifier
+     * @return Retourne True si le pseudo est libre sinon False.
+     */
+    public boolean checkEmail(String email) throws SQLException {
+        String query = "SELECT * FROM users WHERE email = ?";
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+
+        return true;
+    }
+
+    /**
+     * Permet de vérifier si un email est sur la white list
+     * @param email L'email à vérifier
+     * @return Retourne True si l'email est sur la white list sinon False.
+     */
+    public boolean checkWhiteList(String email) throws SQLException {
+        String query = "SELECT * FROM whitelist_emails WHERE email = ?";
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+
+        return false;
     }
 }
