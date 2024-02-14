@@ -23,3 +23,34 @@
 .buttonSwitch:hover{
     -fx-underline: true;
 }
+
+.poupCard {
+    -fx-min-width: 555px;
+    -fx-max-width: 555px;
+    -fx-display: flex;
+    -fx-flex-direction: column;
+    -fx-justify-content: center;
+    -fx-align-items: center;
+    -fx-padding: 64px;
+    -fx-background-color: #fff;
+}
+
+/* Style général pour les champs d'entrée */
+.text-field, .password-field, .combo-box-base {
+    -fx-border-color: #DDD;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-padding: 12px;
+    -fx-background-color: transparent;
+    -fx-font-family: 'SF Pro Text Regular';
+    -fx-font-size: 16px;
+}
+
+/* Spécifique à la ComboBox pour ajuster l'affichage du texte et de la flèche */
+.combo-box-base .text-field, .combo-box-base .arrow-button {
+    -fx-text-fill: #666; /* Ajustez la couleur du texte si nécessaire */
+}
+
+.combo-box .arrow {
+    -fx-background-color: #666; /* Couleur de la flèche pour correspondre au texte */
+}

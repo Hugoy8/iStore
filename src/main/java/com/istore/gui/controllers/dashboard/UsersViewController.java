@@ -6,18 +6,19 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.paint.Color;
-import javafx.util.Pair;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class UsersViewController {
 
@@ -97,61 +98,26 @@ public class UsersViewController {
                 usersTable.setItems(users);
             } catch (Exception e) {
                 e.printStackTrace();
-                // Gérer l'exception, par exemple, afficher un message d'erreur à l'utilisateur
             }
         });
     }
 
 
-    public void showCreateUserDialog() {
-        // Crée le dialogue
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Créer un Utilisateur");
 
-        // Boutons
-        ButtonType createButtonType = new ButtonType("Créer", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
-
-        // Crée le formulaire
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-
-        TextField pseudo = new TextField();
-        pseudo.setPromptText("Pseudo");
-        TextField email = new TextField();
-        email.setPromptText("Email");
-        PasswordField password = new PasswordField();
-        password.setPromptText("Mot de passe");
-        PasswordField confirmPassword = new PasswordField();
-        confirmPassword.setPromptText("Confirmer mot de passe");
-        ComboBox<String> role = new ComboBox<>();
-        role.getItems().addAll("Administrateur", "Utilisateur");
-
-        grid.add(new Label("Pseudo:"), 0, 0);
-        grid.add(pseudo, 1, 0);
-        grid.add(new Label("Email:"), 0, 1);
-        grid.add(email, 1, 1);
-        grid.add(new Label("Mot de passe:"), 0, 2);
-        grid.add(password, 1, 2);
-        grid.add(new Label("Confirmer mot de passe:"), 0, 3);
-        grid.add(confirmPassword, 1, 3);
-        grid.add(new Label("Rôle:"), 0, 4);
-        grid.add(role, 1, 4);
-
-        dialog.getDialogPane().setContent(grid);
-
-        // Request focus sur le pseudo par défaut
-        Platform.runLater(pseudo::requestFocus);
-
-        dialog.showAndWait();
-    }
-
-    // Méthode pour gérer la création d'un utilisateur (si nécessaire)
     @FXML
-    private void handleCreateUser() {
-        showCreateUserDialog();
+    private void showCreateUserPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/create-user.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Créer un Utilisateur");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
