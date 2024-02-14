@@ -1,6 +1,7 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.models.User;
+import com.istore.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,18 +34,21 @@ public class UsersViewController {
     @FXML
     private TableColumn<User, Void> actionsColumn;
 
+    @FXML
     public void initialize() {
-        // Configuration des colonnes
+        setupTableColumns();
+        loadUsersIntoTable();
+    }
+
+    private void setupTableColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         pseudoColumn.setCellValueFactory(new PropertyValueFactory<>("pseudo"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        // Configuration de la colonne des actions
-// Configuration de la colonne des actions
-        actionsColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button editBtn = new Button();
-            private final Button deleteBtn = new Button();
+        actionsColumn.setCellFactory(param -> new TableCell<User, Void>() {
+            private final Button editBtn = new Button("");
+            private final Button deleteBtn = new Button("");
 
             {
                 // Crée l'icône de modification
@@ -66,12 +70,10 @@ public class UsersViewController {
                 editBtn.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
                     System.out.println("Edit: " + user.getId());
-                    // Ajoute ici la logique pour éditer l'utilisateur
                 });
                 deleteBtn.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
                     System.out.println("Delete: " + user.getId());
-                    // Ajoute ici la logique pour supprimer l'utilisateur
                 });
             }
 
@@ -81,31 +83,25 @@ public class UsersViewController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox hbox = new HBox(5, editBtn, deleteBtn); // Ajuste l'espacement selon tes besoins
+                    HBox hbox = new HBox(10, editBtn, deleteBtn);
                     setGraphic(hbox);
                 }
             }
         });
-
-        // Exemple de données, remplace cela par la récupération réelle de tes données
-        ObservableList<User> users = FXCollections.observableArrayList(
-                new User(1, "email1@example.com", "Pseudo1", "hash1", "Rôle1"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2"),
-                new User(2, "email2@example.com", "Pseudo2", "hash2", "Rôle2")
-                // Continuer à ajouter des utilisateurs
-        );
-
-        usersTable.setItems(users);
     }
+
+    private void loadUsersIntoTable() {
+        Platform.runLater(() -> {
+            try {
+                ObservableList<User> users = FXCollections.observableArrayList(Application.getUserService().listAllUsers());
+                usersTable.setItems(users);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Gérer l'exception, par exemple, afficher un message d'erreur à l'utilisateur
+            }
+        });
+    }
+
 
     public void showCreateUserDialog() {
         // Crée le dialogue
