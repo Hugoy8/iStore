@@ -110,6 +110,21 @@ public class UserDAO {
 
     /**
      * Supprimer un utilisateur par son id
+     * @param userId
+     */
+    public void deleteUserById(int userId) throws SQLException {
+        String query = "DELETE FROM users WHERE id = ?";
+        try (Connection connection = this.db.getConnectionDb();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    /**
+     * Supprimer un utilisateur par son id
      * @param userDeleteId
      * @param userAction L'utilisateur qui effectue l'action
      */

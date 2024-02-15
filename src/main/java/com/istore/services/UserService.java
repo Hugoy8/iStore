@@ -40,6 +40,14 @@ public class UserService {
     }
 
     /**
+     * Supprime un utilisateur par son identifiant.
+     * @param userId L'identifiant de l'utilisateur à supprimer.
+     */
+    public void deleteUserById(int userId) throws SQLException {
+        userDAO.deleteUserById(userId);
+    }
+
+    /**
      * Supprime un utilisateur.
      * @param userDeleteId L'identifiant de l'utilisateur à supprimer.
      * @param userAction L'utilisateur qui effectue l'action.

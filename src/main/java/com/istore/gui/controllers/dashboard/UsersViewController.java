@@ -1,6 +1,7 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.gui.controllers.dashboard.popup.EditUserPopupController;
+import com.istore.gui.controllers.dashboard.popup.DeleteUserConfirmController;
 import com.istore.models.User;
 import com.istore.Application;
 import javafx.application.Platform;
@@ -20,6 +21,9 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class UsersViewController {
 
@@ -76,7 +80,7 @@ public class UsersViewController {
 
                 deleteBtn.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
-                    System.out.println("Delete: " + user.getId());
+                    showDeleteUserConfirmPopup(user);
                 });
             }
 
@@ -143,6 +147,34 @@ public class UsersViewController {
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void showDeleteUserConfirmPopup(User userToDelete) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/delete-user-confirm.fxml"));
+            Parent root = loader.load();
+
+            DeleteUserConfirmController controller = loader.getController();
+            controller.setOnConfirm(() -> deleteUserById(userToDelete.getId()));
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Confirmer la suppression");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteUserById(int userId) {
+        try {
+            Application.getUserService().deleteUserById(userId);
+            refreshTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Afficher une erreur à l'utilisateur
         }
     }
 
