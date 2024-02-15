@@ -1,5 +1,6 @@
 package com.istore.gui.controllers.dashboard;
 
+import com.istore.gui.controllers.dashboard.popup.EditUserPopupController;
 import com.istore.models.User;
 import com.istore.Application;
 import javafx.application.Platform;
@@ -70,8 +71,9 @@ public class UsersViewController {
 
                 editBtn.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
-                    System.out.println("Edit: " + user.getId());
+                    showEditUserPopup(user);
                 });
+
                 deleteBtn.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
                     System.out.println("Delete: " + user.getId());
@@ -89,6 +91,10 @@ public class UsersViewController {
                 }
             }
         });
+    }
+
+    public void refreshTable() {
+        loadUsersIntoTable();
     }
 
     private void loadUsersIntoTable() {
@@ -114,10 +120,31 @@ public class UsersViewController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Créer un Utilisateur");
             stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refreshTable());
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void showEditUserPopup(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/edit-user.fxml"));
+            Parent root = loader.load();
+
+            EditUserPopupController controller = loader.getController();
+            controller.initUserData(user); // Méthode pour initialiser les données de l'utilisateur dans la popup
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Éditer un Utilisateur");
+            stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refreshTable());
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

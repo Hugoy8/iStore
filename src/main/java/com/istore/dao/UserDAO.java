@@ -43,6 +43,33 @@ public class UserDAO {
     }
 
     /**
+     * Retrouver un utilisateur par son id
+     * @param id
+     * @return User
+     */
+    public User findUserById(int id) throws SQLException {
+        String query = "SELECT * FROM users WHERE id = ?";
+        try (Connection connection = this.db.getConnectionDb();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new User(
+                            rs.getInt("id"),
+                            rs.getString("email"),
+                            rs.getString("pseudo"),
+                            rs.getString("password_hash"),
+                            rs.getString("role")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return null;
+    }
+
+    /**
      * Créer un utilisateur
      * @param user
      */

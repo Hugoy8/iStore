@@ -66,6 +66,35 @@ public class AuthService {
         return "Utilisateur enregistré avec succès.";
     }
 
+    /**
+     * Met à jour le mot de passe d'un utilisateur.
+     * @param userId L'identifiant de l'utilisateur.
+     * @param newPassword Le nouveau mot de passe de l'utilisateur.
+     * @return Un message indiquant si la mise à jour a réussi ou non.
+     */
+    public String updateUserPassword(int userId, String newPassword) throws SQLException {
+        // Hasher le nouveau mot de passe
+        String hashedPassword = HashUtil.hashPassword(newPassword);
+        if (hashedPassword == null) {
+            return "Erreur lors du hashage du mot de passe. Veuillez réessayer plus tard.";
+        }
+
+        // Récupérer l'utilisateur par son ID
+        User user = userDAO.findUserById(userId);
+        if (user == null) {
+            return "Utilisateur introuvable.";
+        }
+
+        // Mettre à jour le mot de passe hashé de l'utilisateur
+        user.setPasswordHash(hashedPassword);
+        try {
+            userDAO.updateUser(user);
+            return "Mot de passe mis à jour avec succès.";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Erreur lors de la mise à jour du mot de passe. Veuillez réessayer plus tard.";
+        }
+    }
     public User getUser() throws IOException {
         if (user == null){
             AppLauncher.showLoginView();
