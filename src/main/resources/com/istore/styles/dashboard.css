@@ -92,6 +92,7 @@
 .buttonSubmit{
     -fx-text-fill: white;
     -fx-background-color: #007AFF;
+    -fx-padding: 12px 16px;
 }
 .buttonSubmit:hover{
     -fx-background-color: #CBE4FF;

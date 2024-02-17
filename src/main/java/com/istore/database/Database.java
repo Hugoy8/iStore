@@ -13,7 +13,6 @@ public class Database {
                 this.connectToDb();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Erreur lors de la vérification de l'état de la connexion à la base de données.");
         }
         return this.connectionDb;
@@ -28,13 +27,14 @@ public class Database {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connectionDb = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Erreur pendant la connexion à la base de donnée.");
             System.exit(0);
         }
     }
 
-    // Ajoutez une méthode pour fermer la connexion si nécessaire
+    /**
+     * Ajoutez une méthode pour fermer la connexion si nécessaire
+     */
     public void closeConnection() {
         if (this.connectionDb != null) {
             try {

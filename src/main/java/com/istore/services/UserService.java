@@ -78,7 +78,6 @@ public class UserService {
 
     /**
      * Ajoute une adresse e-mail à la whitelist.
-     *
      * @param email L'adresse e-mail à ajouter.
      * @throws SQLException Si l'ajout échoue en raison d'une contrainte de base de données ou d'une autre erreur SQL.
      */

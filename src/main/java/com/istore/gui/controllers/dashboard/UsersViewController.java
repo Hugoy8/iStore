@@ -1,6 +1,5 @@
 package com.istore.gui.controllers.dashboard;
 
-import com.istore.gui.AppLauncher;
 import com.istore.gui.controllers.dashboard.popup.EditUserPopupController;
 import com.istore.gui.controllers.dashboard.popup.DeleteUserConfirmController;
 import com.istore.models.User;
@@ -25,7 +24,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class UsersViewController {
 

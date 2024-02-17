@@ -10,26 +10,33 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="824.0" prefWidth="1200.0" stylesheets="@../../styles/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.StoresViewController">
-    <VBox prefHeight="579.0" prefWidth="1057.0" spacing="48.0" style="-fx-padding: 32px;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="0">
-        <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="902.0" spacing="458.0">
+<?import javafx.scene.Cursor?>
+<AnchorPane prefHeight="824.0" prefWidth="1170.0" stylesheets="@../../styles/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.StoresViewController">
+    <VBox spacing="48.0" style="-fx-padding: 32px;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="0">
+        <HBox alignment="CENTER_LEFT" spacing="428.0">
             <VBox spacing="4">
                 <Text text="Magasins">
                     <font>
                         <Font name="SF Pro Text Bold" size="32.0" />
-                    </font></Text>
+                    </font>
+                </Text>
                 <Text text="Gestion des magasins (création, lecture, suppression).  ">
                     <font>
                         <Font name="SF Pro Text Regular" size="20.0" />
-                    </font></Text>
+                    </font>
+                </Text>
             </VBox>
-            <Button onAction="#showCreateStore" style="-fx-background-color: #007AFF; -fx-background-radius: 8px; -fx-cursor: pointer;" text="Créer un magasin" textFill="WHITE">
-                <padding>
-                    <Insets bottom="12.0" left="16.0" right="16.0" top="12.0" />
-                </padding>
+            <Button onAction="#showCreateStore" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Créer un magasin">
                 <font>
-                    <Font name="SF Pro Text Semibold" size="16.0" />
-                </font></Button>
+                    <Font name="SF Pro Display Semibold" size="18.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </Button>
         </HBox>
         <TableView fx:id="storesTable" prefHeight="646.0">
             <columnResizePolicy>
