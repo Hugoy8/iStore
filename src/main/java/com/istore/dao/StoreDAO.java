@@ -5,6 +5,7 @@ import com.istore.models.Store;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class StoreDAO {
@@ -42,13 +43,14 @@ public class StoreDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                List<String> employees = new ArrayList<>();
                 return new Store(
                         rs.getInt("id"),
-                        rs.getString("name")
+                        rs.getString("name"),
+                        rs.getString("location"),
+                        employees
                 );
             }
-        } catch (SQLException e) {
-            throw e;
         }
         return null;
     }
@@ -88,21 +90,27 @@ public class StoreDAO {
      * Retrouver tous les magasins disponibles
      * @return List<Store>
      */
-    public List<Store> listAllStores() throws SQLException {
+    public List<Store> listAllStoresWithEmployees() throws SQLException {
         List<Store> stores = new ArrayList<>();
-        String query = "SELECT * FROM stores";
+        String query = "SELECT s.id, s.name, s.location, GROUP_CONCAT(u.pseudo SEPARATOR ', ') AS employees " +
+                "FROM stores s " +
+                "LEFT JOIN store_employees se ON s.id = se.store_id " +
+                "LEFT JOIN users u ON se.user_id = u.id " +
+                "GROUP BY s.id";
         try (Connection conn = db.getConnectionDb();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                stores.add(new Store(
+                Store store = new Store(
                         rs.getInt("id"),
-                        rs.getString("name")
-                ));
+                        rs.getString("name"),
+                        rs.getString("location"),
+                        rs.getString("employees") != null ? List.of(rs.getString("employees").split(", ")) : List.of()
+                );
+                stores.add(store);
             }
-        } catch (SQLException e) {
-            throw e;
         }
         return stores;
     }
 }
+

@@ -34,7 +34,7 @@ public class StoreService {
      * Liste tous les magasins.
      * @return La liste de tous les magasins.
      */
-    public List<Store> listAllStores() throws SQLException {
-        return storeDAO.listAllStores();
+    public List<Store> listAllStoresWithEmployees() throws SQLException {
+        return storeDAO.listAllStoresWithEmployees();
     }
 }
