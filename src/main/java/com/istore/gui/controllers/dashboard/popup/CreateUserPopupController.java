@@ -37,13 +37,22 @@ public class CreateUserPopupController {
             return;
         }
 
-        User user = new User(0, email, pseudo, password, role);
+        String hashedPassword = com.istore.utils.HashUtil.hashPassword(password);
+        if (hashedPassword == null) {
+            errorText.setText("Erreur lors du hachage du mot de passe. Veuillez réessayer.");
+            errorBox.setVisible(true);
+            return;
+        }
+
+        User user = new User(0, email, pseudo, hashedPassword, role);
 
         try {
             Application.getUserService().createUser(user);
             closePopup();
         } catch (Exception e) {
             e.printStackTrace();
+            errorText.setText("Erreur lors de la création de l'utilisateur. Veuillez réessayer.");
+            errorBox.setVisible(true);
         }
     }
 

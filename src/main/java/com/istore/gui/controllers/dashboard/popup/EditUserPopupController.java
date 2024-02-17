@@ -1,9 +1,11 @@
 package com.istore.gui.controllers.dashboard.popup;
 
 import com.istore.models.User;
+import com.istore.services.AuthService;
 import com.istore.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -13,6 +15,8 @@ public class EditUserPopupController {
 
     @FXML private TextField pseudoField;
     @FXML private TextField emailField;
+    @FXML private PasswordField newPasswordField;
+    @FXML private PasswordField confirmPasswordField;
     @FXML private ComboBox<String> roleComboBox;
     @FXML private Text errorText;
     @FXML private HBox errorBox;
@@ -24,7 +28,6 @@ public class EditUserPopupController {
         pseudoField.setText(user.getPseudo());
         emailField.setText(user.getEmail());
         roleComboBox.setValue(user.getRole());
-        // Assurez-vous de ne pas pré-remplir les champs de mot de passe
     }
 
     @FXML
@@ -33,14 +36,30 @@ public class EditUserPopupController {
         String pseudo = pseudoField.getText();
         String email = emailField.getText();
         String role = roleComboBox.getValue();
+        String newPassword = newPasswordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
+
+        AuthService authService = Application.getAuthService();
 
         currentUser.setPseudo(pseudo);
         currentUser.setEmail(email);
-        // Ne mettez pas à jour le mot de passe ici
         currentUser.setRole(role);
 
         try {
-            // Mise à jour des informations de l'utilisateur sans mot de passe
+            if (!newPassword.isEmpty() && !confirmPassword.isEmpty()) {
+                if (!newPassword.equals(confirmPassword)) {
+                    errorText.setText("Les mots de passe ne correspondent pas.");
+                    errorBox.setVisible(true);
+                    return;
+                }
+                String updatePasswordResult = authService.updateUserPassword(currentUser.getId(), newPassword);
+                if (!updatePasswordResult.equals("Mot de passe mis à jour avec succès.")) {
+                    errorText.setText(updatePasswordResult);
+                    errorBox.setVisible(true);
+                    return;
+                }
+            }
+
             Application.getUserService().updateUser(currentUser);
             closePopup();
         } catch (Exception e) {
