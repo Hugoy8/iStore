@@ -1,6 +1,7 @@
 package com.istore.services;
 
 import com.istore.dao.UserDAO;
+import com.istore.dao.WhitelistEmailDAO;
 import com.istore.models.User;
 
 import java.sql.SQLException;
@@ -9,9 +10,11 @@ import java.util.List;
 public class UserService {
 
     private UserDAO userDAO;
+    private WhitelistEmailDAO whitelistEmailDAO;
 
-    public UserService(UserDAO userDAO) {
+    public UserService(UserDAO userDAO, WhitelistEmailDAO whitelistEmailDAO) {
         this.userDAO = userDAO;
+        this.whitelistEmailDAO = whitelistEmailDAO;
     }
 
     /**
@@ -71,5 +74,15 @@ public class UserService {
      */
     public boolean checkAdmin(User user){
         return user.getRole().equals("admin");
+    }
+
+    /**
+     * Ajoute une adresse e-mail à la whitelist.
+     *
+     * @param email L'adresse e-mail à ajouter.
+     * @throws SQLException Si l'ajout échoue en raison d'une contrainte de base de données ou d'une autre erreur SQL.
+     */
+    public void addEmailToWhitelist(String email) throws SQLException {
+        whitelistEmailDAO.addEmailToWhitelist(email);
     }
 }

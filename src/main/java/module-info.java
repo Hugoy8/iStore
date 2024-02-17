@@ -10,6 +10,7 @@ module com.istore {
     exports com.istore.models;
     opens com.istore to javafx.fxml;
     exports com.istore;
+    exports com.istore.dao;
     exports com.istore.services;
     exports com.istore.gui;
     opens com.istore.gui to javafx.fxml;

@@ -89,3 +89,15 @@
     -fx-cursor: hand;
 }
 
+.buttonSubmit{
+    -fx-text-fill: white;
+    -fx-background-color: #007AFF;
+}
+.buttonSubmit:hover{
+    -fx-background-color: #CBE4FF;
+    -fx-text-fill: #007AFF;
+}
+
+.text-field-custom {
+    -fx-pref-width: 300px;
+}

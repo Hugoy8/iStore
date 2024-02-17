@@ -3,6 +3,7 @@ package com.istore;
 import com.istore.dao.InventoryDAO;
 import com.istore.dao.StoreDAO;
 import com.istore.dao.UserDAO;
+import com.istore.dao.WhitelistEmailDAO;
 import com.istore.database.Database;
 import com.istore.gui.AppLauncher;
 import com.istore.services.AuthService;
@@ -18,7 +19,7 @@ public class Application {
 
     private static final StoreService storeService = new StoreService(new StoreDAO(getDatabase()));
 
-    private static final UserService userService = new UserService(new UserDAO(getDatabase()));
+    private static final UserService userService = new UserService(new UserDAO(getDatabase()), new WhitelistEmailDAO(getDatabase()));
 
     public static void main(String[] args) {
         AppLauncher.main(args);
