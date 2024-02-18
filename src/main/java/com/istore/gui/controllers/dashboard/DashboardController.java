@@ -3,11 +3,13 @@ package com.istore.gui.controllers.dashboard;
 import com.istore.gui.AppLauncher;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import com.istore.gui.controllers.dashboard.stores.StoreDetailsViewController;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -43,10 +45,49 @@ public class DashboardController {
      * Charge la vue des magasins.
      */
     @FXML
-    private void loadStoresView() {
-        loadView("/com/istore/views/dashboard/stores-view.fxml", btnStores);
-        AppLauncher.setTitle("Magasins");
+    public void loadStoresView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/stores-view.fxml"));
+            Parent storesView = loader.load();
+
+            StoresViewController storesViewController = loader.getController();
+            storesViewController.setDashboardController(this);
+
+            contentArea.getChildren().setAll(storesView);
+
+            highlightActiveButton(btnStores);
+            AppLauncher.setTitle("Magasins");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    @FXML
+    public void loadStoreDetailsView() {
+        try {
+            // Chemin vers le fichier FXML pour la vue de détails du magasin
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/stores/store-details-view.fxml"));
+            Parent detailView = loader.load();
+
+            // Obtention du contrôleur pour la vue de détails du magasin
+            StoreDetailsViewController controller = loader.getController();
+
+            // Passage de la référence DashboardController au contrôleur de détails du magasin
+            controller.setDashboardController(this);
+
+            // Mise à jour de la zone de contenu avec la vue de détails du magasin
+            contentArea.getChildren().setAll(detailView);
+
+            // Mettre en surbrillance le bouton des magasins comme actif
+            highlightActiveButton(btnStores);
+
+            // Mise à jour du titre de la fenêtre
+            AppLauncher.setTitle("Détails du Magasin");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Charge la vue de gestion.

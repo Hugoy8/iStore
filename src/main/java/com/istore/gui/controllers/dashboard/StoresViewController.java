@@ -1,8 +1,8 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.Application;
+import com.istore.gui.AppLauncher;
 import com.istore.models.Store;
-import com.istore.models.User;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -15,7 +15,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import com.istore.gui.controllers.dashboard.DashboardController;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class StoresViewController {
@@ -32,6 +34,12 @@ public class StoresViewController {
     private TableColumn<Store, String> employeesColumn;
     @FXML
     private TableColumn<Store, Void> actionsColumn;
+
+    private DashboardController dashboardController;
+
+    public void setDashboardController(DashboardController controller) {
+        this.dashboardController = controller;
+    }
 
     public void initialize() {
         setupTableColumns();
@@ -79,6 +87,7 @@ public class StoresViewController {
 
                 viewBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
+                    dashboardController.loadStoreDetailsView();
                 });
                 editBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());

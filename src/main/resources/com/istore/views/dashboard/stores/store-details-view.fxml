@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="824.0" prefWidth="1170.0" stylesheets="@../../../styles/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.stores.StoreDetailsViewController">
+    <VBox spacing="48.0" style="-fx-padding: 32px;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="0">
+        <HBox alignment="CENTER_LEFT" spacing="592.0">
+            <VBox spacing="16.0">
+                <Button onAction="#showStoresView"  style="-fx-background-color: #F9F9F9;" styleClass="buttonReturn" text="Retour" textFill="#007aff">
+                    <graphic>
+                        <HBox alignment="CENTER_LEFT">
+                            <SVGPath content="M7.5 9L4.5 6L7.5 3" fill="#007AFF" />
+                        </HBox>
+                    </graphic>
+                    <font>
+                        <Font name="SF Pro Text Medium" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <VBox spacing="8.0">
+                    <Text text="Magasins / Magasin - Apple Store Lille">
+                        <font>
+                            <Font name="SF Pro Text Regular" size="20.0" />
+                        </font>
+                    </Text>
+                    <Text text="Apple Store Lille">
+                        <font>
+                            <Font name="SF Pro Text Bold" size="32.0" />
+                        </font>
+                    </Text>
+                </VBox>
+            </VBox>
+
+            <Button style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Créer un magasin">
+                <font>
+                    <Font name="SF Pro Display Semibold" size="18.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </Button>
+        </HBox>
+        <TableView fx:id="inventoryTable" prefHeight="646.0">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+            <columns>
+                <TableColumn fx:id="idColumn" styleClass="columnHeader" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="200.0" styleClass="columnHeader" text="Nom" />
+                <TableColumn fx:id="priceColumn" prefWidth="300.0" styleClass="columnHeader" text="Prix" />
+                <TableColumn fx:id="stockColumn" prefWidth="140.0" styleClass="columnHeader" text="Stock" />
+                <TableColumn fx:id="actionsColumn" prefWidth="100.0" styleClass="columnHeader" text="Actions" />
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>
