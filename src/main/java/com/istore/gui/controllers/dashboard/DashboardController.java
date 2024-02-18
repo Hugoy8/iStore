@@ -24,7 +24,6 @@ public class DashboardController {
     @FXML
     private AnchorPane contentArea;
 
-    // Boutons de navigation
     @FXML private Button btnUsers, btnStores, btnManagement, btnSettings;
 
     @FXML
@@ -65,23 +64,15 @@ public class DashboardController {
     @FXML
     public void loadStoreDetailsView() {
         try {
-            // Chemin vers le fichier FXML pour la vue de détails du magasin
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/stores/store-details-view.fxml"));
             Parent detailView = loader.load();
 
-            // Obtention du contrôleur pour la vue de détails du magasin
             StoreDetailsViewController controller = loader.getController();
-
-            // Passage de la référence DashboardController au contrôleur de détails du magasin
             controller.setDashboardController(this);
 
-            // Mise à jour de la zone de contenu avec la vue de détails du magasin
             contentArea.getChildren().setAll(detailView);
 
-            // Mettre en surbrillance le bouton des magasins comme actif
             highlightActiveButton(btnStores);
-
-            // Mise à jour du titre de la fenêtre
             AppLauncher.setTitle("Détails du Magasin");
         } catch (IOException e) {
             e.printStackTrace();
