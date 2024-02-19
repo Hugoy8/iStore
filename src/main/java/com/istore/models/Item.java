@@ -4,22 +4,22 @@ public class Item {
     private int id;
     private String name;
     private double price;
-    private int quantity;
+    private int stock;
     private int inventoryId;
 
     // Constructeur
-    public Item(int id, String name, double price, int quantity, int inventoryId) {
+    public Item(int id, String name, double price, int stock, int inventoryId) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
+        this.stock = stock;
         this.inventoryId = inventoryId;
     }
 
-    public Item(String name, double price, int quantity, int inventoryId) {
+    public Item(String name, double price, int stock, int inventoryId) {
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
+        this.stock = stock;
         this.inventoryId = inventoryId;
     }
 
@@ -48,12 +48,12 @@ public class Item {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public int getInventoryId() {

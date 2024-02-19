@@ -21,12 +21,12 @@ public class ItemDAO {
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void createItem(Item item) throws SQLException {
-        String query = "INSERT INTO items (name, price, quantity, inventory_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO items (name, price, stock, inventory_id) VALUES (?, ?, ?, ?)";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
-            ps.setInt(3, item.getQuantity());
+            ps.setInt(3, item.getStock());
             ps.setInt(4, item.getInventoryId());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -51,12 +51,10 @@ public class ItemDAO {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getInt("quantity"),
+                        rs.getInt("stock"),
                         rs.getInt("inventory_id")
                 );
             }
-        } catch (SQLException e) {
-            throw e;
         }
         return null;
     }
@@ -67,12 +65,12 @@ public class ItemDAO {
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void updateItem(Item item) throws SQLException {
-        String query = "UPDATE items SET name = ?, price = ?, quantity = ?, inventory_id = ? WHERE id = ?";
+        String query = "UPDATE items SET name = ?, price = ?, stock = ?, inventory_id = ? WHERE id = ?";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
-            ps.setInt(3, item.getQuantity());
+            ps.setInt(3, item.getStock());
             ps.setInt(4, item.getInventoryId());
             ps.setInt(5, item.getId());
             ps.executeUpdate();
@@ -98,27 +96,27 @@ public class ItemDAO {
     }
 
     /**
-     * Retrouver tous les items
-     * @return Liste des items
+     * Retrouver des items par leur id de magasin
+     * @param storeId ID du magasin
+     * @return items Liste des items
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
-    public List<Item> listAllItems() throws SQLException {
+    public List<Item> findItemsByStoreId(int storeId) throws SQLException {
         List<Item> items = new ArrayList<>();
-        String query = "SELECT * FROM items";
+        String query = "SELECT * FROM items WHERE inventory_id IN (SELECT id FROM inventories WHERE store_id = ?)";
         try (Connection conn = db.getConnectionDb();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, storeId);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 items.add(new Item(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getInt("quantity"),
+                        rs.getInt("stock"),
                         rs.getInt("inventory_id")
                 ));
             }
-        } catch (SQLException e) {
-            throw e;
         }
         return items;
     }

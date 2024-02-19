@@ -30,4 +30,11 @@ public class InventoryService {
     public void deleteInventory(int storeId) throws SQLException {
         inventoryDAO.deleteInventoryByStoreId(storeId);
     }
+
+    /**
+     * Retrouve l'inventaire d'un magasin par son ID.
+     */
+    public Inventory findInventoryByStoreId(int storeId) throws SQLException {
+        return inventoryDAO.findInventoryByStoreId(storeId);
+    }
 }

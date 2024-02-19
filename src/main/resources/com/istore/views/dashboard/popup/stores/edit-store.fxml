@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.SVGPath?>
-<VBox alignment="CENTER" spacing="10" stylesheets="@../../../styles/auth.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.stores.CreateStorePopupController">
+<?import java.lang.String?>
+<VBox alignment="CENTER" spacing="10" stylesheets="@../../../../styles/auth.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.stores.EditStorePopupController">
     <VBox spacing="20" styleClass="poupCard">
         <VBox spacing="4">
-            <Text text="Créer un magasin">
+            <Text text="Éditer un magasin">
                 <font>
                     <Font name="SF Pro Display Semibold" size="32.0" />
                 </font>
             </Text>
-            <Text fill="#828282" text="Renseignez les informations de l'utilisateur à créer">
+            <Text fill="#828282" text="Modifiez les informations d'un magasin">
                 <font>
                     <Font name="SF Pro Text Regular" size="16.0" />
                 </font>
@@ -42,7 +44,7 @@
                 </TextField>
             </VBox>
             <VBox spacing="8">
-                <Label text="Localisation (ville)">
+                <Label text="Localisation">
                     <font>
                         <Font name="SF Pro Display Medium" size="16.0" />
                     </font>
@@ -66,19 +68,14 @@
             </HBox>
         </VBox>
         <VBox spacing="12">
-            <VBox spacing="8">
-                <Button onAction="#handleCreateStore" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Créer le magasin">
-                    <font>
-                        <Font name="SF Pro Display Semibold" size="18.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                </Button>
-            </VBox>
+            <Button onAction="#handleUpdateStore" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Mettre à jour le magasin">
+                <font>
+                    <Font name="SF Pro Display Semibold" size="18.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
         </VBox>
     </VBox>
 </VBox>

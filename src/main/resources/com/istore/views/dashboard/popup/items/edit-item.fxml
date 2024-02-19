@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.FXCollections?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.shape.SVGPath?>
-<?import java.lang.String?>
-<VBox alignment="CENTER" spacing="10" stylesheets="@../../../styles/auth.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.stores.EditStorePopupController">
+<VBox alignment="CENTER" spacing="10" stylesheets="@../../../../styles/auth.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.items.EditItemPopupController">
     <VBox spacing="20" styleClass="poupCard">
         <VBox spacing="4">
-            <Text text="Éditer un magasin">
+            <Text text="Éditer un objet">
                 <font>
                     <Font name="SF Pro Display Semibold" size="32.0" />
                 </font>
             </Text>
-            <Text fill="#828282" text="Modifiez les informations d'un magasin">
+            <Text fill="#828282" text="Modifiez les informations d'un objet">
                 <font>
                     <Font name="SF Pro Text Regular" size="16.0" />
                 </font>
@@ -44,12 +40,27 @@
                 </TextField>
             </VBox>
             <VBox spacing="8">
-                <Label text="Localisation">
+                <Label text="Prix">
                     <font>
                         <Font name="SF Pro Display Medium" size="16.0" />
                     </font>
                 </Label>
-                <TextField fx:id="locationField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
+                <TextField fx:id="priceField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
+                    <font>
+                        <Font name="SF Pro Text Regular" size="16.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT" />
+                    </cursor>
+                </TextField>
+            </VBox>
+            <VBox spacing="8">
+                <Label text="Stock">
+                    <font>
+                        <Font name="SF Pro Display Medium" size="16.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="stockField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
                     <font>
                         <Font name="SF Pro Text Regular" size="16.0" />
                     </font>
@@ -68,7 +79,7 @@
             </HBox>
         </VBox>
         <VBox spacing="12">
-            <Button onAction="#handleUpdateStore" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Mettre à jour le magasin">
+            <Button onAction="#handleUpdateItem" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Mettre à jour l'objet">
                 <font>
                     <Font name="SF Pro Display Semibold" size="18.0" />
                 </font>

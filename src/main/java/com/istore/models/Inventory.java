@@ -16,4 +16,5 @@ public class Inventory {
     public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
+
 }

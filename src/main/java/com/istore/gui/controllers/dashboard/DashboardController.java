@@ -98,18 +98,16 @@ public class DashboardController {
      * Charge la vue des détails du magasin.
      */
     @FXML
-    public void loadStoreDetailsView() {
+    public void loadStoreDetailsView(int storeId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/stores/store-details-view.fxml"));
             Parent detailView = loader.load();
 
             StoreDetailsViewController controller = loader.getController();
             controller.setDashboardController(this);
+            controller.loadStoreData(storeId); // Méthode à implémenter dans StoreDetailsViewController
 
             contentArea.getChildren().setAll(detailView);
-
-            highlightActiveButton(btnStores);
-            AppLauncher.setTitle("Détails du Magasin");
         } catch (IOException e) {
             e.printStackTrace();
         }

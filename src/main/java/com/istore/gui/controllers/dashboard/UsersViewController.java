@@ -48,8 +48,8 @@ public class UsersViewController {
      */
     @FXML
     public void initialize() {
-        setupTableColumns();
-        loadUsersIntoTable();
+        this.setupTableColumns();
+        this.loadUsersIntoTable();
     }
 
     /**
@@ -133,7 +133,7 @@ public class UsersViewController {
     @FXML
     private void showCreateUserPopup() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/create-user.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/create-user.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -153,7 +153,7 @@ public class UsersViewController {
      */
     private void showEditUserPopup(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/edit-user.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/edit-user.fxml"));
             Parent root = loader.load();
 
             EditUserPopupController controller = loader.getController();
@@ -176,7 +176,7 @@ public class UsersViewController {
      */
     private void showDeleteUserConfirmPopup(User userToDelete) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/delete-user-confirm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/delete-user-confirm.fxml"));
             Parent root = loader.load();
 
             DeleteUserConfirmController controller = loader.getController();

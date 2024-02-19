@@ -105,7 +105,7 @@ public class StoresViewController {
 
                 viewBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
-                    dashboardController.loadStoreDetailsView();
+                    dashboardController.loadStoreDetailsView(store.getId());
                 });
                 editBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
@@ -158,7 +158,7 @@ public class StoresViewController {
     @FXML
     private void showCreateStore() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/create-store.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/create-store.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -179,7 +179,7 @@ public class StoresViewController {
     @FXML
     private void showEditStorePopup(Store store) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/edit-store.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/edit-store.fxml"));
             Parent root = loader.load();
 
             EditStorePopupController controller = loader.getController();
@@ -203,7 +203,7 @@ public class StoresViewController {
     @FXML
     private void showDeleteStoreConfirmPopup(Store storeToDelete) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/delete-store-confirm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/delete-store-confirm.fxml"));
             Parent root = loader.load();
 
             DeleteStoreConfirmController controller = loader.getController();
