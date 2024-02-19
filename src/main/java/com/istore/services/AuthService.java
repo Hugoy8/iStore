@@ -24,6 +24,7 @@ public class AuthService {
      * @param email L'email de l'utilisateur.
      * @param password Le mot de passe de l'utilisateur.
      * @return Le User si les identifiants sont corrects, sinon null.
+     * @throws SQLException
      */
     public User login(String email, String password) throws SQLException {
         User user = userDAO.findUserByEmail(email);
@@ -38,6 +39,7 @@ public class AuthService {
      * Enregistre un nouvel utilisateur dans le système.
      * @param user L'utilisateur à enregistrer.
      * @return Un message d'erreur ou de succès lors de l'inscription.
+     * @throws SQLException
      */
     public String register(User user) throws SQLException {
         String result = this.verifyAllInformationUser(user);
@@ -65,6 +67,8 @@ public class AuthService {
     /**
      * Permet de vérifier si les informations de l'utilisateur sont correctes.
      * @param user L'utilisateur à vérifier.
+     * @return Un message d'erreur ou de succès lors de la vérification.
+     * @throws SQLException
      */
     public String verifyAllInformationUser(User user) throws SQLException {
         try {
@@ -90,6 +94,7 @@ public class AuthService {
      * @param userId L'identifiant de l'utilisateur.
      * @param newPassword Le nouveau mot de passe de l'utilisateur.
      * @return Un message indiquant si la mise à jour a réussi ou non.
+     * @throws SQLException
      */
     public String updateUserPassword(int userId, String newPassword) throws SQLException {
         // Hasher le nouveau mot de passe
@@ -118,8 +123,9 @@ public class AuthService {
      * Met à jour les informations d'un utilisateur.
      * @param oldUser L'utilisateur avec les informations actuelles en base de données.
      * @param newUser L'utilisateur avec les nouvelles informations.
+     * @return Un message indiquant si la mise à jour a réussi ou non.
      */
-    public String updateUser(User oldUser, User newUser) throws SQLException {
+    public String updateUser(User oldUser, User newUser) {
         try {
             // Vérification de l'unicité de l'email et du pseudo
             if (!Objects.equals(oldUser.getEmail(), newUser.getEmail())){
@@ -145,6 +151,8 @@ public class AuthService {
 
     /**
      * Récupère l'utilisateur connecté.
+     * @return L'utilisateur connecté.
+     * @throws IOException
      */
     public User getUser() throws IOException {
         if (user == null){
@@ -164,6 +172,8 @@ public class AuthService {
     /**
      * Permet de récupérer les informations en base de données.
      * Et de les attribuer à l'utilisateur.
+     * @throws SQLException
+     * @throws IOException
      */
     public void reloadUser() throws SQLException, IOException {
         User user = userDAO.findUserByEmail(this.getUser().getEmail());

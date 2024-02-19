@@ -18,8 +18,9 @@ public class InventoryDAO {
 
     /**
      * Retrouver un inventaire par son id de magasin
-     * @param storeId
+     * @param storeId ID du magasin
      * @return Inventory
+     * @throws SQLException
      */
     public Inventory findInventoryByStoreId(int storeId) throws SQLException {
         String query = "SELECT * FROM inventories WHERE store_id = ?";
@@ -40,7 +41,8 @@ public class InventoryDAO {
 
     /**
      * Créer un inventaire
-     * @param inventory
+     * @param inventory Inventaire à créer
+     * @throws SQLException
      */
     public void createInventory(Inventory inventory) throws SQLException {
         String query = "INSERT INTO inventories (store_id) VALUES (?)";
@@ -55,7 +57,8 @@ public class InventoryDAO {
 
     /**
      * Mettre à jour un inventaire par son id de magasin
-     * @param storeId
+     * @param storeId ID du magasin
+     * @throws SQLException
      */
     public void deleteInventoryByStoreId(int storeId) throws SQLException {
         String query = "DELETE FROM inventories WHERE store_id = ?";
@@ -70,7 +73,8 @@ public class InventoryDAO {
 
     /**
      * Lister tous les inventaires disponibles
-     * @return List<Inventory>
+     * @return List<Inventory> Liste des inventaires
+     * @throws SQLException
      */
     public List<Inventory> listAllInventories() throws SQLException {
         List<Inventory> inventories = new ArrayList<>();

@@ -38,6 +38,7 @@ public class SettingsViewController {
 
     /**
      * Initialisation de la vue.
+     * @throws IOException
      */
     public void initialize() throws IOException {
         this.handleInformationSection();
@@ -47,6 +48,8 @@ public class SettingsViewController {
 
     /**
      * Gère la modification des informations de l'utilisateur.
+     * @throws SQLException
+     * @throws IOException
      */
     @FXML
     public void handleInformation() throws SQLException, IOException {
@@ -78,6 +81,8 @@ public class SettingsViewController {
 
     /**
      * Gère la modification du mot de passe.
+     * @throws SQLException
+     * @throws IOException
      */
     @FXML
     public void handlePassword() throws IOException, SQLException {

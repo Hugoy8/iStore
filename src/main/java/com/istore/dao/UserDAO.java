@@ -17,8 +17,9 @@ public class UserDAO {
 
     /**
      * Retrouver un utilisateur par son adresse mail
-     * @param email
+     * @param email L'adresse mail de l'utilisateur
      * @return User
+     * @throws SQLException
      */
     public User findUserByEmail(String email) throws SQLException {
         String query = "SELECT * FROM users WHERE email = ?";
@@ -44,8 +45,9 @@ public class UserDAO {
 
     /**
      * Retrouver un utilisateur par son id
-     * @param id
+     * @param id L'id de l'utilisateur
      * @return User
+     * @throws SQLException
      */
     public User findUserById(int id) throws SQLException {
         String query = "SELECT * FROM users WHERE id = ?";
@@ -71,7 +73,8 @@ public class UserDAO {
 
     /**
      * Créer un utilisateur
-     * @param user
+     * @param user L'utilisateur à créer
+     * @throws SQLException
      */
     public void createUser(User user) throws SQLException {
         String query = "INSERT INTO users (email, pseudo, password_hash, role) VALUES (?, ?, ?, ?)";
@@ -90,7 +93,8 @@ public class UserDAO {
 
     /**
      * Mettre à jour un utilisateur complet
-     * @param user
+     * @param user L'utilisateur à mettre à jour
+     * @throws SQLException
      */
     public void updateUser(User user) throws SQLException {
         String query = "UPDATE users SET email = ?, pseudo = ?, password_hash = ?, role = ? WHERE id = ?";
@@ -110,7 +114,8 @@ public class UserDAO {
 
     /**
      * Supprimer un utilisateur par son id
-     * @param userId
+     * @param userId L'id de l'utilisateur à supprimer
+     * @throws SQLException
      */
     public void deleteUserById(int userId) throws SQLException {
         String query = "DELETE FROM users WHERE id = ?";
@@ -125,8 +130,9 @@ public class UserDAO {
 
     /**
      * Supprimer un utilisateur par son id
-     * @param userDeleteId
+     * @param userDeleteId L'id de l'utilisateur à supprimer
      * @param userAction L'utilisateur qui effectue l'action
+     * @throws SQLException
      */
     public void deleteUser(int userDeleteId, User userAction) throws SQLException {
         String query = "DELETE FROM users WHERE id = ?";
@@ -142,7 +148,8 @@ public class UserDAO {
 
     /**
      * Récupérer la liste de tous les utilisateurs
-     * @return List<User>
+     * @return List<User> Liste des utilisateurs
+     * @throws SQLException
      */
     public List<User> listAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
@@ -171,6 +178,7 @@ public class UserDAO {
      * Permet de vérifier si un pseudo est déjà utilisé
      * @param pseudo Le pseudo à vérifier
      * @return Retourne True si le pseudo est libre sinon False.
+     * @throws SQLException
      */
     public boolean checkPseudo(String pseudo) throws SQLException {
         String query = "SELECT * FROM users WHERE pseudo = ?";
@@ -193,6 +201,7 @@ public class UserDAO {
      * Permet de vérifier si un email est déjà utilisé
      * @param email L'email à vérifier
      * @return Retourne True si le pseudo est libre sinon False.
+     * @throws SQLException
      */
     public boolean checkEmail(String email) throws SQLException {
         String query = "SELECT * FROM users WHERE email = ?";
@@ -215,6 +224,7 @@ public class UserDAO {
      * Permet de vérifier si un email est sur la white list
      * @param email L'email à vérifier
      * @return Retourne True si l'email est sur la white list sinon False.
+     * @throws SQLException
      */
     public boolean checkWhiteList(String email) throws SQLException {
         String query = "SELECT * FROM whitelist_emails WHERE email = ?";

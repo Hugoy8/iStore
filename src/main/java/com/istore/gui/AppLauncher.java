@@ -17,10 +17,20 @@ public class AppLauncher extends Application {
     private static double WINDOW_HEIGHT = 824;
 
     private static String baseTitle = "iStore";
+
+    /**
+     * Change le titre de la fenêtre.
+     * @param specificTitle
+     */
     public static void setTitle(String specificTitle) {
         primaryStage.setTitle(baseTitle + " - " + specificTitle);
     }
 
+    /**
+     * Démarre l'application.
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
@@ -36,6 +46,7 @@ public class AppLauncher extends Application {
 
     /**
      * Change la scène pour afficher la page de connexion.
+     * @throws IOException
      */
     public static void showLoginView() throws IOException {
         Parent loginView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/auth/login-view.fxml")));
@@ -49,6 +60,7 @@ public class AppLauncher extends Application {
 
     /**
      * Change la scène pour afficher la page d'inscription.
+     * @throws IOException
      */
     public static void showRegisterView() throws IOException {
         Parent registerView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/auth/register-view.fxml")));
@@ -62,6 +74,7 @@ public class AppLauncher extends Application {
 
     /**
      * Change la scène pour afficher la page de base du dashboard.
+     * @throws IOException
      */
     public static void showDashboardView() throws IOException {
         Parent dashboardView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/dashboard/dashboard-view.fxml")));
@@ -72,6 +85,9 @@ public class AppLauncher extends Application {
         primaryStage.setScene(scene);
     }
 
+    /**
+     * Fonction principale.
+     */
     public static void main(String[] args) {
         launch(args);
     }

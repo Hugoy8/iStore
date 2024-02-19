@@ -16,6 +16,7 @@ public class InventoryService {
     /**
      * Crée un nouvel inventaire pour un magasin.
      * @param inventory L'inventaire à créer.
+     * @throws SQLException
      */
     public void createInventory(Inventory inventory) throws SQLException {
         inventoryDAO.createInventory(inventory);
@@ -24,6 +25,7 @@ public class InventoryService {
     /**
      * Supprime l'inventaire d'un magasin.
      * @param storeId L'identifiant du magasin dont l'inventaire doit être supprimé.
+     * @throws SQLException
      */
     public void deleteInventory(int storeId) throws SQLException {
         inventoryDAO.deleteInventoryByStoreId(storeId);

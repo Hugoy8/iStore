@@ -49,6 +49,7 @@ public class RegisterController {
 
     /**
      * Redirige l'utilisateur vers la page de connexion.
+     * @throws IOException
      */
     public void goToLoginView() throws IOException {
         AppLauncher.showLoginView();

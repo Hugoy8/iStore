@@ -19,6 +19,7 @@ public class StoreDAO {
     /**
      * Créer un magasin
      * @param store Le magasin à créer
+     * @throws SQLException
      */
     public void createStore(Store store) throws SQLException {
         String query = "INSERT INTO stores (name, location) VALUES (?, ?)";
@@ -34,8 +35,9 @@ public class StoreDAO {
 
     /**
      * Retrouver un magasin par son id
-     * @param id
+     * @param id ID du magasin
      * @return Store
+     * @throws SQLException
      */
     public Store findStoreById(int id) throws SQLException {
         String query = "SELECT * FROM stores WHERE id = ?";
@@ -58,7 +60,8 @@ public class StoreDAO {
 
     /**
      * Mettre à jour un magasin par son id
-     * @param store
+     * @param store Le magasin à mettre à jour
+     * @throws SQLException
      */
     public void updateStore(Store store) throws SQLException {
         String query = "UPDATE stores SET name = ?, location = ? WHERE id = ?";
@@ -75,7 +78,8 @@ public class StoreDAO {
 
     /**
      * Supprimer un magasin par son id
-     * @param id
+     * @param id ID du magasin
+     * @throws SQLException
      */
     public void deleteStore(int id) throws SQLException {
         String query = "DELETE FROM stores WHERE id = ?";
@@ -90,7 +94,8 @@ public class StoreDAO {
 
     /**
      * Retrouver tous les magasins disponibles
-     * @return List<Store>
+     * @return List<Store> Liste des magasins
+     * @throws SQLException
      */
     public List<Store> listAllStoresWithEmployees() throws SQLException {
         List<Store> stores = new ArrayList<>();
