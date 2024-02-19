@@ -27,6 +27,9 @@ import java.sql.SQLException;
 
 public class UsersViewController {
 
+    /**
+     * La table des utilisateurs.
+     */
     @FXML
     private TableView<User> usersTable;
     @FXML
@@ -40,12 +43,18 @@ public class UsersViewController {
     @FXML
     private TableColumn<User, Void> actionsColumn;
 
+    /**
+     * Initialise la vue.
+     */
     @FXML
     public void initialize() {
         setupTableColumns();
         loadUsersIntoTable();
     }
 
+    /**
+     * Configure les colonnes de la table.
+     */
     private void setupTableColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         pseudoColumn.setCellValueFactory(new PropertyValueFactory<>("pseudo"));

@@ -28,6 +28,9 @@ import java.sql.SQLException;
 
 public class StoresViewController {
 
+    /**
+     * La table des magasins.
+     */
     @FXML
     private TableView<Store> storesTable;
     @FXML
@@ -43,15 +46,25 @@ public class StoresViewController {
 
     private DashboardController dashboardController;
 
+    /**
+     * Définit le contrôleur du tableau de bord.
+     * @param controller Le contrôleur du tableau de bord.
+     */
     public void setDashboardController(DashboardController controller) {
         this.dashboardController = controller;
     }
 
+    /**
+     * Initialise la vue.
+     */
     public void initialize() {
         setupTableColumns();
         loadStoresIntoTable();
     }
 
+    /**
+     * Configure les colonnes de la table.
+     */
     private void setupTableColumns() {
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
