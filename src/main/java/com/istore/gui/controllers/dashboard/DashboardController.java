@@ -35,7 +35,7 @@ public class DashboardController {
 
     /**
      * Initialise la vue.
-     * @throws IOException
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
     public void initialize() throws IOException {
@@ -46,7 +46,7 @@ public class DashboardController {
 
     /**
      * Récupère les informations de l'utilisateur connecté.
-     * @throws IOException
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
     public void retrieveUserInfos() throws IOException {
@@ -178,7 +178,7 @@ public class DashboardController {
 
     /**
      * Déconnecte l'utilisateur et le redirige vers la page de connexion.
-     * @throws IOException
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
     private void handleLogout() throws IOException {

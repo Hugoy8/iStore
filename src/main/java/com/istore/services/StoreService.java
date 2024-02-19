@@ -17,7 +17,7 @@ public class StoreService {
     /**
      * Crée un nouveau magasin.
      * @param store Le magasin à créer.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void createStore(Store store) throws SQLException {
         storeDAO.createStore(store);
@@ -26,7 +26,7 @@ public class StoreService {
     /**
      * Supprime un magasin.
      * @param storeId L'identifiant du magasin à supprimer.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void deleteStore(int storeId) throws SQLException {
         storeDAO.deleteStore(storeId);
@@ -35,7 +35,7 @@ public class StoreService {
     /**
      * Met à jour un magasin.
      * @param store Le magasin à mettre à jour.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void updateStore(Store store) throws SQLException {
         storeDAO.updateStore(store);
@@ -44,7 +44,7 @@ public class StoreService {
     /**
      * Liste tous les magasins.
      * @return La liste de tous les magasins.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public List<Store> listAllStoresWithEmployees() throws SQLException {
         return storeDAO.listAllStoresWithEmployees();

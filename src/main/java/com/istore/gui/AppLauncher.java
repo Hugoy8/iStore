@@ -20,7 +20,7 @@ public class AppLauncher extends Application {
 
     /**
      * Change le titre de la fenêtre.
-     * @param specificTitle
+     * @param specificTitle Le titre spécifique à ajouter.
      */
     public static void setTitle(String specificTitle) {
         primaryStage.setTitle(baseTitle + " - " + specificTitle);
@@ -28,8 +28,8 @@ public class AppLauncher extends Application {
 
     /**
      * Démarre l'application.
-     * @param stage
-     * @throws IOException
+     * @param stage La scène principale.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -46,7 +46,7 @@ public class AppLauncher extends Application {
 
     /**
      * Change la scène pour afficher la page de connexion.
-     * @throws IOException
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     public static void showLoginView() throws IOException {
         Parent loginView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/auth/login-view.fxml")));
@@ -60,7 +60,7 @@ public class AppLauncher extends Application {
 
     /**
      * Change la scène pour afficher la page d'inscription.
-     * @throws IOException
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     public static void showRegisterView() throws IOException {
         Parent registerView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/auth/register-view.fxml")));
@@ -74,7 +74,7 @@ public class AppLauncher extends Application {
 
     /**
      * Change la scène pour afficher la page de base du dashboard.
-     * @throws IOException
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     public static void showDashboardView() throws IOException {
         Parent dashboardView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/dashboard/dashboard-view.fxml")));
@@ -87,6 +87,7 @@ public class AppLauncher extends Application {
 
     /**
      * Fonction principale.
+     * @param args Les arguments de la ligne de commande.
      */
     public static void main(String[] args) {
         launch(args);

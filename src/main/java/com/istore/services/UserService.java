@@ -21,7 +21,7 @@ public class UserService {
      * Récupère un utilisateur par son email.
      * @param email L'email de l'utilisateur à récupérer.
      * @return L'utilisateur correspondant à l'email.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public User getUserByEmail(String email) throws SQLException {
         return userDAO.findUserByEmail(email);
@@ -30,7 +30,7 @@ public class UserService {
     /**
      * Crée un nouvel utilisateur.
      * @param user L'utilisateur à créer.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void createUser(User user) throws SQLException {
         userDAO.createUser(user);
@@ -39,7 +39,7 @@ public class UserService {
     /**
      * Met à jour les informations d'un utilisateur.
      * @param user L'utilisateur avec les informations mises à jour.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void updateUser(User user) throws SQLException {
         userDAO.updateUser(user);
@@ -48,7 +48,7 @@ public class UserService {
     /**
      * Supprime un utilisateur par son identifiant.
      * @param userId L'identifiant de l'utilisateur à supprimer.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void deleteUserById(int userId) throws SQLException {
         userDAO.deleteUserById(userId);
@@ -58,7 +58,7 @@ public class UserService {
      * Supprime un utilisateur.
      * @param userDeleteId L'identifiant de l'utilisateur à supprimer.
      * @param userAction L'utilisateur qui effectue l'action.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void deleteUser(int userDeleteId, User userAction) throws SQLException {
         userDAO.deleteUser(userDeleteId, userAction);
@@ -67,7 +67,7 @@ public class UserService {
     /**
      * Liste tous les utilisateurs.
      * @return La liste de tous les utilisateurs.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public List<User> listAllUsers() throws SQLException {
         return userDAO.listAllUsers();
@@ -85,7 +85,7 @@ public class UserService {
     /**
      * Ajoute une adresse e-mail à la whitelist.
      * @param email L'adresse e-mail à ajouter.
-     * @throws SQLException Si l'ajout échoue en raison d'une contrainte de base de données ou d'une autre erreur SQL.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void addEmailToWhitelist(String email) throws SQLException {
         whitelistEmailDAO.addEmailToWhitelist(email);

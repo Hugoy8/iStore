@@ -18,7 +18,7 @@ public class ItemDAO {
     /**
      * Créer un item
      * @param item Item à créer
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void createItem(Item item) throws SQLException {
         String query = "INSERT INTO items (name, price, quantity, inventory_id) VALUES (?, ?, ?, ?)";
@@ -38,7 +38,7 @@ public class ItemDAO {
      * Retrouver un item par son id
      * @param id ID de l'item
      * @return Item
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public Item findItemById(int id) throws SQLException {
         String query = "SELECT * FROM items WHERE id = ?";
@@ -64,7 +64,7 @@ public class ItemDAO {
     /**
      * Mettre à jour un item
      * @param item Item à mettre à jour
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void updateItem(Item item) throws SQLException {
         String query = "UPDATE items SET name = ?, price = ?, quantity = ?, inventory_id = ? WHERE id = ?";
@@ -84,7 +84,7 @@ public class ItemDAO {
     /**
      * Supprimer un item par son id
      * @param id ID de l'item
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void deleteItem(int id) throws SQLException {
         String query = "DELETE FROM items WHERE id = ?";
@@ -99,8 +99,8 @@ public class ItemDAO {
 
     /**
      * Retrouver tous les items
-     * @return List<Item> Liste des items
-     * @throws SQLException
+     * @return Liste des items
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public List<Item> listAllItems() throws SQLException {
         List<Item> items = new ArrayList<>();

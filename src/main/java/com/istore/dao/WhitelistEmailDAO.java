@@ -18,7 +18,7 @@ public class WhitelistEmailDAO {
      * Ajoute une adresse e-mail à la table whitelist_emails.
      *
      * @param email L'adresse e-mail à ajouter.
-     * @throws SQLException Si une erreur de base de données se produit.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données Si une erreur de base de données se produit.
      */
     public void addEmailToWhitelist(String email) throws SQLException {
         String query = "INSERT INTO whitelist_emails (email) VALUES (?)";
