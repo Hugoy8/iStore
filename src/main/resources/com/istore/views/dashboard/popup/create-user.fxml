@@ -36,7 +36,7 @@
                         <Font name="SF Pro Display Medium" size="16.0" />
                     </font>
                 </Label>
-                <TextField fx:id="pseudoField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
+                <TextField fx:id="pseudoField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
                     <font>
                         <Font name="SF Pro Text Regular" size="16.0" />
                     </font>
@@ -51,7 +51,7 @@
                         <Font name="SF Pro Display Medium" size="16.0" />
                     </font>
                 </Label>
-                <TextField fx:id="emailField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
+                <TextField fx:id="emailField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
                     <font>
                         <Font name="SF Pro Text Regular" size="16.0" />
                     </font>
@@ -66,7 +66,7 @@
                         <Font name="SF Pro Display Medium" size="16.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="roleComboBox" prefHeight="46.0" prefWidth="427.0" promptText="Rôle" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-background-color: WHITE;">
+                <ComboBox fx:id="roleComboBox" prefHeight="46.0" prefWidth="427.0" promptText="Rôle" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-background-color: WHITE;">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="admin" />
@@ -81,7 +81,7 @@
                         <Font name="SF Pro Display Medium" size="16.0" />
                     </font>
                 </Label>
-                <PasswordField fx:id="passwordField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
+                <PasswordField fx:id="passwordField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
                     <font>
                         <Font name="SF Pro Text Regular" size="16.0" />
                     </font>
@@ -96,7 +96,7 @@
                         <Font name="SF Pro Display Medium" size="16.0"/>
                     </font>
                 </Label>
-                <PasswordField fx:id="confirmPasswordField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
+                <PasswordField fx:id="confirmPasswordField" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
                     <font>
                         <Font name="SF Pro Text Regular" size="16.0"/>
                     </font>
@@ -116,7 +116,7 @@
         </VBox>
         <VBox spacing="12">
             <VBox spacing="8">
-                <Button onAction="#handleCreateUser" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Créer l'utilisateur">
+                <Button onAction="#handleCreateUser" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px; -fx-border-radius: 6px;" styleClass="buttonSubmit" text="Créer l'utilisateur">
                     <font>
                         <Font name="SF Pro Display Semibold" size="18.0" />
                     </font>

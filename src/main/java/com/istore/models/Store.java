@@ -19,6 +19,12 @@ public class Store {
         this.employees.set(FXCollections.observableArrayList(employees));
     }
 
+    public Store(String name, String location, List<String> employees) {
+        this.name.set(name);
+        this.location.set(location);
+        this.employees.set(FXCollections.observableArrayList(employees));
+    }
+
     // Getters and Setters for id
     public int getId() {
         return id.get();

@@ -24,7 +24,7 @@
                   <Font name="SF Pro Text Regular" size="20.0" />
                </font></Text>
             </VBox>
-            <Button onAction="#showCreateUserPopup" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Créer un utilisateur">
+            <Button onAction="#showCreateUserPopup" style="-fx-border-radius: 6px; -fx-background-radius: 6px;" styleClass="buttonSubmit" text="Créer un utilisateur">
                 <font>
                     <Font name="SF Pro Display Semibold" size="18.0" />
                 </font>

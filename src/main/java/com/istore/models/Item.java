@@ -16,6 +16,13 @@ public class Item {
         this.inventoryId = inventoryId;
     }
 
+    public Item(String name, double price, int quantity, int inventoryId) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.inventoryId = inventoryId;
+    }
+
     // Getters et Setters
     public int getId() {
         return id;

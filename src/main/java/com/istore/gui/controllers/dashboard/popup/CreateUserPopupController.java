@@ -44,7 +44,7 @@ public class CreateUserPopupController {
             return;
         }
 
-        User user = new User(0, email, pseudo, hashedPassword, role);
+        User user = new User(email, pseudo, hashedPassword, role);
 
         try {
             Application.getUserService().createUser(user);
