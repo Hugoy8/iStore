@@ -1,6 +1,7 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.gui.AppLauncher;
+import com.istore.models.Store;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -97,21 +98,21 @@ public class DashboardController {
     /**
      * Charge la vue des détails du magasin.
      */
-    @FXML
-    public void loadStoreDetailsView(int storeId) {
+    public void loadStoreDetailsView(Store store) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/stores/store-details-view.fxml"));
             Parent detailView = loader.load();
 
             StoreDetailsViewController controller = loader.getController();
             controller.setDashboardController(this);
-            controller.loadStoreData(storeId); // Méthode à implémenter dans StoreDetailsViewController
+            controller.initStoreData(store); // Assumez que cette méthode a été modifiée pour accepter un objet Store
 
             contentArea.getChildren().setAll(detailView);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Charge la vue de gestion.

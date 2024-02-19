@@ -14,6 +14,15 @@ public class ItemService {
     }
 
     /**
+     * Crée un item.
+     * @param item L'item à créer.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void createItem(Item item) throws SQLException {
+        itemDAO.createItem(item);
+    }
+
+    /**
      * Récupère un item par son id de magasin.
      * @param storeId
      * @return L'item trouvé.

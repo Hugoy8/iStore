@@ -29,12 +29,12 @@
                 </cursor>
             </Button>
             <VBox spacing="8.0">
-                <Text text="Magasins / Magasin - Apple Store Lille">
+                <Text fx:id="breadcrumbText" text="Magasins / Magasin - Apple Store Lille">
                     <font>
                         <Font name="SF Pro Text Regular" size="20.0" />
                     </font>
                 </Text>
-                <Text text="Apple Store Lille">
+                <Text fx:id="storeNameText" text="Apple Store Lille">
                     <font>
                         <Font name="SF Pro Text Bold" size="32.0" />
                     </font>
@@ -66,7 +66,7 @@
                     </VBox.margin>
                 </Button>
             </HBox>
-            <Button fx:id="inventoryAddButton" style="-fx-border-radius: 6px; -fx-background-radius: 6px;" styleClass="buttonSubmit" text="Ajouter un objet">
+            <Button fx:id="inventoryAddButton" onAction="#showCreateItemPopup" style="-fx-border-radius: 6px; -fx-background-radius: 6px;" styleClass="buttonSubmit" text="Ajouter un objet">
                 <font>
                     <Font name="SF Pro Display Semibold" size="18.0" />
                 </font>

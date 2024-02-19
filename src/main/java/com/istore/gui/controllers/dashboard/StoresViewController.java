@@ -105,7 +105,7 @@ public class StoresViewController {
 
                 viewBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
-                    dashboardController.loadStoreDetailsView(store.getId());
+                    dashboardController.loadStoreDetailsView(store);
                 });
                 editBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());

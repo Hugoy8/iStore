@@ -2,9 +2,9 @@ package com.istore.gui.controllers.dashboard.stores;
 
 import com.istore.Application;
 import com.istore.gui.controllers.dashboard.DashboardController;
+import com.istore.gui.controllers.dashboard.popup.items.CreateItemPopupController;
 import com.istore.gui.controllers.dashboard.popup.items.DeleteItemConfirmController;
 import com.istore.gui.controllers.dashboard.popup.items.EditItemPopupController;
-import com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController;
 import com.istore.models.Item;
 import com.istore.models.Store;
 import javafx.application.Platform;
@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -74,6 +75,21 @@ public class StoreDetailsViewController {
 
     private DashboardController dashboardController;
 
+    @FXML
+    private Text storeNameText;
+    @FXML
+    private Text breadcrumbText;
+
+    private Store currentStore;
+
+    public void initStoreData(Store store) {
+        this.currentStore = store;
+
+        storeNameText.setText(store.getName());
+        breadcrumbText.setText("Magasins / Magasin - " + store.getName());
+
+        loadInventoryIntoTable(store.getId());
+    }
     /**
      * Définit le contrôleur du tableau de bord.
      * @param dashboardController Le contrôleur du tableau de bord.
@@ -173,6 +189,29 @@ public class StoreDetailsViewController {
      */
     public void refreshTable() {
         loadInventoryIntoTable(currentStoreId);
+    }
+
+    /**
+     * Affiche la popup de création d'un nouvel item.
+     */
+    @FXML
+    private void showCreateItemPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/items/create-item.fxml"));
+            Parent root = loader.load();
+
+            CreateItemPopupController controller = loader.getController();
+            controller.setInventoryId(currentStoreId);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Créer un nouvel objet");
+            stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refreshTable());
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
