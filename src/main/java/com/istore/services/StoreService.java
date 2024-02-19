@@ -17,7 +17,7 @@ public class StoreService {
     /**
      * Crée un nouveau magasin.
      * @param store Le magasin à créer.
-     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void createStore(Store store) throws SQLException {
         storeDAO.createStore(store);

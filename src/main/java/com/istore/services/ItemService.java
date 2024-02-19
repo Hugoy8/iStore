@@ -17,7 +17,7 @@ public class ItemService {
      * Récupère un item par son id de magasin.
      * @param storeId
      * @return L'item trouvé.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public List<Item> findItemsByStoreId(int storeId) throws SQLException {
         return itemDAO.findItemsByStoreId(storeId);
@@ -26,7 +26,7 @@ public class ItemService {
     /**
      * Met à jour un item.
      * @param item L'item à mettre à jour.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void updateItem(Item item) throws SQLException {
         itemDAO.updateItem(item);
@@ -35,7 +35,7 @@ public class ItemService {
     /**
      * Supprime un item par son id.
      * @param itemId L'id de l'item à supprimer.
-     * @throws SQLException
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void deleteItemById(int itemId) throws SQLException {
         itemDAO.deleteItem(itemId);
