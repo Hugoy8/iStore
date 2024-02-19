@@ -120,4 +120,33 @@ public class ItemDAO {
         }
         return items;
     }
+
+    /**
+     * Incrémenter le stock d'un item
+     * @param itemId ID de l'item
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void incrementStock(int itemId) throws SQLException {
+        String query = "UPDATE items SET stock = stock + 1 WHERE id = ?";
+        try (Connection conn = db.getConnectionDb();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, itemId);
+            ps.executeUpdate();
+        }
+    }
+
+    /**
+     * Décrémenter le stock d'un item
+     * @param itemId ID de l'item
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void decrementStock(int itemId) throws SQLException {
+        String query = "UPDATE items SET stock = CASE WHEN stock > 0 THEN stock - 1 ELSE 0 END WHERE id = ?";
+        try (Connection conn = db.getConnectionDb();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, itemId);
+            ps.executeUpdate();
+        }
+    }
+
 }

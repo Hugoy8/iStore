@@ -17,10 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -124,7 +121,64 @@ public class StoreDetailsViewController {
         idColumnInventory.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumnInventory.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceColumnInventory.setCellValueFactory(new PropertyValueFactory<>("price"));
-        stockColumnInventory.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        stockColumnInventory.setCellFactory(param -> new TableCell<Item, String>() {
+            final Button decrementBtn = new Button("-");
+            final TextField stockField = new TextField();
+            final Button incrementBtn = new Button("+");
+
+            {
+                stockField.setPrefWidth(33);
+                decrementBtn.setStyle("-fx-background-color: transparent;");
+                incrementBtn.setStyle("-fx-background-color: transparent;");
+                stockField.setStyle("-fx-border-color: #BABABA; -fx-background-color: white; -fx-background-insets: 0; -fx-background-radius: 4px; -fx-border-radius:4px;");
+
+                decrementBtn.setOnAction(event -> {
+                    Item item = getTableView().getItems().get(getIndex());
+                    try {
+                        Application.getItemService().decrementStock(item.getId());
+                        refreshTable();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                incrementBtn.setOnAction(event -> {
+                    Item item = getTableView().getItems().get(getIndex());
+                    try {
+                        Application.getItemService().incrementStock(item.getId());
+                        refreshTable();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                stockField.setOnAction(event -> {
+                    Item item = getTableView().getItems().get(getIndex());
+                    try {
+                        int newStock = Integer.parseInt(stockField.getText());
+                        item.setStock(newStock);
+                        Application.getItemService().updateItem(item);
+                        refreshTable();
+                    } catch (NumberFormatException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Item currentItem = getTableView().getItems().get(getIndex());
+                    stockField.setText(String.valueOf(currentItem.getStock()));
+                    HBox hbox = new HBox(decrementBtn, stockField, incrementBtn);
+                    hbox.setSpacing(0);
+                    setGraphic(hbox);
+                }
+            }
+        });
         actionsColumnInventory.setCellFactory(param -> new TableCell<Item, Void>() {
             private final Button editBtn = new Button("");
             private final Button deleteBtn = new Button("");

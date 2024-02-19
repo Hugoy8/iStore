@@ -49,4 +49,23 @@ public class ItemService {
     public void deleteItemById(int itemId) throws SQLException {
         itemDAO.deleteItem(itemId);
     }
+
+    /**
+     * Incrémenter le stock d'un item.
+     * @param itemId
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void incrementStock(int itemId) throws SQLException {
+        itemDAO.incrementStock(itemId);
+    }
+
+    /**
+     * Décrémenter le stock d'un item.
+     * @param itemId
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void decrementStock(int itemId) throws SQLException {
+        itemDAO.decrementStock(itemId);
+    }
+
 }
