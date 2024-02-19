@@ -18,6 +18,13 @@ public class User {
         this.role = role;
     }
 
+    public User(String email, String pseudo, String passwordHash, String role) {
+        this.email = email;
+        this.pseudo = pseudo;
+        this.passwordHash = passwordHash;
+        this.role = role;
+    }
+
     // Getters et setters
     public int getId() {
         return id;

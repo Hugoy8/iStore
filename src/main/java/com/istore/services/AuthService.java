@@ -7,6 +7,7 @@ import com.istore.utils.HashUtil;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class AuthService {
 
@@ -39,15 +40,10 @@ public class AuthService {
      * @return Un message d'erreur ou de succès lors de l'inscription.
      */
     public String register(User user) throws SQLException {
-        // Vérification de l'unicité de l'email et du pseudo
-        if (!this.userDAO.checkEmail(user.getEmail())) {
-            return "L'adresse email est déjà utilisé.";
-        }
-        if (!this.userDAO.checkPseudo(user.getPseudo())) {
-            return "Ce pseudo est déjà utilisé.";
-        }
-        if (!this.userDAO.checkWhiteList(user.getEmail())) {
-            return "L'adresse email n'est pas autorisé à s'inscrire.";
+        String result = this.verifyAllInformationUser(user);
+
+        if (!result.equals("Information vérifiée avec succès.")) {
+            return result;
         }
 
         String hashedPassword = HashUtil.hashPassword(user.getPasswordHash());
@@ -64,6 +60,29 @@ public class AuthService {
         }
 
         return "Utilisateur enregistré avec succès.";
+    }
+
+    /**
+     * Permet de vérifier si les informations de l'utilisateur sont correctes.
+     * @param user L'utilisateur à vérifier.
+     */
+    public String verifyAllInformationUser(User user) throws SQLException {
+        try {
+            // Vérification de l'unicité de l'email et du pseudo
+            if (!this.userDAO.checkEmail(user.getEmail())) {
+                return "L'adresse email est déjà utilisé.";
+            }
+            if (!this.userDAO.checkPseudo(user.getPseudo())) {
+                return "Ce pseudo est déjà utilisé.";
+            }
+            if (!this.userDAO.checkWhiteList(user.getEmail())) {
+                return "L'adresse email n'est pas autorisé.";
+            }
+
+            return "Information vérifiée avec succès.";
+        } catch (SQLException e) {
+            return "Erreur lors de la vérification des informations. Veuillez réessayer plus tard.";
+        }
     }
 
     /**
@@ -91,17 +110,66 @@ public class AuthService {
             userDAO.updateUser(user);
             return "Mot de passe mis à jour avec succès.";
         } catch (SQLException e) {
-            e.printStackTrace();
             return "Erreur lors de la mise à jour du mot de passe. Veuillez réessayer plus tard.";
         }
     }
+
+    /**
+     * Met à jour les informations d'un utilisateur.
+     * @param oldUser L'utilisateur avec les informations actuelles en base de données.
+     * @param newUser L'utilisateur avec les nouvelles informations.
+     */
+    public String updateUser(User oldUser, User newUser) throws SQLException {
+        try {
+            // Vérification de l'unicité de l'email et du pseudo
+            if (!Objects.equals(oldUser.getEmail(), newUser.getEmail())){
+                if (!this.userDAO.checkEmail(user.getEmail())) {
+                    return "L'adresse email est déjà utilisé.";
+                }
+                if (!this.userDAO.checkWhiteList(user.getEmail())) {
+                    return "L'adresse email n'est pas autorisé.";
+                }
+            }
+            if (!Objects.equals(oldUser.getPseudo(), newUser.getPseudo())){
+                if (!this.userDAO.checkPseudo(user.getPseudo())) {
+                    return "Ce pseudo est déjà utilisé.";
+                }
+            }
+
+            userDAO.updateUser(newUser);
+            return "Utilisateur mis à jour avec succès.";
+        } catch (SQLException e) {
+            return "Erreur lors de la vérification des informations. Veuillez réessayer plus tard.";
+        }
+    }
+
+    /**
+     * Récupère l'utilisateur connecté.
+     */
     public User getUser() throws IOException {
         if (user == null){
             AppLauncher.showLoginView();
         }
         return user;
     }
+
+    /**
+     * Permet d'attribuer un utilisateur à l'authentification.
+     * @param user L'utilisateur à attribuer.
+     */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * Permet de récupérer les informations en base de données.
+     * Et de les attribuer à l'utilisateur.
+     */
+    public void reloadUser() throws SQLException, IOException {
+        User user = userDAO.findUserByEmail(this.getUser().getEmail());
+
+        if (user != null) {
+            this.user = user;
+        }
     }
 }

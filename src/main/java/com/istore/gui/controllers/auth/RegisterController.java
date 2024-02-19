@@ -37,7 +37,7 @@ public class RegisterController {
             return;
         }
 
-        String error = getAuthService().register(new User(0, emailField.getText(), pseudoField.getText(), passwordField.getText(), "user"));
+        String error = getAuthService().register(new User(emailField.getText(), pseudoField.getText(), passwordField.getText(), "user"));
 
         if (Objects.equals(error, "Utilisateur enregistré avec succès.")) {
             this.goToLoginView();

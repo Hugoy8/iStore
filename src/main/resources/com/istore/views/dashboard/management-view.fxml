@@ -33,7 +33,7 @@
                             <Font name="SF Pro Display Medium" size="16.0" />
                         </font>
                     </Label>
-                    <TextField fx:id="emailField" prefHeight="46.0" prefWidth="400.0" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
+                    <TextField fx:id="emailField" prefHeight="46.0" prefWidth="400.0" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-padding: 12px; -fx-background-color: WHITE;">
                         <font>
                             <Font name="SF Pro Text Regular" size="16.0" />
                         </font>
@@ -59,7 +59,7 @@
                     </Text>
                 </HBox>
             </VBox>
-            <Button onAction="#handleWhitelist" prefHeight="52.0" prefWidth="242.0" style="-fx-background-radius: 6px;" styleClass="buttonSubmit" text="Ajouter à la liste blanche">
+            <Button onAction="#handleWhitelist" prefHeight="52.0" prefWidth="242.0" style="-fx-background-radius: 6px; -fx-border-radius: 6px;" styleClass="buttonSubmit" text="Ajouter à la liste blanche">
                 <font>
                     <Font name="SF Pro Display Semibold" size="18.0" />
                 </font>
