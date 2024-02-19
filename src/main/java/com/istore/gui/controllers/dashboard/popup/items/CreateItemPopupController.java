@@ -1,6 +1,7 @@
 package com.istore.gui.controllers.dashboard.popup.items;
 
 import com.istore.Application;
+import com.istore.gui.controllers.dashboard.StoresViewController;
 import com.istore.models.Item;
 import com.istore.models.Store;
 import com.istore.models.User;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import com.istore.gui.controllers.dashboard.stores.StoreDetailsViewController;
 
 import java.sql.SQLException;
 

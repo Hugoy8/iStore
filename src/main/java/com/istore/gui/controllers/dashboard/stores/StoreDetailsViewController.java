@@ -188,7 +188,7 @@ public class StoreDetailsViewController {
      * Rafraîchit la table de l'inventaire.
      */
     public void refreshTable() {
-        loadInventoryIntoTable(currentStoreId);
+        loadInventoryIntoTable(currentStore.getId());
     }
 
     /**
