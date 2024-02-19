@@ -45,9 +45,8 @@ public class StoreDetailsViewController {
 
     /**
      * Initialisation de la vue.
-     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
-    public void initialize() throws IOException {
+    public void initialize() {
         this.handleInventorySection();
     }
 
