@@ -33,7 +33,7 @@ public class CreateStorePopupController {
         String location = locationField.getText();
         List<String> employees = new ArrayList<>();
 
-        Store store = new Store(0, name, location, employees);
+        Store store = new Store(name, location, employees);
 
         try {
             Application.getStoreService().createStore(store);
