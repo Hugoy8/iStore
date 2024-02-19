@@ -31,6 +31,14 @@ public class StoreService {
     }
 
     /**
+     * Met à jour un magasin.
+     * @param store Le magasin à mettre à jour.
+     */
+    public void updateStore(Store store) throws SQLException {
+        storeDAO.updateStore(store);
+    }
+
+    /**
      * Liste tous les magasins.
      * @return La liste de tous les magasins.
      */

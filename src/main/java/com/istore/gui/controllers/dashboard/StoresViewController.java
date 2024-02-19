@@ -2,6 +2,7 @@ package com.istore.gui.controllers.dashboard;
 
 import com.istore.Application;
 import com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController;
+import com.istore.gui.controllers.dashboard.popup.stores.EditStorePopupController;
 import com.istore.models.Store;
 import com.istore.models.User;
 import javafx.application.Platform;
@@ -96,7 +97,7 @@ public class StoresViewController {
                 });
                 editBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
-                    showDeleteStoreConfirmPopup(store);
+                    showEditStorePopup(store);
                 });
                 deleteBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
@@ -151,6 +152,26 @@ public class StoresViewController {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Créer un magasin");
+            stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refreshTable());
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void showEditStorePopup(Store store) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/edit-store.fxml"));
+            Parent root = loader.load();
+
+            EditStorePopupController controller = loader.getController();
+            controller.initStoreData(store);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Éditer un magasin");
             stage.setScene(new Scene(root));
             stage.setOnHidden(e -> refreshTable());
             stage.showAndWait();

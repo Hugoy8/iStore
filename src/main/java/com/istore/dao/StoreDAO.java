@@ -61,11 +61,12 @@ public class StoreDAO {
      * @param store
      */
     public void updateStore(Store store) throws SQLException {
-        String query = "UPDATE stores SET name = ? WHERE id = ?";
+        String query = "UPDATE stores SET name = ?, location = ? WHERE id = ?";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, store.getName());
-            ps.setInt(2, store.getId());
+            ps.setString(2, store.getLocation());
+            ps.setInt(3, store.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
