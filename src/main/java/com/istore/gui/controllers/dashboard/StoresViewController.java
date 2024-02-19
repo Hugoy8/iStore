@@ -4,7 +4,6 @@ import com.istore.Application;
 import com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController;
 import com.istore.gui.controllers.dashboard.popup.stores.EditStorePopupController;
 import com.istore.models.Store;
-import com.istore.models.User;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;

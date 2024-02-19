@@ -1,7 +1,6 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.gui.AppLauncher;
-import com.istore.services.AuthService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,6 +33,9 @@ public class DashboardController {
 
     @FXML private Button btnUsers, btnStores, btnManagement, btnSettings;
 
+    /**
+     * Initialise la vue.
+     */
     @FXML
     public void initialize() throws IOException {
         this.loadUsersView();
@@ -41,6 +43,9 @@ public class DashboardController {
         retrieveUserInfos();
     }
 
+    /**
+     * Récupère les informations de l'utilisateur connecté.
+     */
     @FXML
     public void retrieveUserInfos() throws IOException {
         // Affiche le nom d'utilisateur
