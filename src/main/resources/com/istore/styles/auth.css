@@ -41,7 +41,6 @@
     -fx-background-color: #fff;
 }
 
-/* Style général pour les champs d'entrée */
 .text-field, .password-field, .combo-box-base {
     -fx-border-color: #DDD;
     -fx-border-width: 1px;
@@ -53,11 +52,10 @@
     -fx-font-size: 16px;
 }
 
-/* Spécifique à la ComboBox pour ajuster l'affichage du texte et de la flèche */
 .combo-box-base .text-field, .combo-box-base .arrow-button {
-    -fx-text-fill: #666; /* Ajustez la couleur du texte si nécessaire */
+    -fx-text-fill: #666;
 }
 
 .combo-box .arrow {
-    -fx-background-color: #666; /* Couleur de la flèche pour correspondre au texte */
+    -fx-background-color: #666;
 }
