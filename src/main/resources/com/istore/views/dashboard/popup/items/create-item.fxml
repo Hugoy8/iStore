@@ -82,7 +82,7 @@
         </VBox>
         <VBox spacing="12">
             <VBox spacing="8">
-                <Button onAction="#handleCreateUser" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px; -fx-border-radius: 6px;" styleClass="buttonSubmit" text="Créer l'objet">
+                <Button onAction="#handleCreateItem" prefHeight="52.0" prefWidth="428.0" style="-fx-background-radius: 6px; -fx-border-radius: 6px;" styleClass="buttonSubmit" text="Créer l'objet">
                     <font>
                         <Font name="SF Pro Display Semibold" size="18.0" />
                     </font>

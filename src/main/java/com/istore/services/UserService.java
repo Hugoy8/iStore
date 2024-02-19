@@ -18,16 +18,6 @@ public class UserService {
     }
 
     /**
-     * Récupère un utilisateur par son email.
-     * @param email L'email de l'utilisateur à récupérer.
-     * @return L'utilisateur correspondant à l'email.
-     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
-     */
-    public User getUserByEmail(String email) throws SQLException {
-        return userDAO.findUserByEmail(email);
-    }
-
-    /**
      * Crée un nouvel utilisateur.
      * @param user L'utilisateur à créer.
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
@@ -52,16 +42,6 @@ public class UserService {
      */
     public void deleteUserById(int userId) throws SQLException {
         userDAO.deleteUserById(userId);
-    }
-
-    /**
-     * Supprime un utilisateur.
-     * @param userDeleteId L'identifiant de l'utilisateur à supprimer.
-     * @param userAction L'utilisateur qui effectue l'action.
-     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
-     */
-    public void deleteUser(int userDeleteId, User userAction) throws SQLException {
-        userDAO.deleteUser(userDeleteId, userAction);
     }
 
     /**

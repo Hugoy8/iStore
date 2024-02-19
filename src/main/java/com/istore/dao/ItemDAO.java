@@ -35,31 +35,6 @@ public class ItemDAO {
     }
 
     /**
-     * Retrouver un item par son id
-     * @param id ID de l'item
-     * @return Item
-     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
-     */
-    public Item findItemById(int id) throws SQLException {
-        String query = "SELECT * FROM items WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Item(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getInt("stock"),
-                        rs.getInt("inventory_id")
-                );
-            }
-        }
-        return null;
-    }
-
-    /**
      * Mettre à jour un item
      * @param item Item à mettre à jour
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données

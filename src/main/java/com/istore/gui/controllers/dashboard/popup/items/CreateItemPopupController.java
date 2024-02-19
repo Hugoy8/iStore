@@ -19,14 +19,9 @@ import java.sql.SQLException;
 
 public class CreateItemPopupController {
 
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField priceField;
-
-    @FXML
-    private TextField stockField;
+    @FXML private TextField nameField;
+    @FXML private TextField priceField;
+    @FXML private TextField stockField;
 
     @FXML private Text errorText;
     @FXML private HBox errorBox;
@@ -46,7 +41,7 @@ public class CreateItemPopupController {
      * Crée un utilisateur.
      */
     @FXML
-    private void handleCreateUser() {
+    private void handleCreateItem() {
         errorBox.setVisible(false);
 
         String name = nameField.getText();
@@ -72,6 +67,7 @@ public class CreateItemPopupController {
             errorBox.setVisible(true);
         } catch (SQLException e) {
             errorText.setText("Erreur lors de la mise à jour de l'article.");
+            e.printStackTrace();
             errorBox.setVisible(true);
         }
     }

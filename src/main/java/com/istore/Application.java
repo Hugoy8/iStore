@@ -7,6 +7,7 @@ import com.istore.services.*;
 
 public class Application {
     private static final Database database = new Database();
+
     private static final AuthService authService = new AuthService(new UserDAO(getDatabase()));
 
     private static final InventoryService inventoryService = new InventoryService(new InventoryDAO(getDatabase()));

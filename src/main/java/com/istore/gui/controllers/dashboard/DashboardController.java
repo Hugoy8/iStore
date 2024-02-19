@@ -23,15 +23,9 @@ import static com.istore.Application.getAuthService;
 
 public class DashboardController {
 
-    @FXML
-    private AnchorPane contentArea;
-
-    @FXML
-    private Label usernameLabel;
-
-    @FXML
-    private Label roleLabel;
-
+    @FXML private AnchorPane contentArea;
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
     @FXML private Button btnUsers, btnStores, btnManagement, btnSettings;
 
     /**
@@ -97,6 +91,7 @@ public class DashboardController {
 
     /**
      * Charge la vue des détails du magasin.
+     * @param store Le magasin
      */
     public void loadStoreDetailsView(Store store) {
         try {
@@ -105,14 +100,13 @@ public class DashboardController {
 
             StoreDetailsViewController controller = loader.getController();
             controller.setDashboardController(this);
-            controller.initStoreData(store); // Assumez que cette méthode a été modifiée pour accepter un objet Store
+            controller.initStoreData(store);
 
             contentArea.getChildren().setAll(detailView);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Charge la vue de gestion.

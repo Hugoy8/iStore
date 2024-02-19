@@ -12,15 +12,9 @@ import java.sql.SQLException;
 
 public class ManagementViewController {
 
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private HBox errorBox, successBox;
-
-    @FXML
-    private Text errorText, successText;
-
+    @FXML private TextField emailField;
+    @FXML private HBox errorBox, successBox;
+    @FXML private Text errorText, successText;
 
     /**
      * Ajoute une adresse e-mail à la liste blanche.

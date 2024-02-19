@@ -7,6 +7,10 @@ import java.sql.SQLException;
 public class Database {
     private Connection connectionDb = null;
 
+    /**
+     * Obtenir la connexion à la base de données
+     * @return Connection
+     */
     public synchronized Connection getConnectionDb() {
         try {
             if (this.connectionDb == null || this.connectionDb.isClosed()) {
@@ -18,6 +22,9 @@ public class Database {
         return this.connectionDb;
     }
 
+    /**
+     * Connection à la base de données
+     */
     private void connectToDb() {
         String url = System.getenv("DB_URL") + System.getenv("DB_NAME");
         String user = System.getenv("DB_USER");
@@ -33,7 +40,7 @@ public class Database {
     }
 
     /**
-     * Ajoutez une méthode pour fermer la connexion si nécessaire
+     * Fermer la connexion à la base de données
      */
     public void closeConnection() {
         if (this.connectionDb != null) {

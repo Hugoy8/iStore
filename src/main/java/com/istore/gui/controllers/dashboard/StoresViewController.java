@@ -30,18 +30,12 @@ public class StoresViewController {
     /**
      * La table des magasins.
      */
-    @FXML
-    private TableView<Store> storesTable;
-    @FXML
-    private TableColumn<Store, Integer> idColumn;
-    @FXML
-    private TableColumn<Store, String> nameColumn;
-    @FXML
-    private TableColumn<Store, String> locationColumn;
-    @FXML
-    private TableColumn<Store, String> employeesColumn;
-    @FXML
-    private TableColumn<Store, Void> actionsColumn;
+    @FXML private TableView<Store> storesTable;
+    @FXML private TableColumn<Store, Integer> idColumn;
+    @FXML private TableColumn<Store, String> nameColumn;
+    @FXML private TableColumn<Store, String> locationColumn;
+    @FXML private TableColumn<Store, String> employeesColumn;
+    @FXML private TableColumn<Store, Void> actionsColumn;
 
     private DashboardController dashboardController;
 

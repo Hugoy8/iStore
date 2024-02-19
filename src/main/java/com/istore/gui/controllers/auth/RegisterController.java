@@ -16,21 +16,24 @@ import static com.istore.Application.getAuthService;
 
 public class RegisterController {
 
-    // Champ de texte.
     @FXML private TextField pseudoField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
 
-    // Zone de texte pour les erreurs.
     @FXML private Text errorText;
     @FXML private HBox errorBox;
 
+    /**
+     * Enregistre un utilisateur.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
+     * @throws SQLException Exception qui gère les erreurs SQL
+     */
     @FXML
     public void handleRegister() throws IOException, SQLException {
         errorBox.setVisible(false);
 
-        // Vérification des mots de passe.
+        // Vérification des mots de passe
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             errorText.setText("Les mots de passe ne correspondent pas.");
             errorBox.setVisible(true);

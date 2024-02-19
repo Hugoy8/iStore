@@ -27,7 +27,6 @@ public class WhitelistEmailDAO {
             ps.setString(1, email);
             ps.executeUpdate();
         } catch (SQLException e) {
-            // Lancer une exception personnalisée si nécessaire, par exemple si l'email existe déjà.
             throw e;
         }
     }

@@ -34,52 +34,34 @@ import java.util.List;
 public class StoreDetailsViewController {
 
     // Tableau de l'invenatire
-    @FXML
-    private TableView<Item> inventoryTable;
-    @FXML
-    private TableColumn<Item, Integer> idColumnInventory;
-    @FXML
-    private TableColumn<Item, String> nameColumnInventory;
-    @FXML
-    private TableColumn<Item, String> priceColumnInventory;
-    @FXML
-    private TableColumn<Item, String> stockColumnInventory;
-    @FXML
-    private TableColumn<Item, Void> actionsColumnInventory;
+    @FXML private TableView<Item> inventoryTable;
+    @FXML private TableColumn<Item, Integer> idColumnInventory;
+    @FXML private TableColumn<Item, String> nameColumnInventory;
+    @FXML private TableColumn<Item, String> priceColumnInventory;
+    @FXML private TableColumn<Item, String> stockColumnInventory;
+    @FXML private TableColumn<Item, Void> actionsColumnInventory;
 
     // Identifiant du magasin actuel
     private int currentStoreId;
 
     // Tableau des employés
-    @FXML
-    private TableView<User> employeesTable;
-    @FXML
-    private TableColumn<User, Integer> idColumnEmployees;
-    @FXML
-    private TableColumn<User, String> nameColumnEmployees;
-    @FXML
-    private TableColumn<User, String> emailColumnEmployees;
-    @FXML
-    private TableColumn<User, String> roleColumnEmployees;
-    @FXML
-    private TableColumn<User, Void> actionsColumnEmployees;
+    @FXML private TableView<User> employeesTable;
+    @FXML private TableColumn<User, Integer> idColumnEmployees;
+    @FXML private TableColumn<User, String> nameColumnEmployees;
+    @FXML private TableColumn<User, String> emailColumnEmployees;
+    @FXML private TableColumn<User, String> roleColumnEmployees;
+    @FXML private TableColumn<User, Void> actionsColumnEmployees;
 
     // Éléments de la vue
-    @FXML
-    private Button inventoryButton, employeesButton;
-    @FXML
-    private Button inventoryAddButton, employeesAddButton;
-    @FXML
-    private VBox inventorySection, employeesSection;
-    @FXML
-    private HBox horizontalBox;
+    @FXML private Button inventoryButton, employeesButton;
+    @FXML private Button inventoryAddButton, employeesAddButton;
+    @FXML private VBox inventorySection, employeesSection;
+    @FXML private HBox horizontalBox;
 
     private DashboardController dashboardController;
 
-    @FXML
-    private Text storeNameText;
-    @FXML
-    private Text breadcrumbText;
+    @FXML private Text storeNameText;
+    @FXML private Text breadcrumbText;
 
     private Store currentStore;
 
@@ -306,6 +288,8 @@ public class StoreDetailsViewController {
 
     /**
      * Affiche la popup de création d'un nouvel item.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     @FXML
     private void showCreateItemPopup() {
@@ -314,7 +298,8 @@ public class StoreDetailsViewController {
             Parent root = loader.load();
 
             CreateItemPopupController controller = loader.getController();
-            controller.setInventoryId(currentStoreId);
+            int inventoryId = Application.getInventoryService().getInventoryIdByStoreId(currentStore.getId());
+            controller.setInventoryId(inventoryId);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -322,7 +307,7 @@ public class StoreDetailsViewController {
             stage.setScene(new Scene(root));
             stage.setOnHidden(e -> refreshTable());
             stage.showAndWait();
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -494,6 +479,7 @@ public class StoreDetailsViewController {
 
     /**
      * Affiche la fenêtre des magasins (retour en arrière).
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
     public void showStoresView() throws IOException {

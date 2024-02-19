@@ -30,18 +30,12 @@ public class UsersViewController {
     /**
      * La table des utilisateurs.
      */
-    @FXML
-    private TableView<User> usersTable;
-    @FXML
-    private TableColumn<User, Integer> idColumn;
-    @FXML
-    private TableColumn<User, String> pseudoColumn;
-    @FXML
-    private TableColumn<User, String> emailColumn;
-    @FXML
-    private TableColumn<User, String> roleColumn;
-    @FXML
-    private TableColumn<User, Void> actionsColumn;
+    @FXML private TableView<User> usersTable;
+    @FXML private TableColumn<User, Integer> idColumn;
+    @FXML private TableColumn<User, String> pseudoColumn;
+    @FXML private TableColumn<User, String> emailColumn;
+    @FXML private TableColumn<User, String> roleColumn;
+    @FXML private TableColumn<User, Void> actionsColumn;
 
     /**
      * Initialise la vue.

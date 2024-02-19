@@ -24,7 +24,7 @@ public class ItemService {
 
     /**
      * Récupère un item par son id de magasin.
-     * @param storeId
+     * @param storeId L'id du magasin.
      * @return L'item trouvé.
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
@@ -52,7 +52,7 @@ public class ItemService {
 
     /**
      * Incrémenter le stock d'un item.
-     * @param itemId
+     * @param itemId L'id de l'item.
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void incrementStock(int itemId) throws SQLException {
@@ -61,7 +61,7 @@ public class ItemService {
 
     /**
      * Décrémenter le stock d'un item.
-     * @param itemId
+     * @param itemId L'id de l'item.
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public void decrementStock(int itemId) throws SQLException {

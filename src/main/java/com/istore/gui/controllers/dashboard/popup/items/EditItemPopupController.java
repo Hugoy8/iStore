@@ -12,12 +12,9 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class EditItemPopupController {
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField priceField;
-    @FXML
-    private TextField stockField;
+    @FXML private TextField nameField;
+    @FXML private TextField priceField;
+    @FXML private TextField stockField;
 
     @FXML private Text errorText;
     @FXML private HBox errorBox;

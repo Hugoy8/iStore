@@ -25,6 +25,7 @@ public class AddEmployeePopupController {
 
     /**
      * Initialise les utilisateurs via le store
+     * @param storeId L'identifiant du magasin
      */
     public void setStoreId(int storeId) {
         this.storeId = storeId;

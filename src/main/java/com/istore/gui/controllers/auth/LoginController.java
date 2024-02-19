@@ -14,15 +14,16 @@ import static com.istore.Application.getAuthService;
 
 public class LoginController{
 
-    // Champ de texte.
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
 
-    // Zone de texte pour les erreurs.
     @FXML private Text errorText;
     @FXML private HBox errorBox;
 
-
+    /**
+     * Connecte un utilisateur.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
+     */
     @FXML
     public void handleLogin() throws IOException {
         User user = null;

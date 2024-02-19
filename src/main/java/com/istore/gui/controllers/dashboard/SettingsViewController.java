@@ -19,22 +19,12 @@ import static com.istore.Application.getAuthService;
 
 public class SettingsViewController {
 
-    @FXML
-    private TextField emailField, pseudoField;
-
-    @FXML
-    private PasswordField actualPasswordField, newPasswordField, confirmNewPasswordField;
-
-    @FXML
-    private HBox errorInformationBox, successInformationBox, errorSecurityBox, successSecurityBox;
-
-    @FXML
-    private VBox informationBox, securityBox;
-    @FXML
-    private Button informationButton, securityButton;
-
-    @FXML
-    private Text errorInformationText, successInformationText, errorSecurityText, successSecurityText;
+    @FXML private TextField emailField, pseudoField;
+    @FXML private PasswordField actualPasswordField, newPasswordField, confirmNewPasswordField;
+    @FXML private HBox errorInformationBox, successInformationBox, errorSecurityBox, successSecurityBox;
+    @FXML private VBox informationBox, securityBox;
+    @FXML private Button informationButton, securityButton;
+    @FXML private Text errorInformationText, successInformationText, errorSecurityText, successSecurityText;
 
     /**
      * Initialisation de la vue.
@@ -89,7 +79,7 @@ public class SettingsViewController {
         this.hideAllBox();
         User user = getAuthService().getUser();
 
-        // Vérification des nouvelles informations.
+        // Vérification des nouvelles informations
         if (actualPasswordField.getText().isEmpty() || newPasswordField.getText().isEmpty() || confirmNewPasswordField.getText().isEmpty()) {
             showErrorSecurityBox(true, "Veuillez remplir tous les champs.");
             return;
@@ -103,7 +93,7 @@ public class SettingsViewController {
             return;
         }
 
-        // Mise à jour du mot de passe.
+        // Mise à jour du mot de passe
         String result = getAuthService().updateUserPassword(user.getId(), newPasswordField.getText());
 
         if (result.equals("Mot de passe mis à jour avec succès.")){
