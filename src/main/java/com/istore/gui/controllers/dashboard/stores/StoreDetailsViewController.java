@@ -54,6 +54,9 @@ public class StoreDetailsViewController {
         this.dashboardController = dashboardController;
     }
 
+    /**
+     * Permet de charger la vue de la liste des magasins.
+     */
     @FXML
     private void showStoresView() {
         if (dashboardController != null) {
