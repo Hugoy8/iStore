@@ -21,6 +21,9 @@ public class CreateUserPopupController {
     @FXML private Text errorText;
     @FXML private HBox errorBox;
 
+    /**
+     * Crée un utilisateur.
+     */
     @FXML
     private void handleCreateUser() {
         errorBox.setVisible(false);
@@ -56,6 +59,9 @@ public class CreateUserPopupController {
         }
     }
 
+    /**
+     * Ferme la fenêtre de popup.
+     */
     private void closePopup() {
         Stage stage = (Stage) pseudoField.getScene().getWindow();
         stage.close();

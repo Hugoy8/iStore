@@ -23,6 +23,10 @@ public class EditUserPopupController {
 
     private User currentUser;
 
+    /**
+     * Initialise les données de l'utilisateur à modifier.
+     * @param user L'utilisateur à modifier.
+     */
     public void initUserData(User user) {
         this.currentUser = user;
         pseudoField.setText(user.getPseudo());
@@ -30,6 +34,9 @@ public class EditUserPopupController {
         roleComboBox.setValue(user.getRole());
     }
 
+    /**
+     * Met à jour les informations de l'utilisateur.
+     */
     @FXML
     private void handleUpdateUser() {
         errorBox.setVisible(false);
@@ -69,6 +76,9 @@ public class EditUserPopupController {
         }
     }
 
+    /**
+     * Ferme la popup.
+     */
     private void closePopup() {
         Stage stage = (Stage) pseudoField.getScene().getWindow();
         stage.close();

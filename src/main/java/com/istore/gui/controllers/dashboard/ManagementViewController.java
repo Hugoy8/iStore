@@ -22,6 +22,9 @@ public class ManagementViewController {
     private Text errorText, successText;
 
 
+    /**
+     * Ajoute une adresse e-mail à la liste blanche.
+     */
     @FXML
     private void handleWhitelist() {
         String email = emailField.getText().trim();

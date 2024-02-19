@@ -97,10 +97,9 @@ public class UsersViewController {
         });
     }
 
-    public void refreshTable() {
-        loadUsersIntoTable();
-    }
-
+    /**
+     * Charge les utilisateurs dans la table.
+     */
     private void loadUsersIntoTable() {
         Platform.runLater(() -> {
             try {
@@ -112,8 +111,16 @@ public class UsersViewController {
         });
     }
 
+    /**
+     * Rafraîchit la table des utilisateurs.
+     */
+    public void refreshTable() {
+        loadUsersIntoTable();
+    }
 
-
+    /**
+     * Affiche la fenêtre de création de magasin.
+     */
     @FXML
     private void showCreateUserPopup() {
         try {
@@ -131,6 +138,10 @@ public class UsersViewController {
         }
     }
 
+    /**
+     * Affiche la fenêtre de modification d'un utilisateur.
+     * @param user L'utilisateur à modifier.
+     */
     private void showEditUserPopup(User user) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/edit-user.fxml"));
@@ -150,6 +161,10 @@ public class UsersViewController {
         }
     }
 
+    /**
+     * Affiche la fenêtre de confirmation de suppression de l'utilisateur.
+     * @param userToDelete L'utilisateur à supprimer.
+     */
     private void showDeleteUserConfirmPopup(User userToDelete) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/delete-user-confirm.fxml"));
@@ -168,6 +183,10 @@ public class UsersViewController {
         }
     }
 
+    /**
+     * Supprime un utilisateur par son ID.
+     * @param userId L'ID de l'utilisateur à supprimer.
+     */
     private void deleteUserById(int userId) {
         try {
             Application.getUserService().deleteUserById(userId);

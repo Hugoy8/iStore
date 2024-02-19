@@ -1,14 +1,9 @@
 package com.istore.gui.controllers.dashboard.popup.stores;
 
 import com.istore.Application;
-import com.istore.gui.AppLauncher;
 import com.istore.models.Store;
-import com.istore.models.User;
-import com.istore.services.AuthService;
 import com.istore.services.StoreService;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -26,12 +21,19 @@ public class EditStorePopupController {
 
     private Store currentStore;
 
+    /**
+     * Initialise les données du magasin à modifier.
+     * @param store Le magasin à modifier.
+     */
     public void initStoreData(Store store) {
         this.currentStore = store;
         nameField.setText(store.getName());
         locationField.setText(store.getLocation());
     }
 
+    /**
+     * Met à jour les informations du magasin.
+     */
     @FXML
     private void handleUpdateStore() {
         errorBox.setVisible(false);
@@ -56,6 +58,9 @@ public class EditStorePopupController {
         }
     }
 
+    /**
+     * Ferme la fenêtre de popup.
+     */
     private void closePopup() {
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();

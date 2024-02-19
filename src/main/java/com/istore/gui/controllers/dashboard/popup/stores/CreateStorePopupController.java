@@ -22,6 +22,9 @@ public class CreateStorePopupController {
     @FXML private Text errorText;
     @FXML private HBox errorBox;
 
+    /**
+     * Crée un magasin.
+     */
     @FXML
     private void handleCreateStore() {
         errorBox.setVisible(false);
@@ -42,6 +45,9 @@ public class CreateStorePopupController {
         }
     }
 
+    /**
+     * Ferme la fenêtre de popup.
+     */
     private void closePopup() {
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();

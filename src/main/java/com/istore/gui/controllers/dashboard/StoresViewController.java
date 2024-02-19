@@ -118,6 +118,9 @@ public class StoresViewController {
         });
     }
 
+    /**
+     * Charge les magasins dans la table.
+     */
     private void loadStoresIntoTable() {
         Platform.runLater(() -> {
             ObservableList<Store> stores = FXCollections.observableArrayList();
@@ -130,19 +133,16 @@ public class StoresViewController {
         });
     }
 
+    /**
+     * Rafraîchit la table des magasins.
+     */
     public void refreshTable() {
         loadStoresIntoTable();
     }
 
-    private void deleteStore(int storeId) {
-        try {
-            Application.getStoreService().deleteStore(storeId);
-            loadStoresIntoTable();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Affiche la fenêtre de création de magasin.
+     */
     @FXML
     private void showCreateStore() {
         try {
@@ -160,6 +160,10 @@ public class StoresViewController {
         }
     }
 
+    /**
+     * Affiche la fenêtre de modification de magasin.
+     * @param store Le magasin à modifier.
+     */
     @FXML
     private void showEditStorePopup(Store store) {
         try {
@@ -180,6 +184,10 @@ public class StoresViewController {
         }
     }
 
+    /**
+     * Affiche la fenêtre de confirmation de suppression de magasin.
+     * @param storeToDelete Le magasin à supprimer.
+     */
     @FXML
     private void showDeleteStoreConfirmPopup(Store storeToDelete) {
         try {
@@ -199,6 +207,10 @@ public class StoresViewController {
         }
     }
 
+    /**
+     * Supprime un magasin par son ID.
+     * @param storeId L'ID du magasin à supprimer.
+     */
     private void deleteStoreById(int storeId) {
         try {
             Application.getStoreService().deleteStore(storeId);

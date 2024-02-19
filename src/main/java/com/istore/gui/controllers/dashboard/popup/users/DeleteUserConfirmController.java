@@ -15,6 +15,9 @@ public class DeleteUserConfirmController {
         this.onConfirm = onConfirm;
     }
 
+    /**
+     * Appelé lorsqu'on clique sur le bouton "Confirmer".
+     */
     @FXML
     private void handleConfirm() {
         if (onConfirm != null) {
@@ -23,15 +26,22 @@ public class DeleteUserConfirmController {
         closeStage();
     }
 
+    /**
+     * Appelé lorsqu'on clique sur le bouton "Annuler".
+     */
     @FXML
     private void handleCancel() {
         closeStage();
     }
 
+    /**
+     * Ferme la fenêtre de popup.
+     */
     private void closeStage() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
 
 
 }
