@@ -14,7 +14,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.DashboardController">
     <HBox style="-fx-background-color: #fff;" styleClass="sidebarBox" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-        <VBox spacing="32" styleClass="sidebarContainer">
+        <VBox spacing="260.0" styleClass="sidebarContainer">
             <VBox spacing="48" style="-fx-padding: 48px 32px;" styleClass="sidebar">
                 <ImageView fitHeight="38.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -83,7 +83,7 @@
                     </VBox>
                 </VBox>
             </VBox>
-            <VBox alignment="BOTTOM_CENTER" style="-fx-padding: 48px 32px;" VBox.vgrow="ALWAYS">
+            <VBox alignment="BOTTOM_CENTER" style="-fx-padding: 48px 32px;">
                 <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 12px 0;">
                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                         <image>
