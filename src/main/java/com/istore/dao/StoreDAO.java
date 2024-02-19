@@ -2,6 +2,7 @@ package com.istore.dao;
 
 import com.istore.database.Database;
 import com.istore.models.Store;
+import com.istore.models.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -119,5 +120,70 @@ public class StoreDAO {
         }
         return stores;
     }
+
+    /**
+     * Retrouver les employés d'un magasin par son id
+     * @param storeId ID du magasin
+     * @return Liste des employés
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public List<User> getEmployeesByStoreId(int storeId) throws SQLException {
+        List<User> employees = new ArrayList<>();
+        String query = "SELECT u.* FROM users u " +
+                "JOIN store_employees se ON u.id = se.user_id " +
+                "WHERE se.store_id = ?";
+        try (Connection conn = db.getConnectionDb();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, storeId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("id"),
+                        rs.getString("pseudo"),
+                        rs.getString("email"),
+                        rs.getString("role")
+                );
+                employees.add(user);
+            }
+        }
+        return employees;
+    }
+
+    /**
+     * Ajouter un employé à un magasin
+     * @param storeId ID du magasin
+     * @param userId ID de l'employé
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void addEmployeeToStore(int storeId, int userId) throws SQLException {
+        String query = "INSERT INTO store_employees (store_id, user_id) VALUES (?, ?)";
+        try (Connection conn = db.getConnectionDb();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, storeId);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    /**
+     * Supprimer un employé d'un magasin
+     * @param storeId ID du magasin
+     * @param userId ID de l'employé
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void removeEmployeeFromStore(int storeId, int userId) throws SQLException {
+        String query = "DELETE FROM store_employees WHERE store_id = ? AND user_id = ?";
+        try (Connection conn = db.getConnectionDb();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, storeId);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
 }
 

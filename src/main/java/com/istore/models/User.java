@@ -25,6 +25,18 @@ public class User {
         this.role = role;
     }
 
+    public User(int id, String pseudo, String email, String role) {
+        this.id = id;
+        this.pseudo = pseudo;
+        this.email = email;
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return this.pseudo;
+    }
+
     // Getters et setters
     public int getId() {
         return id;

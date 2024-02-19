@@ -7,8 +7,8 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController" style="-fx-padding: 20; -fx-background-color: white;" stylesheets="@../../../../styles/auth.css">
-    <Text fill="#000" text="Êtes-vous sûr de vouloir supprimer ce magasin ?">
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.employees.RemoveEmployeeConfirmController" style="-fx-padding: 20; -fx-background-color: white;" stylesheets="@../../../../styles/auth.css">
+    <Text fill="#000" text="Êtes-vous sûr de vouloir supprimer cet employé ?">
         <font>
             <Font name="SF Pro Text Regular" size="18.0" />
         </font>

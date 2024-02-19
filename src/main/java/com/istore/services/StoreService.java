@@ -2,6 +2,7 @@ package com.istore.services;
 
 import com.istore.dao.StoreDAO;
 import com.istore.models.Store;
+import com.istore.models.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -48,5 +49,35 @@ public class StoreService {
      */
     public List<Store> listAllStoresWithEmployees() throws SQLException {
         return storeDAO.listAllStoresWithEmployees();
+    }
+
+    /**
+     * Retrouve un magasin par son ID.
+     * @param id L'ID du magasin.
+     * @return Le magasin trouvé.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public List<User> getEmployeesByStoreId(int id) throws SQLException {
+        return storeDAO.getEmployeesByStoreId(id);
+    }
+
+    /**
+     * Ajoute un employé à un magasin.
+     * @param storeId L'ID du magasin.
+     * @param employeeId L'ID de l'employé.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void addEmployeeToStore(int storeId, int employeeId) throws SQLException {
+        storeDAO.addEmployeeToStore(storeId, employeeId);
+    }
+
+    /**
+     * Supprime un employé d'un magasin.
+     * @param storeId L'ID du magasin.
+     * @param employeeId L'ID de l'employé.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void removeEmployeeFromStore(int storeId, int employeeId) throws SQLException {
+        storeDAO.removeEmployeeFromStore(storeId, employeeId);
     }
 }

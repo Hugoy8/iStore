@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Pos?>
 <?import javafx.scene.layout.HBox?>
-
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.text.Text?>
+
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.items.DeleteItemConfirmController" style="-fx-padding: 20; -fx-background-color: white;" stylesheets="@../../../../styles/auth.css">
     <Text fill="#000" text="Êtes-vous sûr de vouloir supprimer cet objet ?">
         <font>

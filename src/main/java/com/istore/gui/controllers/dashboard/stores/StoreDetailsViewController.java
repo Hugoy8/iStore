@@ -2,11 +2,14 @@ package com.istore.gui.controllers.dashboard.stores;
 
 import com.istore.Application;
 import com.istore.gui.controllers.dashboard.DashboardController;
+import com.istore.gui.controllers.dashboard.popup.employees.AddEmployeePopupController;
 import com.istore.gui.controllers.dashboard.popup.items.CreateItemPopupController;
 import com.istore.gui.controllers.dashboard.popup.items.DeleteItemConfirmController;
 import com.istore.gui.controllers.dashboard.popup.items.EditItemPopupController;
+import com.istore.gui.controllers.dashboard.popup.employees.RemoveEmployeeConfirmController;
 import com.istore.models.Item;
 import com.istore.models.Store;
+import com.istore.models.User;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +32,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class StoreDetailsViewController {
 
@@ -51,17 +55,17 @@ public class StoreDetailsViewController {
 
     // Tableau des employés
     @FXML
-    private TableView<Store> employeesTable;
+    private TableView<User> employeesTable;
     @FXML
-    private TableColumn<Store, Integer> idColumnEmployees;
+    private TableColumn<User, Integer> idColumnEmployees;
     @FXML
-    private TableColumn<Store, String> nameColumnEmployees;
+    private TableColumn<User, String> nameColumnEmployees;
     @FXML
-    private TableColumn<Store, String> emailColumnEmployees;
+    private TableColumn<User, String> emailColumnEmployees;
     @FXML
-    private TableColumn<Store, String> roleColumnEmployees;
+    private TableColumn<User, String> roleColumnEmployees;
     @FXML
-    private TableColumn<Store, Void> actionsColumnEmployees;
+    private TableColumn<User, Void> actionsColumnEmployees;
 
     // Éléments de la vue
     @FXML
@@ -82,6 +86,10 @@ public class StoreDetailsViewController {
 
     private Store currentStore;
 
+    /**
+     * Initialise les données du magasin.
+     * @param store Le magasin actuel.
+     */
     public void initStoreData(Store store) {
         this.currentStore = store;
 
@@ -89,7 +97,9 @@ public class StoreDetailsViewController {
         breadcrumbText.setText("Magasins / Magasin - " + store.getName());
 
         loadInventoryIntoTable(store.getId());
+        loadEmployeesTable(store.getId());
     }
+
     /**
      * Définit le contrôleur du tableau de bord.
      * @param dashboardController Le contrôleur du tableau de bord.
@@ -102,14 +112,15 @@ public class StoreDetailsViewController {
      * Initialisation de la vue.
      */
     public void initialize() {
-        this.setupTableColumns();
+        this.setupInventoryTableColumns();
+        this.setupEmployeeTableColumns();
         this.handleInventorySection();
     }
 
     /**
-     * Configure les colonnes de la table.
+     * Configure les colonnes de la table de l'inventaire.
      */
-    private void setupTableColumns() {
+    private void setupInventoryTableColumns() {
         idColumnInventory.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumnInventory.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceColumnInventory.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -160,16 +171,6 @@ public class StoreDetailsViewController {
     }
 
     /**
-     * Initialise les données du magasin.
-     * @param storeId L'identifiant du magasin.
-     */
-    public void loadStoreData(int storeId) {
-        this.currentStoreId = storeId;
-        loadInventoryIntoTable(storeId);
-    }
-
-
-    /**
      * Charge l'inventaire dans la table.
      * @param storeId L'identifiant du magasin.
      */
@@ -185,10 +186,68 @@ public class StoreDetailsViewController {
     }
 
     /**
+     * Configure les colonnes de la table des employés.
+     */
+    private void setupEmployeeTableColumns() {
+        idColumnEmployees.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumnEmployees.setCellValueFactory(new PropertyValueFactory<>("pseudo"));
+        emailColumnEmployees.setCellValueFactory(new PropertyValueFactory<>("email"));
+        roleColumnEmployees.setCellValueFactory(new PropertyValueFactory<>("role"));
+        actionsColumnEmployees.setCellFactory(param -> new TableCell<User, Void>() {
+            private final Button deleteBtn = new Button("");
+
+            {
+
+                // Suppression
+                SVGPath deleteIcon = new SVGPath();
+                deleteIcon.setContent("M16 9V19H8V9H16ZM14.5 3H9.5L8.5 4H5V6H19V4H15.5L14.5 3ZM18 7H6V19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7Z");
+                deleteIcon.getStyleClass().add("delete-icon");
+                deleteIcon.setFill(Color.web("#FF3C3C"));
+                deleteBtn.setGraphic(deleteIcon);
+
+                deleteBtn.getStyleClass().add("button-icon");
+
+                deleteBtn.setOnAction(event -> {
+                    User selectedUser = getTableView().getItems().get(getIndex());
+                    showRemoveEmployeeConfirmPopup(selectedUser);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void user, boolean empty) {
+                super.updateItem(user, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox hbox = new HBox(5, deleteBtn);
+                    setGraphic(hbox);
+                }
+            }
+        });
+    }
+
+    /**
+     * Charge les employés dans la table.
+     * @param storeId L'identifiant du magasin.
+     */
+    private void loadEmployeesTable(int storeId) {
+        Platform.runLater(() -> {
+            try {
+                List<User> employees = Application.getStoreService().getEmployeesByStoreId(storeId);
+                ObservableList<User> observableEmployees = FXCollections.observableArrayList(employees);
+                employeesTable.setItems(observableEmployees);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
      * Rafraîchit la table de l'inventaire.
      */
     public void refreshTable() {
         loadInventoryIntoTable(currentStore.getId());
+        loadEmployeesTable(currentStore.getId());
     }
 
     /**
@@ -254,6 +313,7 @@ public class StoreDetailsViewController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Confirmer la suppression");
             stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refreshTable());
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -268,6 +328,64 @@ public class StoreDetailsViewController {
         try {
             Application.getItemService().deleteItemById(itemId);
             refreshTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Affiche la popup de création d'un nouvel item.
+     */
+    @FXML
+    private void showAddEmployeePopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/employees/add-employee.fxml"));
+            Parent root = loader.load();
+
+            AddEmployeePopupController controller = loader.getController();
+            controller.setStoreId(currentStore.getId());
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajouter un employé");
+            stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refreshTable());
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Supprime un employé.
+     * @param user L'employé à supprimer.
+     */
+    private void showRemoveEmployeeConfirmPopup(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/employees/remove-employee.fxml"));
+            Parent root = loader.load();
+
+            RemoveEmployeeConfirmController controller = loader.getController();
+            controller.setOnConfirm(() -> removeEmployee(user.getId()));
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Supprimer un employé");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Supprime un employé.
+     * @param userId L'ID de l'employé à supprimer.
+     */
+    private void removeEmployee(int userId) {
+        try {
+            Application.getStoreService().removeEmployeeFromStore(currentStore.getId(), userId);
+            loadEmployeesTable(currentStore.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -311,8 +429,8 @@ public class StoreDetailsViewController {
         this.employeesAddButton.setVisible(true);
         this.employeesAddButton.setManaged(true);
 
-        this.employeesAddButton.setVisible(true);
-        this.employeesAddButton.setManaged(true);
+        this.employeesSection.setVisible(true);
+        this.employeesSection.setManaged(true);
 
         this.inventorySection.setVisible(false);
         this.inventorySection.setManaged(false);
