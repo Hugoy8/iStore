@@ -16,14 +16,14 @@
     <VBox spacing="48.0" style="-fx-padding: 32px;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="0">
         <HBox alignment="CENTER_LEFT" spacing="592.0">
             <VBox spacing="16.0">
-                <Button onAction="#showStoresView"  style="-fx-background-color: #F9F9F9;" styleClass="buttonReturn" text="Retour" textFill="#007aff">
+                <Button graphicTextGap="8.0" onAction="#showStoresView" style="-fx-background-color: #F9F9F9;" styleClass="buttonReturn" text="Retour" textFill="#007aff">
                     <graphic>
                         <HBox alignment="CENTER_LEFT">
                             <SVGPath content="M7.5 9L4.5 6L7.5 3" fill="#007AFF" />
                         </HBox>
                     </graphic>
                     <font>
-                        <Font name="SF Pro Text Medium" size="12.0" />
+                        <Font name="SF Pro Text Medium" size="14.0" />
                     </font>
                     <cursor>
                         <Cursor fx:constant="HAND" />

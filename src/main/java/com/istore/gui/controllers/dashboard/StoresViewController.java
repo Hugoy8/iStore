@@ -1,13 +1,15 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.Application;
-import com.istore.gui.AppLauncher;
 import com.istore.models.Store;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -15,9 +17,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import com.istore.gui.controllers.dashboard.DashboardController;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class StoresViewController {
@@ -123,6 +125,10 @@ public class StoresViewController {
         });
     }
 
+    public void refreshTable() {
+        loadStoresIntoTable();
+    }
+
     private void deleteStore(int storeId) {
         try {
             Application.getStoreService().deleteStore(storeId);
@@ -134,5 +140,18 @@ public class StoresViewController {
 
     @FXML
     private void showCreateStore() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/create-store.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Créer un magasin");
+            stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refreshTable());
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

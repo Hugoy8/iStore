@@ -1,8 +1,8 @@
-package com.istore.gui.controllers.dashboard.popup;
+package com.istore.gui.controllers.dashboard.popup.stores;
 
+import com.istore.Application;
 import com.istore.models.User;
 import com.istore.services.AuthService;
-import com.istore.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class EditUserPopupController {
+public class EditStorePopupController {
 
     @FXML private TextField pseudoField;
     @FXML private TextField emailField;

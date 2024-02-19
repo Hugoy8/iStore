@@ -1,7 +1,7 @@
 package com.istore.gui.controllers.dashboard;
 
-import com.istore.gui.controllers.dashboard.popup.EditUserPopupController;
-import com.istore.gui.controllers.dashboard.popup.DeleteUserConfirmController;
+import com.istore.gui.controllers.dashboard.popup.users.EditUserPopupController;
+import com.istore.gui.controllers.dashboard.popup.users.DeleteUserConfirmController;
 import com.istore.models.User;
 import com.istore.Application;
 import javafx.application.Platform;

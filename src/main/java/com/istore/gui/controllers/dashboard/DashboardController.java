@@ -1,10 +1,12 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.gui.AppLauncher;
+import com.istore.services.AuthService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -24,11 +26,35 @@ public class DashboardController {
     @FXML
     private AnchorPane contentArea;
 
+    @FXML
+    private Label usernameLabel;
+
+    @FXML
+    private Label roleLabel;
+
     @FXML private Button btnUsers, btnStores, btnManagement, btnSettings;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         this.loadUsersView();
+
+        retrieveUserInfos();
+    }
+
+    @FXML
+    public void retrieveUserInfos() throws IOException {
+        // Affiche le nom d'utilisateur
+        usernameLabel.setText(getAuthService().getUser().getPseudo());
+
+        // Affiche le rôle de l'utilisateur
+        String role = getAuthService().getUser().getRole();
+        if (role.equals("admin")) {
+            roleLabel.setText("Administrateur");
+            roleLabel.setTextFill(Color.web("#007AFF"));
+        } else {
+            roleLabel.setText("Utilisateur");
+            roleLabel.setTextFill(Color.web("#818181"));
+        }
     }
 
     /**
@@ -61,6 +87,9 @@ public class DashboardController {
         }
     }
 
+    /**
+     * Charge la vue des détails du magasin.
+     */
     @FXML
     public void loadStoreDetailsView() {
         try {
@@ -78,7 +107,6 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Charge la vue de gestion.
@@ -131,10 +159,10 @@ public class DashboardController {
                 if (icon != null) {
                     if (button == activeButton) {
                         button.getStyleClass().add("activeButton");
-                        icon.setFill(Color.WHITE); // Couleur pour bouton actif
+                        icon.setFill(Color.WHITE);
                     } else {
                         button.getStyleClass().removeAll("activeButton");
-                        icon.setFill(Color.web("#818181")); // Couleur pour bouton inactif
+                        icon.setFill(Color.web("#818181"));
                     }
                 }
             }

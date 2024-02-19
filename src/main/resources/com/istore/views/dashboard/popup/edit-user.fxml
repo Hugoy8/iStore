@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.shape.SVGPath?>
 <?import java.lang.String?>
-<VBox alignment="CENTER" spacing="10" stylesheets="@../../../styles/auth.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.EditUserPopupController">
+<VBox alignment="CENTER" spacing="10" stylesheets="@../../../styles/auth.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.users.EditUserPopupController">
     <VBox spacing="20" styleClass="poupCard">
         <VBox spacing="4">
             <Text text="Éditer un utilisateur">

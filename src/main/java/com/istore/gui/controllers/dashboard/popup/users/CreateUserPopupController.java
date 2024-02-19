@@ -1,4 +1,4 @@
-package com.istore.gui.controllers.dashboard.popup;
+package com.istore.gui.controllers.dashboard.popup.users;
 
 import com.istore.models.User;
 import com.istore.Application;

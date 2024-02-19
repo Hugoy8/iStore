@@ -84,18 +84,27 @@
                 </VBox>
             </VBox>
             <VBox alignment="BOTTOM_CENTER" style="-fx-padding: 48px 32px;" VBox.vgrow="ALWAYS">
-                <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 12px">
+                <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 12px 0;">
                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                             <Image url="@../../pictures/profile.png" />
                         </image>
                     </ImageView>
-                    <Label fx:id="usernameLabel" text="Pseudo">
-                  <font>
-                     <Font name="SF Pro Text Semibold" size="18.0" />
-                  </font></Label>
+                    <VBox>
+                        <Label fx:id="usernameLabel" text="Pseudo">
+                            <font>
+                                <Font name="SF Pro Text Semibold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="roleLabel" text="Rôle">
+                            <font>
+                                <Font name="SF Pro Text Semibold" size="12.0" />
+                            </font>
+                        </Label>
+                    </VBox>
+
                 </HBox>
-                <Button alignment="CENTER_LEFT" onAction="#handleLogout" prefHeight="43.0" prefWidth="170.0" styleClass="sidebarDeconnexion" text="Déconnexion">
+                <Button alignment="CENTER_LEFT" onAction="#handleLogout" prefHeight="43.0" prefWidth="170.0" style="-fx-padding: 0;" styleClass="sidebarDeconnexion" text="Déconnexion">
                     <graphic>
                         <HBox alignment="CENTER_LEFT" style="-fx-padding: 0 8px 0 0;">
                             <SVGPath content="M4.79167 20.125C4.26458 20.125 3.81353 19.9375 3.4385 19.5625C3.06347 19.1874 2.87564 18.7361 2.875 18.2083V4.79167C2.875 4.26458 3.06283 3.81353 3.4385 3.4385C3.81417 3.06347 4.26522 2.87564 4.79167 2.875H11.5V4.79167H4.79167V18.2083H11.5V20.125H4.79167ZM15.3333 16.2917L14.0156 14.9021L16.4594 12.4583H8.625V10.5417H16.4594L14.0156 8.09792L15.3333 6.70833L20.125 11.5L15.3333 16.2917Z" fill="#FF3C3C" />
