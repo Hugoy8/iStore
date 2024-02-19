@@ -174,7 +174,6 @@ public class UsersViewController {
             refreshTable();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Afficher une erreur à l'utilisateur
         }
     }
 

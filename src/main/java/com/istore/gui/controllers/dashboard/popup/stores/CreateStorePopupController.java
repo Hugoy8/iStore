@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class CreateStorePopupController {
 
         String name = nameField.getText();
         String location = locationField.getText();
-        List<String> employees = null;
+        List<String> employees = new ArrayList<>();
 
         Store store = new Store(0, name, location, employees);
 

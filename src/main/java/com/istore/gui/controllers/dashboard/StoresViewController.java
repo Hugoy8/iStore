@@ -1,7 +1,9 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.Application;
+import com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController;
 import com.istore.models.Store;
+import com.istore.models.User;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -20,6 +22,7 @@ import javafx.scene.shape.SVGPath;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class StoresViewController {
@@ -93,10 +96,11 @@ public class StoresViewController {
                 });
                 editBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
+                    showDeleteStoreConfirmPopup(store);
                 });
                 deleteBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
-                    deleteStore(store.getId());
+                    showDeleteStoreConfirmPopup(store);
                 });
             }
 
@@ -151,6 +155,34 @@ public class StoresViewController {
             stage.setOnHidden(e -> refreshTable());
             stage.showAndWait();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void showDeleteStoreConfirmPopup(Store storeToDelete) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/delete-store-confirm.fxml"));
+            Parent root = loader.load();
+
+            DeleteStoreConfirmController controller = loader.getController();
+            controller.setOnConfirm(() -> deleteStoreById(storeToDelete.getId()));
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Confirmer la suppression");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteStoreById(int storeId) {
+        try {
+            Application.getStoreService().deleteStore(storeId);
+            refreshTable();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

@@ -21,10 +21,11 @@ public class StoreDAO {
      * @param store Le magasin à créer
      */
     public void createStore(Store store) throws SQLException {
-        String query = "INSERT INTO stores (name) VALUES (?)";
+        String query = "INSERT INTO stores (name, location) VALUES (?, ?)";
         try (Connection conn = db.getConnectionDb();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, store.getName());
+            ps.setString(2, store.getLocation());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
