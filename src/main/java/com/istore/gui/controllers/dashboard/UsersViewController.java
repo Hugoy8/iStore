@@ -38,6 +38,7 @@ public class UsersViewController {
 
     /**
      * Initialise la vue.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     @FXML
     public void initialize() throws SQLException {

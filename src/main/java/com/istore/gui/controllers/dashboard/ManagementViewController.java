@@ -135,7 +135,6 @@ public class ManagementViewController {
         }
     }
 
-
     /**
      * Supprime un whitelist par son email.
      * @param whitelistEmail L'email à supprimer.

@@ -83,6 +83,7 @@ public class UserService {
 
     /**
      * Liste les adresses e-mail de la whitelist.
+     * @return La liste des adresses e-mail de la whitelist.
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     public List<WhitelistEmail> listWhitelistEmails() throws SQLException {
