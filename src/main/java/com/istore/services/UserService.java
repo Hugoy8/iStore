@@ -3,6 +3,7 @@ package com.istore.services;
 import com.istore.dao.UserDAO;
 import com.istore.dao.WhitelistEmailDAO;
 import com.istore.models.User;
+import com.istore.models.WhitelistEmail;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -70,4 +71,22 @@ public class UserService {
     public void addEmailToWhitelist(String email) throws SQLException {
         whitelistEmailDAO.addEmailToWhitelist(email);
     }
+
+    /**
+     * Supprime une adresse e-mail de la whitelist.
+     * @param email L'adresse e-mail à supprimer.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void removeEmailFromWhitelist(String email) throws SQLException {
+        whitelistEmailDAO.removeEmailFromWhitelist(email);
+    }
+
+    /**
+     * Liste les adresses e-mail de la whitelist.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public List<WhitelistEmail> listWhitelistEmails() throws SQLException {
+        return whitelistEmailDAO.listWhitelistEmails();
+    }
+
 }

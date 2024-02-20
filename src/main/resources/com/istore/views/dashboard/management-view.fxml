@@ -12,6 +12,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <AnchorPane prefHeight="824.0" prefWidth="533.0" stylesheets="@../../styles/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.ManagementViewController">
     <VBox prefHeight="824.0" prefWidth="499.0" spacing="48.0" style="-fx-padding: 32px;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="0">
         <VBox spacing="4">
@@ -71,5 +73,15 @@
                 </VBox.margin>
             </Button>
         </VBox>
+        <TableView fx:id="whitelistTable" prefHeight="646.0">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+            <columns>
+                <TableColumn fx:id="idColumn" styleClass="columnHeader" text="ID" />
+                <TableColumn fx:id="emailColumn" prefWidth="300.0" styleClass="columnHeader" text="Email" />
+                <TableColumn fx:id="actionsColumn" prefWidth="100.0" styleClass="columnHeader" text="Actions" />
+            </columns>
+        </TableView>
     </VBox>
 </AnchorPane>
