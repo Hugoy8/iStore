@@ -48,7 +48,7 @@ public class ManagementViewController {
         try {
             loadWhitelistIntoTable();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 

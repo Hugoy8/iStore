@@ -51,7 +51,7 @@ public class AddEmployeePopupController {
 
             employeeComboBox.setItems(availableUsers);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -73,7 +73,7 @@ public class AddEmployeePopupController {
                     Application.getStoreService().addEmployeeToStore(storeId, userToAdd.getId());
                     closePopup();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw e;
                     errorText.setText("Erreur lors de l'ajout de l'employé. Veuillez réessayer.");
                     errorBox.setVisible(true);
                 }

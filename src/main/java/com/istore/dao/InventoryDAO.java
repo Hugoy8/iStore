@@ -24,8 +24,9 @@ public class InventoryDAO {
      */
     public int getInventoryIdByStoreId(int storeId) throws SQLException {
         String query = "SELECT id FROM inventories WHERE store_id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, storeId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -33,6 +34,8 @@ public class InventoryDAO {
             } else {
                 throw new SQLException("Aucun inventaire trouvé pour le storeId: " + storeId);
             }
+        } catch (SQLException e) {
+            throw e;
         }
     }
 

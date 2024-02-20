@@ -121,7 +121,7 @@ public class UsersViewController {
                     try {
                         showEditUserPopup(user);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 });
 
@@ -130,7 +130,7 @@ public class UsersViewController {
                     try {
                         showDeleteUserConfirmPopup(user);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 });
             }
@@ -156,7 +156,7 @@ public class UsersViewController {
             try {
                 ObservableList<User> users = FXCollections.observableArrayList(Application.getUserService().listAllUsers());
                 usersTable.setItems(users);
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
@@ -239,7 +239,7 @@ public class UsersViewController {
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         } else {
             AppLauncher.showAdminError();
@@ -261,7 +261,7 @@ public class UsersViewController {
                 AppLauncher.showLoginView();
             }
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

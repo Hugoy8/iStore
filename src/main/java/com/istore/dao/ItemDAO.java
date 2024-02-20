@@ -22,8 +22,9 @@ public class ItemDAO {
      */
     public void createItem(Item item) throws SQLException {
         String query = "INSERT INTO items (name, price, stock, inventory_id) VALUES (?, ?, ?, ?)";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try{
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
             ps.setInt(3, item.getStock());
@@ -41,8 +42,9 @@ public class ItemDAO {
      */
     public void updateItem(Item item) throws SQLException {
         String query = "UPDATE items SET name = ?, price = ?, stock = ?, inventory_id = ? WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
             ps.setInt(3, item.getStock());
@@ -61,8 +63,9 @@ public class ItemDAO {
      */
     public void deleteItem(int id) throws SQLException {
         String query = "DELETE FROM items WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -79,8 +82,9 @@ public class ItemDAO {
     public List<Item> findItemsByStoreId(int storeId) throws SQLException {
         List<Item> items = new ArrayList<>();
         String query = "SELECT * FROM items WHERE inventory_id IN (SELECT id FROM inventories WHERE store_id = ?)";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, storeId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -92,6 +96,8 @@ public class ItemDAO {
                         rs.getInt("inventory_id")
                 ));
             }
+        } catch (SQLException e) {
+            throw e;
         }
         return items;
     }
@@ -103,10 +109,13 @@ public class ItemDAO {
      */
     public void incrementStock(int itemId) throws SQLException {
         String query = "UPDATE items SET stock = stock + 1 WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, itemId);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
         }
     }
 
@@ -117,10 +126,13 @@ public class ItemDAO {
      */
     public void decrementStock(int itemId) throws SQLException {
         String query = "UPDATE items SET stock = CASE WHEN stock > 0 THEN stock - 1 ELSE 0 END WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, itemId);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
         }
     }
 

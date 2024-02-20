@@ -39,7 +39,7 @@ public class CreateStorePopupController {
             Application.getStoreService().createStore(store);
             closePopup();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
             errorText.setText("Erreur lors de la création du magasin. Veuillez réessayer.");
             errorBox.setVisible(true);
         }

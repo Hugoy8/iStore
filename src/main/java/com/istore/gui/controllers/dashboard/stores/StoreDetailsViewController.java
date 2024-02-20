@@ -122,7 +122,7 @@ public class StoreDetailsViewController {
                         Application.getItemService().decrementStock(item.getId());
                         refreshTable();
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        throw e;
                     }
                 });
 
@@ -132,7 +132,7 @@ public class StoreDetailsViewController {
                         Application.getItemService().incrementStock(item.getId());
                         refreshTable();
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        throw e;
                     }
                 });
 
@@ -144,7 +144,7 @@ public class StoreDetailsViewController {
                         Application.getItemService().updateItem(item);
                         refreshTable();
                     } catch (NumberFormatException | SQLException e) {
-                        e.printStackTrace();
+                        throw e;
                     }
                 });
             }
@@ -190,7 +190,7 @@ public class StoreDetailsViewController {
                     try {
                         showEditItemPopup(selectedItem);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw e;
                     }
                 });
                 deleteBtn.setOnAction(event -> {
@@ -198,7 +198,7 @@ public class StoreDetailsViewController {
                     try {
                         showDeleteItemConfirmPopup(selectedItem);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw e;
                     }
                 });
             }
@@ -226,7 +226,7 @@ public class StoreDetailsViewController {
                 ObservableList<Item> inventoryItems = FXCollections.observableArrayList(Application.getItemService().findItemsByStoreId(storeId)); // Supposons cette méthode existe
                 inventoryTable.setItems(inventoryItems);
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw e;
             }
         });
     }
@@ -258,7 +258,7 @@ public class StoreDetailsViewController {
                     try {
                         showRemoveEmployeeConfirmPopup(selectedUser);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw e;
                     }
                 });
             }
@@ -287,7 +287,7 @@ public class StoreDetailsViewController {
                 ObservableList<User> observableEmployees = FXCollections.observableArrayList(employees);
                 employeesTable.setItems(observableEmployees);
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw e;
             }
         });
     }
@@ -323,7 +323,7 @@ public class StoreDetailsViewController {
                 stage.setOnHidden(e -> refreshTable());
                 stage.showAndWait();
             } catch (IOException | SQLException e) {
-                e.printStackTrace();
+                throw e;
             }
         } else {
             AppLauncher.showAdminError();
@@ -350,7 +350,7 @@ public class StoreDetailsViewController {
                 stage.setOnHidden(e -> refreshTable());
                 stage.showAndWait();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw e;
             }
         } else {
             AppLauncher.showAdminError();
@@ -378,7 +378,7 @@ public class StoreDetailsViewController {
                 stage.setOnHidden(e -> refreshTable());
                 stage.showAndWait();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw e;
             }
         } else {
             AppLauncher.showAdminError();
@@ -394,7 +394,7 @@ public class StoreDetailsViewController {
             Application.getItemService().deleteItemById(itemId);
             refreshTable();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -418,7 +418,7 @@ public class StoreDetailsViewController {
                 stage.setOnHidden(e -> refreshTable());
                 stage.showAndWait();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw e;
             }
         } else {
             AppLauncher.showAdminError();
@@ -444,7 +444,7 @@ public class StoreDetailsViewController {
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw e;
             }
         } else {
             AppLauncher.showAdminError();
@@ -460,7 +460,7 @@ public class StoreDetailsViewController {
             Application.getStoreService().removeEmployeeFromStore(currentStore.getId(), userId);
             loadEmployeesTable(currentStore.getId());
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 

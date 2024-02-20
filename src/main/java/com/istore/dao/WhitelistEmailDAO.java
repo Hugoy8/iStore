@@ -26,8 +26,9 @@ public class WhitelistEmailDAO {
      */
     public void addEmailToWhitelist(String email) throws SQLException {
         String query = "INSERT INTO whitelist_emails (email) VALUES (?)";
-        try (Connection connection = this.db.getConnectionDb();
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, email);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -42,8 +43,9 @@ public class WhitelistEmailDAO {
      */
     public void removeEmailFromWhitelist(String email) throws SQLException {
         String query = "DELETE FROM whitelist_emails WHERE email = ?";
-        try (Connection connection = this.db.getConnectionDb();
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, email);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -59,9 +61,10 @@ public class WhitelistEmailDAO {
     public List<WhitelistEmail> listWhitelistEmails() throws SQLException {
         List<WhitelistEmail> emails = new ArrayList<>();
         String query = "SELECT * FROM whitelist_emails";
-        try (Connection connection = this.db.getConnectionDb();
-             PreparedStatement ps = connection.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
+        try {
+            Connection connection = this.db.getConnectionDb();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 emails.add(new WhitelistEmail(rs.getInt("id"), rs.getString("email")));
             }

@@ -24,8 +24,9 @@ public class StoreDAO {
      */
     public void createStore(Store store) throws SQLException {
         String query = "INSERT INTO stores (name, location) VALUES (?, ?)";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, store.getName());
             ps.setString(2, store.getLocation());
             ps.executeUpdate();
@@ -42,8 +43,9 @@ public class StoreDAO {
      */
     public Store findStoreById(int id) throws SQLException {
         String query = "SELECT * FROM stores WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -55,6 +57,8 @@ public class StoreDAO {
                         employees
                 );
             }
+        } catch (SQLException e) {
+            throw e;
         }
         return null;
     }
@@ -66,8 +70,9 @@ public class StoreDAO {
      */
     public void updateStore(Store store) throws SQLException {
         String query = "UPDATE stores SET name = ?, location = ? WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, store.getName());
             ps.setString(2, store.getLocation());
             ps.setInt(3, store.getId());
@@ -84,8 +89,9 @@ public class StoreDAO {
      */
     public void deleteStore(int id) throws SQLException {
         String query = "DELETE FROM stores WHERE id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -105,9 +111,10 @@ public class StoreDAO {
                 "LEFT JOIN store_employees se ON s.id = se.store_id " +
                 "LEFT JOIN users u ON se.user_id = u.id " +
                 "GROUP BY s.id";
-        try (Connection conn = db.getConnectionDb();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Store store = new Store(
                         rs.getInt("id"),
@@ -117,6 +124,8 @@ public class StoreDAO {
                 );
                 stores.add(store);
             }
+        } catch (SQLException e) {
+            throw e;
         }
         return stores;
     }
@@ -135,6 +144,7 @@ public class StoreDAO {
                 "JOIN users u ON se.user_id = u.id " +
                 "WHERE s.id IN ( SELECT distinct s.id FROM stores s JOIN store_employees se ON s.id = se.store_id WHERE se.user_id = ? ) " +
                 "GROUP BY s.id";
+        
         try {
             Connection conn = db.getConnectionDb();
             PreparedStatement ps = conn.prepareStatement(query);
@@ -166,8 +176,9 @@ public class StoreDAO {
         String query = "SELECT u.* FROM users u " +
                 "JOIN store_employees se ON u.id = se.user_id " +
                 "WHERE se.store_id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, storeId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -179,6 +190,8 @@ public class StoreDAO {
                 );
                 employees.add(user);
             }
+        } catch (SQLException e) {
+            throw e;
         }
         return employees;
     }
@@ -191,8 +204,9 @@ public class StoreDAO {
      */
     public void addEmployeeToStore(int storeId, int userId) throws SQLException {
         String query = "INSERT INTO store_employees (store_id, user_id) VALUES (?, ?)";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, storeId);
             ps.setInt(2, userId);
             ps.executeUpdate();
@@ -209,8 +223,9 @@ public class StoreDAO {
      */
     public void removeEmployeeFromStore(int storeId, int userId) throws SQLException {
         String query = "DELETE FROM store_employees WHERE store_id = ? AND user_id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, storeId);
             ps.setInt(2, userId);
             ps.executeUpdate();
@@ -226,8 +241,9 @@ public class StoreDAO {
      */
     public void removeEmployeeFromAllStores(int userId) throws SQLException {
         String query = "DELETE FROM store_employees WHERE user_id = ?";
-        try (Connection conn = db.getConnectionDb();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, userId);
             ps.executeUpdate();
         } catch (SQLException e) {

@@ -67,7 +67,7 @@ public class CreateItemPopupController {
             errorBox.setVisible(true);
         } catch (SQLException e) {
             errorText.setText("Erreur lors de la mise à jour de l'article.");
-            e.printStackTrace();
+            throw e;
             errorBox.setVisible(true);
         }
     }

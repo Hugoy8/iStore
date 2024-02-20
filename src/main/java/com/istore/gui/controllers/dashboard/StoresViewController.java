@@ -108,7 +108,7 @@ public class StoresViewController {
                     try {
                         showEditStorePopup(store);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 });
                 deleteBtn.setOnAction(event -> {
@@ -116,7 +116,7 @@ public class StoresViewController {
                     try {
                         showDeleteStoreConfirmPopup(store);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 });
             }
@@ -147,7 +147,7 @@ public class StoresViewController {
                     stores.addAll(Application.getStoreService().listAllStoresWithEmployees());
                 }
             } catch (SQLException | IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             storesTable.setItems(stores);
         });
