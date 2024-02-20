@@ -11,6 +11,8 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.shape.SVGPath?>
 <AnchorPane prefHeight="824.0" prefWidth="1170.0" stylesheets="@../../styles/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.UsersViewController">
     <VBox spacing="48.0" style="-fx-padding: 32px;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="0">
         <HBox alignment="CENTER_LEFT" spacing="360.0">
@@ -36,17 +38,30 @@
                 </VBox.margin>
             </Button>
         </HBox>
-        <TableView fx:id="usersTable" prefHeight="646.0">
-            <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-            <columns>
-                <TableColumn fx:id="idColumn" styleClass="columnHeader" text="ID" />
-                <TableColumn fx:id="pseudoColumn" prefWidth="200.0" styleClass="columnHeader" text="Pseudo" />
-                <TableColumn fx:id="emailColumn" prefWidth="300.0" styleClass="columnHeader" text="Email" />
-                <TableColumn fx:id="roleColumn" prefWidth="140.0" styleClass="columnHeader" text="Rôle" />
-                <TableColumn fx:id="actionsColumn" prefWidth="100.0" styleClass="columnHeader" text="Actions" />
-            </columns>
-        </TableView>
+        <VBox spacing="12">
+            <HBox alignment="CENTER_LEFT" spacing="8" style="-fx-padding: 0 0 0 12px; -fx-background-color: WHITE; -fx-background-radius: 8px; -fx-border-radius: 8px;">
+                <SVGPath fill="#CAC9C9" content="M0.316406 8.05469C0.316406 7.07031 0.500977 6.14746 0.870117 5.28613C1.24512 4.41895 1.76074 3.65723 2.41699 3.00098C3.07324 2.33887 3.83203 1.82324 4.69336 1.4541C5.56055 1.08496 6.48633 0.900391 7.4707 0.900391C8.46094 0.900391 9.38672 1.08496 10.248 1.4541C11.1152 1.82324 11.877 2.33887 12.5332 3.00098C13.1895 3.65723 13.7021 4.41895 14.0713 5.28613C14.4463 6.14746 14.6338 7.07031 14.6338 8.05469C14.6338 8.82812 14.5137 9.56348 14.2734 10.2607C14.0391 10.958 13.7139 11.5938 13.2979 12.168L17.3057 16.1934C17.4287 16.3105 17.5195 16.4482 17.5781 16.6064C17.6426 16.7646 17.6748 16.9316 17.6748 17.1074C17.6748 17.3535 17.6191 17.5762 17.5078 17.7754C17.3965 17.9746 17.2441 18.1299 17.0508 18.2412C16.8574 18.3584 16.6348 18.417 16.3828 18.417C16.207 18.417 16.0371 18.3848 15.873 18.3203C15.7148 18.2617 15.5713 18.168 15.4424 18.0391L11.4082 14.0049C10.8457 14.3799 10.2305 14.6758 9.5625 14.8926C8.90039 15.1035 8.20312 15.209 7.4707 15.209C6.48633 15.209 5.56055 15.0244 4.69336 14.6553C3.83203 14.2861 3.07324 13.7734 2.41699 13.1172C1.76074 12.4609 1.24512 11.7021 0.870117 10.8408C0.500977 9.97363 0.316406 9.04492 0.316406 8.05469ZM2.18848 8.05469C2.18848 8.78711 2.32324 9.47266 2.59277 10.1113C2.86816 10.75 3.24902 11.3125 3.73535 11.7988C4.22168 12.2793 4.78418 12.6572 5.42285 12.9326C6.06152 13.208 6.74414 13.3457 7.4707 13.3457C8.20312 13.3457 8.88867 13.208 9.52734 12.9326C10.166 12.6572 10.7256 12.2793 11.2061 11.7988C11.6924 11.3125 12.0732 10.75 12.3486 10.1113C12.624 9.47266 12.7617 8.78711 12.7617 8.05469C12.7617 7.32812 12.624 6.64551 12.3486 6.00684C12.0732 5.36816 11.6924 4.80566 11.2061 4.31934C10.7256 3.83301 10.166 3.45508 9.52734 3.18555C8.88867 2.91016 8.20312 2.77246 7.4707 2.77246C6.74414 2.77246 6.06152 2.91016 5.42285 3.18555C4.78418 3.45508 4.22168 3.83301 3.73535 4.31934C3.24902 4.80566 2.86816 5.36816 2.59277 6.00684C2.32324 6.64551 2.18848 7.32812 2.18848 8.05469Z"/>
+                <TextField fx:id="searchField" promptText="Recherche un utilisateur par son pseudo, son email ..." style="-fx-text-fill: #CAC9C9; -fx-border-color: transparent; -fx-background-color: transparent; -fx-padding: 12px 12px 12px 0;">
+                    <font>
+                        <Font name="SF Pro Text Medium" size="16.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT" />
+                    </cursor>
+                </TextField>
+            </HBox>
+            <TableView fx:id="usersTable" prefHeight="646.0">
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+                <columns>
+                    <TableColumn fx:id="idColumn" styleClass="columnHeader" text="ID" />
+                    <TableColumn fx:id="pseudoColumn" prefWidth="200.0" styleClass="columnHeader" text="Pseudo" />
+                    <TableColumn fx:id="emailColumn" prefWidth="300.0" styleClass="columnHeader" text="Email" />
+                    <TableColumn fx:id="roleColumn" prefWidth="140.0" styleClass="columnHeader" text="Rôle" />
+                    <TableColumn fx:id="actionsColumn" prefWidth="100.0" styleClass="columnHeader" text="Actions" />
+                </columns>
+            </TableView>
+        </VBox>
     </VBox>
 </AnchorPane>

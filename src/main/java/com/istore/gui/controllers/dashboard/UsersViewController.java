@@ -7,14 +7,13 @@ import com.istore.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.SVGPath;
@@ -32,18 +31,55 @@ public class UsersViewController {
      */
     @FXML private TableView<User> usersTable;
     @FXML private TableColumn<User, Integer> idColumn;
-    @FXML private TableColumn<User, String> pseudoColumn;
-    @FXML private TableColumn<User, String> emailColumn;
-    @FXML private TableColumn<User, String> roleColumn;
+    @FXML private TableColumn<User, String> pseudoColumn, emailColumn, roleColumn;
     @FXML private TableColumn<User, Void> actionsColumn;
+
+    @FXML private TextField searchField;
 
     /**
      * Initialise la vue.
      */
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         this.setupTableColumns();
         this.loadUsersIntoTable();
+        this.setupSearchField();
+    }
+
+    /**
+     * Permet d'initialiser le champ de recherche.
+     */
+    private void setupSearchField() throws SQLException {
+        FilteredList<User> filteredUsers = new FilteredList<>(FXCollections.observableArrayList(Application.getUserService().listAllUsers()), p -> true);
+
+        // Ajout d'un écouteur sur la propriété text du TextField de recherche
+        this.searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredUsers.setPredicate(user -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Filtre du pseudo
+                if (user.getPseudo().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                // Filtre de l'email
+                else if (user.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            // Ordonnance des données filtrées
+            SortedList<User> sortedData = new SortedList<>(filteredUsers);
+            sortedData.comparatorProperty().bind(usersTable.comparatorProperty());
+
+            // Mise à jour de la table.
+            usersTable.setItems(sortedData);
+        });
     }
 
     /**
