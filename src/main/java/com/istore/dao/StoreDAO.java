@@ -185,5 +185,20 @@ public class StoreDAO {
         }
     }
 
+    /**
+     * Supprimer un employé de tous les magasins
+     * @param userId ID de l'employé
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void removeEmployeeFromAllStores(int userId) throws SQLException {
+        String query = "DELETE FROM store_employees WHERE user_id = ?";
+        try (Connection conn = db.getConnectionDb();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
 }
 

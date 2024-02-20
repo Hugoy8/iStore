@@ -80,4 +80,13 @@ public class StoreService {
     public void removeEmployeeFromStore(int storeId, int employeeId) throws SQLException {
         storeDAO.removeEmployeeFromStore(storeId, employeeId);
     }
+
+    /**
+     * Supprime un employé de tous les magasins.
+     * @param employeeId L'ID de l'employé.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public void removeEmployeeFromAllStores(int employeeId) throws SQLException {
+        storeDAO.removeEmployeeFromAllStores(employeeId);
+    }
 }

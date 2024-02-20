@@ -192,6 +192,7 @@ public class UsersViewController {
      */
     private void deleteUserById(int userId) {
         try {
+            Application.getStoreService().removeEmployeeFromAllStores(userId);
             Application.getUserService().deleteUserById(userId);
             refreshTable();
         } catch (SQLException e) {
