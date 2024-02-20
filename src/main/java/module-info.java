@@ -13,6 +13,7 @@ module com.istore {
     opens com.istore.gui to javafx.fxml;
     opens com.istore.gui.controllers.auth to javafx.fxml;
     opens com.istore.gui.controllers.dashboard to javafx.fxml;
+    opens com.istore.gui.controllers.dashboard.popup to javafx.fxml;
     opens com.istore.gui.controllers.dashboard.popup.stores to javafx.fxml;
     opens com.istore.gui.controllers.dashboard.popup.users to javafx.fxml;
     opens com.istore.gui.controllers.dashboard.popup.items to javafx.fxml;
@@ -29,6 +30,7 @@ module com.istore {
     exports com.istore.gui.controllers.auth;
     exports com.istore.gui.controllers.dashboard;
     exports com.istore.gui.controllers.dashboard.stores;
+    exports com.istore.gui.controllers.dashboard.popup;
     exports com.istore.gui.controllers.dashboard.popup.stores;
     exports com.istore.gui.controllers.dashboard.popup.users;
     exports com.istore.gui.controllers.dashboard.popup.items;

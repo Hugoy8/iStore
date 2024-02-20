@@ -1,5 +1,6 @@
 package com.istore.gui.controllers.dashboard;
 
+import com.istore.gui.AppLauncher;
 import com.istore.gui.controllers.dashboard.popup.users.EditUserPopupController;
 import com.istore.gui.controllers.dashboard.popup.users.DeleteUserConfirmController;
 import com.istore.models.User;
@@ -23,6 +24,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
+import static com.istore.Application.getAuthService;
 
 public class UsersViewController {
 
@@ -115,12 +118,20 @@ public class UsersViewController {
 
                 editBtn.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
-                    showEditUserPopup(user);
+                    try {
+                        showEditUserPopup(user);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
 
                 deleteBtn.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
-                    showDeleteUserConfirmPopup(user);
+                    try {
+                        showDeleteUserConfirmPopup(user);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
 
@@ -162,19 +173,23 @@ public class UsersViewController {
      * Affiche la fenêtre de création de magasin.
      */
     @FXML
-    private void showCreateUserPopup() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/create-user.fxml"));
-            Parent root = loader.load();
+    private void showCreateUserPopup() throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/create-user.fxml"));
+                Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Créer un Utilisateur");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Créer un Utilisateur");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -182,22 +197,26 @@ public class UsersViewController {
      * Affiche la fenêtre de modification d'un utilisateur.
      * @param user L'utilisateur à modifier.
      */
-    private void showEditUserPopup(User user) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/edit-user.fxml"));
-            Parent root = loader.load();
+    private void showEditUserPopup(User user) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser()) || user.getId() == Application.getAuthService().getUser().getId()){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/edit-user.fxml"));
+                Parent root = loader.load();
 
-            EditUserPopupController controller = loader.getController();
-            controller.initUserData(user); // Méthode pour initialiser les données de l'utilisateur dans la popup
+                EditUserPopupController controller = loader.getController();
+                controller.initUserData(user); // Méthode pour initialiser les données de l'utilisateur dans la popup
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Éditer un Utilisateur");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Éditer un Utilisateur");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -205,21 +224,25 @@ public class UsersViewController {
      * Affiche la fenêtre de confirmation de suppression de l'utilisateur.
      * @param userToDelete L'utilisateur à supprimer.
      */
-    private void showDeleteUserConfirmPopup(User userToDelete) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/delete-user-confirm.fxml"));
-            Parent root = loader.load();
+    private void showDeleteUserConfirmPopup(User userToDelete) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser()) || userToDelete.getId() == Application.getAuthService().getUser().getId()){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/users/delete-user-confirm.fxml"));
+                Parent root = loader.load();
 
-            DeleteUserConfirmController controller = loader.getController();
-            controller.setOnConfirm(() -> deleteUserById(userToDelete.getId()));
+                DeleteUserConfirmController controller = loader.getController();
+                controller.setOnConfirm(() -> deleteUserById(userToDelete.getId()));
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Confirmer la suppression");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Confirmer la suppression");
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -232,8 +255,13 @@ public class UsersViewController {
             Application.getStoreService().removeEmployeeFromAllStores(userId);
             Application.getUserService().deleteUserById(userId);
             refreshTable();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            if (userId == Application.getAuthService().getUser().getId()) {
+                getAuthService().setUser(null);
+                AppLauncher.showLoginView();
+            }
+        } catch (SQLException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

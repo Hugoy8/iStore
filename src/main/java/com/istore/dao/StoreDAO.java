@@ -122,6 +122,40 @@ public class StoreDAO {
     }
 
     /**
+     * Retrouver tous les magasins disponibles pour un utilisateur en temps qu'employé.
+     * @param user Utilisateur qu'on veut retrouver les magasins
+     * @return Liste des magasins
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public List<Store> listAllStoresWithUserEmployees(User user) throws SQLException {
+        List<Store> stores = new ArrayList<>();
+        String query = "SELECT s.id, s.name, s.location, GROUP_CONCAT(u.pseudo SEPARATOR ', ') AS employees " +
+                "FROM stores s " +
+                "JOIN store_employees se ON s.id = se.store_id " +
+                "JOIN users u ON se.user_id = u.id " +
+                "WHERE s.id IN ( SELECT distinct s.id FROM stores s JOIN store_employees se ON s.id = se.store_id WHERE se.user_id = ? ) " +
+                "GROUP BY s.id";
+        try {
+            Connection conn = db.getConnectionDb();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, user.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Store store = new Store(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("location"),
+                        rs.getString("employees") != null ? List.of(rs.getString("employees").split(", ")) : List.of()
+                );
+                stores.add(store);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return stores;
+    }
+
+    /**
      * Retrouver les employés d'un magasin par son id
      * @param storeId ID du magasin
      * @return Liste des employés

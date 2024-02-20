@@ -52,6 +52,16 @@ public class StoreService {
     }
 
     /**
+     * Liste tous les magasins d'un utilisateur qui fait partie des employées de ces magasins.
+     * @param user L'utilisateur pour lequel on veut lister les magasins.
+     * @return La liste de tous les magasins.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    public List<Store> listAllStoresWithUserEmployees(User user) throws SQLException {
+        return storeDAO.listAllStoresWithUserEmployees(user);
+    }
+
+    /**
      * Retrouve un magasin par son ID.
      * @param id L'ID du magasin.
      * @return Le magasin trouvé.

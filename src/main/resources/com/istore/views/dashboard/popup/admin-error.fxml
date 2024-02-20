@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox alignment="CENTER" style="-fx-padding: 32; -fx-background-color: white;" spacing="24.0" stylesheets="@../../../styles/auth.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.istore.gui.controllers.dashboard.popup.AdminErrorPopupController">
+    <VBox alignment="CENTER" spacing="8" prefWidth="200">
+        <SVGPath fill="#E40000" content="M7.33594 45.2266C6.00781 45.2266 4.86719 44.9453 3.91406 44.3828C2.96094 43.8203 2.22656 43.0547 1.71094 42.0859C1.19531 41.1328 0.9375 40.0625 0.9375 38.875C0.9375 37.7344 1.24219 36.6406 1.85156 35.5938L20.0391 3.90625C20.6328 2.84375 21.4219 2.04688 22.4062 1.51562C23.3906 0.96875 24.4219 0.695312 25.5 0.695312C26.5781 0.695312 27.6016 0.96875 28.5703 1.51562C29.5547 2.04688 30.3516 2.84375 30.9609 3.90625L49.1484 35.5938C49.4453 36.1094 49.6719 36.6484 49.8281 37.2109C49.9844 37.7734 50.0625 38.3281 50.0625 38.875C50.0625 40.0625 49.8047 41.1328 49.2891 42.0859C48.7734 43.0547 48.0391 43.8203 47.0859 44.3828C46.1328 44.9453 44.9922 45.2266 43.6641 45.2266H7.33594ZM25.5234 29.5469C26.7422 29.5469 27.3594 28.9062 27.375 27.625L27.7266 14.875C27.7422 14.2656 27.5312 13.7578 27.0938 13.3516C26.6719 12.9297 26.1406 12.7188 25.5 12.7188C24.8438 12.7188 24.3047 12.9219 23.8828 13.3281C23.4766 13.7344 23.2812 14.2422 23.2969 14.8516L23.6016 27.625C23.6328 28.9062 24.2734 29.5469 25.5234 29.5469ZM25.5234 37.3984C26.2266 37.3984 26.8359 37.1562 27.3516 36.6719C27.8828 36.1875 28.1484 35.5938 28.1484 34.8906C28.1484 34.1875 27.8828 33.5938 27.3516 33.1094C26.8359 32.6094 26.2266 32.3594 25.5234 32.3594C24.8047 32.3594 24.1875 32.6094 23.6719 33.1094C23.1562 33.6094 22.8984 34.2031 22.8984 34.8906C22.8984 35.5938 23.1562 36.1875 23.6719 36.6719C24.2031 37.1562 24.8203 37.3984 25.5234 37.3984Z"/>
+        <Text fill="#000" text="Vous devez être administrateur pour effectuer cette action !">
+            <font>
+                <Font name="SF Pro Text Regular" size="18.0" />
+            </font>
+        </Text>
+    </VBox>
+    <Button fx:id="cancelButton" text="D'accord" onAction="#handleConfirm" styleClass="buttonSubmit">
+        <font>
+            <Font name="SF Pro Display Semibold" size="16.0" />
+        </font>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+    </Button>
+</VBox>

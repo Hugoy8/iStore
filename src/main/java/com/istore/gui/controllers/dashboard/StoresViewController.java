@@ -1,6 +1,8 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.Application;
+import com.istore.gui.AppLauncher;
+import com.istore.gui.controllers.dashboard.popup.employees.RemoveEmployeeConfirmController;
 import com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController;
 import com.istore.gui.controllers.dashboard.popup.stores.EditStorePopupController;
 import com.istore.models.Store;
@@ -103,11 +105,19 @@ public class StoresViewController {
                 });
                 editBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
-                    showEditStorePopup(store);
+                    try {
+                        showEditStorePopup(store);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
                 deleteBtn.setOnAction(event -> {
                     Store store = getTableView().getItems().get(getIndex());
-                    showDeleteStoreConfirmPopup(store);
+                    try {
+                        showDeleteStoreConfirmPopup(store);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
 
@@ -131,9 +141,13 @@ public class StoresViewController {
         Platform.runLater(() -> {
             ObservableList<Store> stores = FXCollections.observableArrayList();
             try {
-                stores.addAll(Application.getStoreService().listAllStoresWithEmployees());
-            } catch (SQLException e) {
-                e.printStackTrace();
+                if (!Application.getUserService().checkAdmin(Application.getAuthService().getUser())) {
+                    stores.addAll(Application.getStoreService().listAllStoresWithUserEmployees(Application.getAuthService().getUser()));
+                } else {
+                    stores.addAll(Application.getStoreService().listAllStoresWithEmployees());
+                }
+            } catch (SQLException | IOException e) {
+                throw new RuntimeException(e);
             }
             storesTable.setItems(stores);
         });
@@ -150,19 +164,23 @@ public class StoresViewController {
      * Affiche la fenêtre de création de magasin.
      */
     @FXML
-    private void showCreateStore() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/create-store.fxml"));
-            Parent root = loader.load();
+    private void showCreateStore() throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/create-store.fxml"));
+                Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Créer un magasin");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Créer un magasin");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -171,22 +189,26 @@ public class StoresViewController {
      * @param store Le magasin à modifier.
      */
     @FXML
-    private void showEditStorePopup(Store store) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/edit-store.fxml"));
-            Parent root = loader.load();
+    private void showEditStorePopup(Store store) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/edit-store.fxml"));
+                Parent root = loader.load();
 
-            EditStorePopupController controller = loader.getController();
-            controller.initStoreData(store);
+                EditStorePopupController controller = loader.getController();
+                controller.initStoreData(store);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Éditer un magasin");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Éditer un magasin");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -195,21 +217,25 @@ public class StoresViewController {
      * @param storeToDelete Le magasin à supprimer.
      */
     @FXML
-    private void showDeleteStoreConfirmPopup(Store storeToDelete) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/delete-store-confirm.fxml"));
-            Parent root = loader.load();
+    private void showDeleteStoreConfirmPopup(Store storeToDelete) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/stores/delete-store-confirm.fxml"));
+                Parent root = loader.load();
 
-            DeleteStoreConfirmController controller = loader.getController();
-            controller.setOnConfirm(() -> deleteStoreById(storeToDelete.getId()));
+                DeleteStoreConfirmController controller = loader.getController();
+                controller.setOnConfirm(() -> deleteStoreById(storeToDelete.getId()));
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Confirmer la suppression");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Confirmer la suppression");
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.istore.gui.controllers.dashboard;
 
+import com.istore.Application;
 import com.istore.gui.AppLauncher;
 import com.istore.models.Store;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import com.istore.gui.controllers.dashboard.stores.StoreDetailsViewController;
@@ -27,6 +29,8 @@ public class DashboardController {
     @FXML private Label usernameLabel;
     @FXML private Label roleLabel;
     @FXML private Button btnUsers, btnStores, btnManagement, btnSettings;
+    @FXML private VBox sideBarContainer;
+    @FXML private HBox svgBtnManagement;
 
     /**
      * Initialise la vue.
@@ -35,6 +39,12 @@ public class DashboardController {
     @FXML
     public void initialize() throws IOException {
         this.loadUsersView();
+
+        if (!Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            this.btnManagement.setManaged(false);
+            this.svgBtnManagement.setManaged(false);
+            this.sideBarContainer.setSpacing(450);
+        }
 
         retrieveUserInfos();
     }
@@ -112,9 +122,13 @@ public class DashboardController {
      * Charge la vue de gestion.
      */
     @FXML
-    private void loadManagementView() {
-        loadView("/com/istore/views/dashboard/management-view.fxml", btnManagement);
-        AppLauncher.setTitle("Gestion");
+    private void loadManagementView() throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            loadView("/com/istore/views/dashboard/management-view.fxml", btnManagement);
+            AppLauncher.setTitle("Gestion");
+        } else {
+            AppLauncher.showAdminError();
+        }
     }
 
     /**
@@ -149,8 +163,13 @@ public class DashboardController {
      * Met en surbrillance le bouton actif.
      * @param activeButton Bouton actif.
      */
-    private void highlightActiveButton(Button activeButton) {
+    private void highlightActiveButton(Button activeButton) throws IOException {
         List<Button> buttons = Arrays.asList(btnUsers, btnStores, btnManagement, btnSettings);
+
+        if (!Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            buttons = Arrays.asList(btnUsers, btnStores, btnSettings);
+        }
+
         buttons.forEach(button -> {
             if (button.getGraphic() instanceof HBox) {
                 HBox hbox = (HBox) button.getGraphic();

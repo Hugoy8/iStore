@@ -1,7 +1,10 @@
 package com.istore.gui;
 
+import com.istore.gui.controllers.dashboard.popup.users.DeleteUserConfirmController;
+import com.istore.models.User;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -83,6 +86,25 @@ public class AppLauncher extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/styles/dashboard.css")).toExternalForm());
 
         primaryStage.setScene(scene);
+    }
+
+    /**
+     * Permet d'afficher la fênetre d'erreur pour une action requiert en administrateur.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
+     */
+    public static void showAdminError() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(AppLauncher.class.getResource("/com/istore/views/dashboard/popup/admin-error.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Attention");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw e;
+        }
     }
 
     /**

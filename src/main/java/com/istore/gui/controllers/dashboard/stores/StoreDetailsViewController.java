@@ -1,12 +1,14 @@
 package com.istore.gui.controllers.dashboard.stores;
 
 import com.istore.Application;
+import com.istore.gui.AppLauncher;
 import com.istore.gui.controllers.dashboard.DashboardController;
 import com.istore.gui.controllers.dashboard.popup.employees.AddEmployeePopupController;
 import com.istore.gui.controllers.dashboard.popup.items.CreateItemPopupController;
 import com.istore.gui.controllers.dashboard.popup.items.DeleteItemConfirmController;
 import com.istore.gui.controllers.dashboard.popup.items.EditItemPopupController;
 import com.istore.gui.controllers.dashboard.popup.employees.RemoveEmployeeConfirmController;
+import com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController;
 import com.istore.models.Item;
 import com.istore.models.Store;
 import com.istore.models.User;
@@ -185,11 +187,19 @@ public class StoreDetailsViewController {
 
                 editBtn.setOnAction(event -> {
                     Item selectedItem = getTableView().getItems().get(getIndex());
-                    showEditItemPopup(selectedItem);
+                    try {
+                        showEditItemPopup(selectedItem);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
                 deleteBtn.setOnAction(event -> {
                     Item selectedItem = getTableView().getItems().get(getIndex());
-                    showDeleteItemConfirmPopup(selectedItem);
+                    try {
+                        showDeleteItemConfirmPopup(selectedItem);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
 
@@ -245,7 +255,11 @@ public class StoreDetailsViewController {
 
                 deleteBtn.setOnAction(event -> {
                     User selectedUser = getTableView().getItems().get(getIndex());
-                    showRemoveEmployeeConfirmPopup(selectedUser);
+                    try {
+                        showRemoveEmployeeConfirmPopup(selectedUser);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
 
@@ -292,23 +306,27 @@ public class StoreDetailsViewController {
      * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     @FXML
-    private void showCreateItemPopup() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/items/create-item.fxml"));
-            Parent root = loader.load();
+    private void showCreateItemPopup() throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/items/create-item.fxml"));
+                Parent root = loader.load();
 
-            CreateItemPopupController controller = loader.getController();
-            int inventoryId = Application.getInventoryService().getInventoryIdByStoreId(currentStore.getId());
-            controller.setInventoryId(inventoryId);
+                CreateItemPopupController controller = loader.getController();
+                int inventoryId = Application.getInventoryService().getInventoryIdByStoreId(currentStore.getId());
+                controller.setInventoryId(inventoryId);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Créer un nouvel objet");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Créer un nouvel objet");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -316,22 +334,26 @@ public class StoreDetailsViewController {
      * Affiche la fenêtre de modification d'un item.
      * @param item L'item à modifier.
      */
-    private void showEditItemPopup(Item item) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/items/edit-item.fxml"));
-            Parent root = loader.load();
+    private void showEditItemPopup(Item item) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/items/edit-item.fxml"));
+                Parent root = loader.load();
 
-            EditItemPopupController controller = loader.getController();
-            controller.initItemData(item);
+                EditItemPopupController controller = loader.getController();
+                controller.initItemData(item);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Éditer un objet");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Éditer un objet");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -340,22 +362,26 @@ public class StoreDetailsViewController {
      * @param itemToDelete L'objet à supprimer.
      */
     @FXML
-    private void showDeleteItemConfirmPopup(Item itemToDelete) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/items/delete-item-confirm.fxml"));
-            Parent root = loader.load();
+    private void showDeleteItemConfirmPopup(Item itemToDelete) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/items/delete-item-confirm.fxml"));
+                Parent root = loader.load();
 
-            DeleteItemConfirmController controller = loader.getController();
-            controller.setOnConfirm(() -> deleteItemById(itemToDelete.getId()));
+                DeleteItemConfirmController controller = loader.getController();
+                controller.setOnConfirm(() -> deleteItemById(itemToDelete.getId()));
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Confirmer la suppression");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Confirmer la suppression");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -376,22 +402,26 @@ public class StoreDetailsViewController {
      * Affiche la popup de création d'un nouvel item.
      */
     @FXML
-    private void showAddEmployeePopup() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/employees/add-employee.fxml"));
-            Parent root = loader.load();
+    private void showAddEmployeePopup() throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/employees/add-employee.fxml"));
+                Parent root = loader.load();
 
-            AddEmployeePopupController controller = loader.getController();
-            controller.setStoreId(currentStore.getId());
+                AddEmployeePopupController controller = loader.getController();
+                controller.setStoreId(currentStore.getId());
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Ajouter un employé");
-            stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshTable());
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Ajouter un employé");
+                stage.setScene(new Scene(root));
+                stage.setOnHidden(e -> refreshTable());
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -399,21 +429,25 @@ public class StoreDetailsViewController {
      * Supprime un employé.
      * @param user L'employé à supprimer.
      */
-    private void showRemoveEmployeeConfirmPopup(User user) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/employees/remove-employee.fxml"));
-            Parent root = loader.load();
+    private void showRemoveEmployeeConfirmPopup(User user) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/employees/remove-employee.fxml"));
+                Parent root = loader.load();
 
-            RemoveEmployeeConfirmController controller = loader.getController();
-            controller.setOnConfirm(() -> removeEmployee(user.getId()));
+                RemoveEmployeeConfirmController controller = loader.getController();
+                controller.setOnConfirm(() -> removeEmployee(user.getId()));
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Supprimer un employé");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Supprimer un employé");
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
