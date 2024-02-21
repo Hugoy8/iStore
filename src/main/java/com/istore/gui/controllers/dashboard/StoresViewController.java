@@ -6,18 +6,18 @@ import com.istore.gui.controllers.dashboard.popup.employees.RemoveEmployeeConfir
 import com.istore.gui.controllers.dashboard.popup.stores.DeleteStoreConfirmController;
 import com.istore.gui.controllers.dashboard.popup.stores.EditStorePopupController;
 import com.istore.models.Store;
+import com.istore.models.User;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
@@ -39,6 +39,8 @@ public class StoresViewController {
     @FXML private TableColumn<Store, String> employeesColumn;
     @FXML private TableColumn<Store, Void> actionsColumn;
 
+    @FXML private TextField searchField;
+
     private DashboardController dashboardController;
 
     /**
@@ -51,10 +53,56 @@ public class StoresViewController {
 
     /**
      * Initialise la vue.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
-    public void initialize() {
-        setupTableColumns();
-        loadStoresIntoTable();
+    public void initialize() throws SQLException, IOException {
+        this.setupTableColumns();
+        this.loadStoresIntoTable();
+        this.setupSearchField();
+    }
+
+    /**
+     * Permet d'initialiser le champ de recherche.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     * @throws IOException Exception qui gère les erreurs de changement de vue
+     */
+    private void setupSearchField() throws SQLException, IOException {
+        FilteredList<Store> filtered = new FilteredList<>(FXCollections.observableArrayList(Application.getStoreService().listAllStoresWithEmployees()), p -> true);
+
+        if (!Application.getUserService().checkAdmin(Application.getAuthService().getUser())) {
+            filtered = new FilteredList<>(FXCollections.observableArrayList(Application.getStoreService().listAllStoresWithUserEmployees(Application.getAuthService().getUser())), p -> true);
+        }
+
+        FilteredList<Store> filteredStores = filtered;
+        // Ajout d'un écouteur sur la propriété text du TextField de recherche
+        this.searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredStores.setPredicate(store -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Filtre du nom
+                if (store.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                // Filtre de la location
+                else if (store.getLocation().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            // Ordonnance des données filtrées
+            SortedList<Store> sortedData = new SortedList<>(filteredStores);
+            sortedData.comparatorProperty().bind(storesTable.comparatorProperty());
+
+            // Mise à jour de la table.
+            storesTable.setItems(sortedData);
+        });
     }
 
     /**
@@ -162,6 +210,7 @@ public class StoresViewController {
 
     /**
      * Affiche la fenêtre de création de magasin.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
     private void showCreateStore() throws IOException {
@@ -187,6 +236,7 @@ public class StoresViewController {
     /**
      * Affiche la fenêtre de modification de magasin.
      * @param store Le magasin à modifier.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
     private void showEditStorePopup(Store store) throws IOException {
@@ -215,6 +265,7 @@ public class StoresViewController {
     /**
      * Affiche la fenêtre de confirmation de suppression de magasin.
      * @param storeToDelete Le magasin à supprimer.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
     private void showDeleteStoreConfirmPopup(Store storeToDelete) throws IOException {

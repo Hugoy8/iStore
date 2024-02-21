@@ -53,7 +53,7 @@ public class CreateUserPopupController {
             Application.getUserService().createUser(user);
             closePopup();
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
             errorText.setText("Erreur lors de la création de l'utilisateur. Veuillez réessayer.");
             errorBox.setVisible(true);
         }

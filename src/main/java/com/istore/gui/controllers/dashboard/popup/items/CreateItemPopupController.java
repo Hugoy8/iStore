@@ -66,8 +66,8 @@ public class CreateItemPopupController {
             errorText.setText("Le prix et le stock doivent être des nombres valides.");
             errorBox.setVisible(true);
         } catch (SQLException e) {
+            e.printStackTrace();
             errorText.setText("Erreur lors de la mise à jour de l'article.");
-            throw e;
             errorBox.setVisible(true);
         }
     }

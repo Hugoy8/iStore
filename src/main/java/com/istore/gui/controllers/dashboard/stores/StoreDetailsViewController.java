@@ -15,6 +15,8 @@ import com.istore.models.User;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,6 +36,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class StoreDetailsViewController {
+
+    @FXML private TextField searchInventoryField, searchEmployeeField;
 
     // Tableau de l'invenatire
     @FXML private TableView<Item> inventoryTable;
@@ -70,15 +74,88 @@ public class StoreDetailsViewController {
     /**
      * Initialise les données du magasin.
      * @param store Le magasin actuel.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
-    public void initStoreData(Store store) {
+    public void initStoreData(Store store) throws SQLException {
         this.currentStore = store;
 
         storeNameText.setText(store.getName());
         breadcrumbText.setText("Magasins / Magasin - " + store.getName());
 
-        loadInventoryIntoTable(store.getId());
-        loadEmployeesTable(store.getId());
+        this.loadInventoryIntoTable(store.getId());
+        this.loadEmployeesTable(store.getId());
+        this.setupSearchInventoryField(store.getId());
+        this.setupSearchEmployeeField(store.getId());
+    }
+
+    /**
+     * Permet d'initialiser le champ de recherche pour l'inventaire.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    private void setupSearchInventoryField(int storeId) throws SQLException {
+        FilteredList<Item> filteredItems = new FilteredList<>(FXCollections.observableArrayList(Application.getItemService().findItemsByStoreId(storeId)), p -> true);
+
+        // Ajout d'un écouteur sur la propriété text du TextField de recherche
+        this.searchInventoryField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredItems.setPredicate(item -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Filtre du nom
+                if (item.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            // Ordonnance des données filtrées
+            SortedList<Item> sortedData = new SortedList<>(filteredItems);
+            sortedData.comparatorProperty().bind(inventoryTable.comparatorProperty());
+
+            // Mise à jour de la table.
+            inventoryTable.setItems(sortedData);
+        });
+    }
+
+    /**
+     * Permet d'initialiser le champ de recherche pour les employées.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
+     */
+    private void setupSearchEmployeeField(int storeId) throws SQLException {
+        FilteredList<User> filteredEmployees = new FilteredList<>(FXCollections.observableArrayList(Application.getStoreService().getEmployeesByStoreId(storeId)), p -> true);
+
+        // Ajout d'un écouteur sur la propriété text du TextField de recherche
+        this.searchEmployeeField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredEmployees.setPredicate(employee -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Filtre du pseudo
+                if (employee.getPseudo().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                // Filtre de l'email
+                else if (employee.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            // Ordonnance des données filtrées
+            SortedList<User> sortedData = new SortedList<>(filteredEmployees);
+            sortedData.comparatorProperty().bind(employeesTable.comparatorProperty());
+
+            // Mise à jour de la table.
+            employeesTable.setItems(sortedData);
+        });
     }
 
     /**
@@ -122,7 +199,7 @@ public class StoreDetailsViewController {
                         Application.getItemService().decrementStock(item.getId());
                         refreshTable();
                     } catch (SQLException e) {
-                        throw e;
+                        e.printStackTrace();
                     }
                 });
 
@@ -132,7 +209,7 @@ public class StoreDetailsViewController {
                         Application.getItemService().incrementStock(item.getId());
                         refreshTable();
                     } catch (SQLException e) {
-                        throw e;
+                        e.printStackTrace();
                     }
                 });
 
@@ -144,7 +221,7 @@ public class StoreDetailsViewController {
                         Application.getItemService().updateItem(item);
                         refreshTable();
                     } catch (NumberFormatException | SQLException e) {
-                        throw e;
+                        e.printStackTrace();
                     }
                 });
             }
@@ -190,7 +267,7 @@ public class StoreDetailsViewController {
                     try {
                         showEditItemPopup(selectedItem);
                     } catch (IOException e) {
-                        throw e;
+                        e.printStackTrace();
                     }
                 });
                 deleteBtn.setOnAction(event -> {
@@ -198,7 +275,7 @@ public class StoreDetailsViewController {
                     try {
                         showDeleteItemConfirmPopup(selectedItem);
                     } catch (IOException e) {
-                        throw e;
+                        e.printStackTrace();
                     }
                 });
             }
@@ -226,7 +303,7 @@ public class StoreDetailsViewController {
                 ObservableList<Item> inventoryItems = FXCollections.observableArrayList(Application.getItemService().findItemsByStoreId(storeId)); // Supposons cette méthode existe
                 inventoryTable.setItems(inventoryItems);
             } catch (SQLException e) {
-                throw e;
+                e.printStackTrace();
             }
         });
     }
@@ -258,7 +335,7 @@ public class StoreDetailsViewController {
                     try {
                         showRemoveEmployeeConfirmPopup(selectedUser);
                     } catch (IOException e) {
-                        throw e;
+                        e.printStackTrace();
                     }
                 });
             }
@@ -287,7 +364,7 @@ public class StoreDetailsViewController {
                 ObservableList<User> observableEmployees = FXCollections.observableArrayList(employees);
                 employeesTable.setItems(observableEmployees);
             } catch (SQLException e) {
-                throw e;
+                e.printStackTrace();
             }
         });
     }
@@ -323,7 +400,7 @@ public class StoreDetailsViewController {
                 stage.setOnHidden(e -> refreshTable());
                 stage.showAndWait();
             } catch (IOException | SQLException e) {
-                throw e;
+                e.printStackTrace();
             }
         } else {
             AppLauncher.showAdminError();
@@ -394,7 +471,7 @@ public class StoreDetailsViewController {
             Application.getItemService().deleteItemById(itemId);
             refreshTable();
         } catch (SQLException e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 
@@ -460,7 +537,7 @@ public class StoreDetailsViewController {
             Application.getStoreService().removeEmployeeFromStore(currentStore.getId(), userId);
             loadEmployeesTable(currentStore.getId());
         } catch (SQLException e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 

@@ -92,6 +92,10 @@ public class SettingsViewController {
             showErrorSecurityBox(true, "Les nouveaux mots de passe ne correspondent pas.");
             return;
         }
+        if (HashUtil.checkPassword(newPasswordField.getText(), user.getPasswordHash())) {
+            showErrorInformationBox(true, "Aucune modification n'a été apportée.");
+            return;
+        }
 
         // Mise à jour du mot de passe
         String result = getAuthService().updateUserPassword(user.getId(), newPasswordField.getText());

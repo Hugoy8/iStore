@@ -1,6 +1,7 @@
 package com.istore.gui.controllers.dashboard;
 
 import com.istore.Application;
+import com.istore.gui.AppLauncher;
 import com.istore.gui.controllers.dashboard.popup.users.DeleteUserConfirmController;
 import com.istore.gui.controllers.dashboard.popup.whitelist.DeleteWhitelistConfirmController;
 import com.istore.models.User;
@@ -48,7 +49,7 @@ public class ManagementViewController {
         try {
             loadWhitelistIntoTable();
         } catch (SQLException e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 
@@ -77,7 +78,7 @@ public class ManagementViewController {
                     try {
                         showDeleteWhitelistConfirmPopup(selectedEmail);
                         loadWhitelistIntoTable();
-                    } catch (SQLException e) {
+                    } catch (SQLException | IOException e) {
                         e.printStackTrace();
                     }
                 });
@@ -116,22 +117,27 @@ public class ManagementViewController {
     /**
      * Affiche la fenêtre de confirmation de suppression de l'email de la whitelist.
      * @param whitelistEmail L'email à supprimer.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
-    private void showDeleteWhitelistConfirmPopup(WhitelistEmail whitelistEmail) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/whitelist/delete-whitelist-confirm.fxml"));
-            Parent root = loader.load();
+    private void showDeleteWhitelistConfirmPopup(WhitelistEmail whitelistEmail) throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/istore/views/dashboard/popup/whitelist/delete-whitelist-confirm.fxml"));
+                Parent root = loader.load();
 
-            DeleteWhitelistConfirmController controller = loader.getController();
-            controller.setOnConfirm(() -> deleteWhitelistById(whitelistEmail.getEmail()));
+                DeleteWhitelistConfirmController controller = loader.getController();
+                controller.setOnConfirm(() -> deleteWhitelistById(whitelistEmail.getEmail()));
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Confirmer la suppression");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Confirmer la suppression");
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 
@@ -151,25 +157,30 @@ public class ManagementViewController {
 
     /**
      * Ajoute une adresse e-mail à la liste blanche.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     @FXML
-    private void handleWhitelist() {
-        String email = emailField.getText().trim();
-        try {
-            Application.getUserService().addEmailToWhitelist(email);
-            showErrorBox(false);
-            showSuccessBox(true);
-            refreshTable();
+    private void handleWhitelist() throws IOException {
+        if (Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
+            String email = emailField.getText().trim();
+            try {
+                Application.getUserService().addEmailToWhitelist(email);
+                showErrorBox(false);
+                showSuccessBox(true);
+                refreshTable();
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(event -> {
-                emailField.clear();
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event -> {
+                    emailField.clear();
+                    showSuccessBox(false);
+                });
+                pause.play();
+            } catch (SQLException e) {
                 showSuccessBox(false);
-            });
-            pause.play();
-        } catch (SQLException e) {
-            showSuccessBox(false);
-            showErrorBox(true);
+                showErrorBox(true);
+            }
+        } else {
+            AppLauncher.showAdminError();
         }
     }
 

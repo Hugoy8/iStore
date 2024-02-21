@@ -52,6 +52,7 @@ public class UsersViewController {
 
     /**
      * Permet d'initialiser le champ de recherche.
+     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
     private void setupSearchField() throws SQLException {
         FilteredList<User> filteredUsers = new FilteredList<>(FXCollections.observableArrayList(Application.getUserService().listAllUsers()), p -> true);

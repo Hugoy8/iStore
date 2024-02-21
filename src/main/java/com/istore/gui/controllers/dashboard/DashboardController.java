@@ -16,6 +16,7 @@ import javafx.scene.shape.SVGPath;
 import com.istore.gui.controllers.dashboard.stores.StoreDetailsViewController;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -113,7 +114,7 @@ public class DashboardController {
             controller.initStoreData(store);
 
             contentArea.getChildren().setAll(detailView);
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }

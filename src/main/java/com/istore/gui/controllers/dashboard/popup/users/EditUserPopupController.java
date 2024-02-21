@@ -70,7 +70,7 @@ public class EditUserPopupController {
             Application.getUserService().updateUser(currentUser);
             closePopup();
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
             errorText.setText("Erreur lors de la mise à jour de l'utilisateur.");
             errorBox.setVisible(true);
         }

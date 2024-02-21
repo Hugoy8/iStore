@@ -47,7 +47,7 @@ public class Database {
             try {
                 this.connectionDb.close();
             } catch (SQLException e) {
-                throw e;
+                e.printStackTrace();
             }
         }
     }
