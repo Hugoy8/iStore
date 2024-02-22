@@ -33,6 +33,12 @@ public class CreateStorePopupController {
         String location = locationField.getText();
         List<String> employees = new ArrayList<>();
 
+        if (name.isEmpty() || location.isEmpty()){
+            errorText.setText("Veuillez remplir tous les champs !");
+            errorBox.setVisible(true);
+            return;
+        }
+
         Store store = new Store(name, location, employees);
 
         try {
