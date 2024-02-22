@@ -19,7 +19,7 @@
                     <Font name="SF Pro Display Semibold" size="32.0" />
                 </font>
             </Text>
-            <Text fill="#828282" text="Renseignez les informations de l'utilisateur à créer">
+            <Text fill="#828282" text="Renseignez les informations du magasin à créer">
                 <font>
                     <Font name="SF Pro Text Regular" size="16.0" />
                 </font>
