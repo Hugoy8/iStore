@@ -59,7 +59,7 @@
                     </cursor>
                 </TextField>
             </VBox>
-            <VBox spacing="8">
+            <VBox spacing="8" fx:id="roleBox">
                 <Label text="Choisissez votre rôle">
                     <font>
                         <Font name="SF Pro Display Medium" size="16.0" />
@@ -68,8 +68,8 @@
                 <ComboBox fx:id="roleComboBox" prefHeight="46.0" prefWidth="427.0" promptText="Rôle" style="-fx-border-color: #DDD; -fx-border-width: 1px; -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-background-color: WHITE;">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="admin" />
-                            <String fx:value="user" />
+                            <String fx:value="Administrateur" />
+                            <String fx:value="Utilisateur" />
                         </FXCollections>
                     </items>
                 </ComboBox>

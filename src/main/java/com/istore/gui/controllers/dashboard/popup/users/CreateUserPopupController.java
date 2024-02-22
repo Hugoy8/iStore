@@ -34,6 +34,12 @@ public class CreateUserPopupController {
         String confirmPassword = confirmPasswordField.getText();
         String role = roleComboBox.getValue();
 
+        if (pseudo.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || role == null) {
+            errorText.setText("Veuillez remplir tous les champs.");
+            errorBox.setVisible(true);
+            return;
+        }
+
         if (!password.equals(confirmPassword)) {
             errorText.setText("Les mots de passe ne correspondent pas.");
             errorBox.setVisible(true);

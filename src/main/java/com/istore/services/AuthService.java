@@ -68,9 +68,8 @@ public class AuthService {
      * Permet de vérifier si les informations de l'utilisateur sont correctes.
      * @param user L'utilisateur à vérifier.
      * @return Un message d'erreur ou de succès lors de la vérification.
-     * @throws SQLException Exception SQL en cas d'erreur durant une requête à la base de données
      */
-    public String verifyAllInformationUser(User user) throws SQLException {
+    public String verifyAllInformationUser(User user) {
         try {
             // Vérification de l'unicité de l'email et du pseudo
             if (!this.userDAO.checkEmail(user.getEmail())) {
