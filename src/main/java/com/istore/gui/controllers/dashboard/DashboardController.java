@@ -44,7 +44,7 @@ public class DashboardController {
         if (!Application.getUserService().checkAdmin(Application.getAuthService().getUser())){
             this.btnManagement.setManaged(false);
             this.svgBtnManagement.setManaged(false);
-            this.sideBarContainer.setSpacing(450);
+            this.sideBarContainer.setSpacing(310);
         }
 
         retrieveUserInfos();
