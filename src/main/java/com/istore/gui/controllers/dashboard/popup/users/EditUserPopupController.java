@@ -36,6 +36,7 @@ public class EditUserPopupController {
     /**
      * Initialise les données de l'utilisateur à modifier.
      * @param user L'utilisateur à modifier.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     public void initUserData(User user) throws IOException {
         this.currentUser = user;

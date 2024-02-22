@@ -1,0 +1,17 @@
+module:com.istore
+com.istore
+com.istore.dao
+com.istore.database
+com.istore.gui
+com.istore.gui.controllers.auth
+com.istore.gui.controllers.dashboard
+com.istore.gui.controllers.dashboard.popup
+com.istore.gui.controllers.dashboard.popup.employees
+com.istore.gui.controllers.dashboard.popup.items
+com.istore.gui.controllers.dashboard.popup.stores
+com.istore.gui.controllers.dashboard.popup.users
+com.istore.gui.controllers.dashboard.popup.whitelist
+com.istore.gui.controllers.dashboard.stores
+com.istore.models
+com.istore.services
+com.istore.utils
