@@ -3,6 +3,7 @@ package com.istore.gui;
 import com.istore.gui.controllers.dashboard.popup.users.DeleteUserConfirmController;
 import com.istore.models.User;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -42,9 +43,30 @@ public class AppLauncher extends Application {
         WINDOW_WIDTH = Screen.getPrimary().getBounds().getWidth();
         WINDOW_HEIGHT = Screen.getPrimary().getBounds().getHeight();
 
+        // Initialisation de la scène principale avec un contenu vide ou une vue de démarrage
+        Scene scene = new Scene(new Group(), WINDOW_WIDTH, WINDOW_HEIGHT);
+        primaryStage.setScene(scene);
+
         showLoginView();
         primaryStage.setFullScreen(true);
         primaryStage.show();
+    }
+
+    /**
+     * Change la scène pour afficher le contenu d'une vue.
+     * @param fxmlFile Le fichier FXML de la vue.
+     * @param cssFile Le fichier CSS de la vue.
+     * @param title Le titre de la vue.
+     * @throws IOException Exception qui gère les erreurs de changement de vue
+     */
+    private static void changeSceneContent(String fxmlFile, String cssFile, String title) throws IOException {
+        Scene scene = primaryStage.getScene();
+        scene.setRoot(FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource(fxmlFile))));
+
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(Objects.requireNonNull(AppLauncher.class.getResource(cssFile)).toExternalForm());
+
+        setTitle(title);
     }
 
     /**
@@ -52,13 +74,7 @@ public class AppLauncher extends Application {
      * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     public static void showLoginView() throws IOException {
-        Parent loginView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/auth/login-view.fxml")));
-        Scene scene = new Scene(loginView, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        scene.getStylesheets().add(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/styles/auth.css")).toExternalForm());
-
-        primaryStage.setScene(scene);
-        setTitle("Connexion");
+        changeSceneContent("/com/istore/views/auth/login-view.fxml", "/com/istore/styles/auth.css", "Connexion");
     }
 
     /**
@@ -66,13 +82,7 @@ public class AppLauncher extends Application {
      * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     public static void showRegisterView() throws IOException {
-        Parent registerView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/auth/register-view.fxml")));
-        Scene scene = new Scene(registerView, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        scene.getStylesheets().add(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/styles/auth.css")).toExternalForm());
-
-        primaryStage.setScene(scene);
-        setTitle("Inscription");
+        changeSceneContent("/com/istore/views/auth/register-view.fxml", "/com/istore/styles/auth.css", "Inscription");
     }
 
     /**
@@ -80,12 +90,7 @@ public class AppLauncher extends Application {
      * @throws IOException Exception qui gère les erreurs de changement de vue
      */
     public static void showDashboardView() throws IOException {
-        Parent dashboardView = FXMLLoader.load(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/views/dashboard/dashboard-view.fxml")));
-        Scene scene = new Scene(dashboardView, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        scene.getStylesheets().add(Objects.requireNonNull(AppLauncher.class.getResource("/com/istore/styles/dashboard.css")).toExternalForm());
-
-        primaryStage.setScene(scene);
+        changeSceneContent("/com/istore/views/dashboard/dashboard-view.fxml", "/com/istore/styles/dashboard.css", "Tableau de bord");
     }
 
     /**
