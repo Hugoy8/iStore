@@ -42,3 +42,7 @@ To run the iStore application, ensure your database is running and you have conf
 2. Run `Application.java`.
 
 This will start the iStore application. Ensure your database server is running and accessible to avoid any connection issues.
+
+## Technical documentation (Javadoc
+
+The technical documentation is available in the `javadoc` directory. Open the `index.html` file in your browser to view the documentation.

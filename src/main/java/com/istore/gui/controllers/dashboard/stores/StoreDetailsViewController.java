@@ -476,7 +476,7 @@ public class StoreDetailsViewController {
     }
 
     /**
-     * Affiche la popup de création d'un nouvel item.
+     * Affiche la popup de création d'un nouvel employé.
      */
     @FXML
     private void showAddEmployeePopup() throws IOException {
